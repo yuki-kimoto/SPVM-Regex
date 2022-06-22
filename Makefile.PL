@@ -9,7 +9,7 @@ WriteMakefile(
   NAME              => 'SPVM::Regex',
   VERSION_FROM      => 'lib/SPVM/Regex.pm',
   PREREQ_PM         => {
-    'SPVM::Unicode' => '0.01',
+    'SPVM::Unicode' => '0.03',
   }, # e.g., Module::Name => 1.1
   LICENSE           => 'perl_5',
   ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
