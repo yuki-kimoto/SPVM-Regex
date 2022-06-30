@@ -29,6 +29,8 @@ class Regex : precompile {
     QUANTIFIER_STATUS_MAX,
   }
 
+  native static method re2_test : void ();
+
   static method new : Regex ($re_str_and_options : string[]...) {
     
     my $re_str = $re_str_and_options->[0];
