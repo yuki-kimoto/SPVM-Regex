@@ -14,6 +14,11 @@ my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
 
 SPVM::Regex->re2_test;
 
+# Version 2
+{
+  ok(SPVM::TestCase::Regex->match2);
+}
+
 # SPVM::Regex
 {
   ok(SPVM::TestCase::Regex->replace_all_cb);

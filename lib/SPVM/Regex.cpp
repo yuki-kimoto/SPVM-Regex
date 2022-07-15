@@ -6,6 +6,7 @@
 #include <string>
 #include <assert.h>
 #include <cstdio>
+#include <vector>
 
 const char* FILE_NAME = "SPVM/Regex.cpp";
 
@@ -60,6 +61,8 @@ int32_t SPVM__Regex__compile2(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   RE2* re2 = new RE2(regex_string);
   
+  spvm_warn("DDDDDDD %s", regex_string);
+  
   if (!re2->ok()) {
     return env->die(env, stack, "The regex string can't be compiled for syntax error", FILE_NAME, __LINE__);
   }
@@ -113,11 +116,27 @@ int32_t SPVM__Regex__match2(SPVM_ENV* env, SPVM_VALUE* stack) {
   string_piece.set(string + string_offset, string_length - string_offset);
 
   re2::StringPiece result;
+  
+  int32_t groupSize = re2->NumberOfCapturingGroups();
 
-  int32_t match = RE2::PartialMatch(string_piece, *re2, &result);
+  std::vector<re2::RE2::Arg> argv(groupSize);
+  std::vector<re2::RE2::Arg*> args(groupSize);  
+  std::vector<re2::StringPiece> ws(groupSize);  
+  for (int i = 0; i < groupSize; ++i) {  
+    args[i] = &argv[i];  
+    argv[i] = &ws[i];  
+  }
+      
+  const RE2::Arg* args_tmp[10];
+  int32_t match = RE2::PartialMatchN(string_piece, *re2, &(args[0]), groupSize);
   
   if (match) {
-    int32_t match_pos = result.data() - string_piece.data();
+    for (int i = 0; i < groupSize; ++i) {
+      // std::cout << "PPPP " << ws[i] << std::endl;
+    }
+    
+    int32_t match_pos = ws[0].data() - string;
+    
     stack[0].ival = match_pos;
   }
   else {
