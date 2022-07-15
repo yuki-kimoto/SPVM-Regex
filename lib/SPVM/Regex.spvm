@@ -1,4 +1,103 @@
-class Regex : precompile {
+class Regex {
+  use Regex::Re2;
+  
+  has re2 : Regex::Re2;
+  
+  # Version 2
+  static method new2 : Regex ($regex_string_and_options : string[]...) {
+    
+    my $regex_string = $regex_string_and_options->[0];
+    my $options = (string)undef;
+    if (@$regex_string_and_options > 1) {
+      $options = $regex_string_and_options->[1];
+    }
+    
+    my $self = Regex->new_with_options2($regex_string, $options);
+    
+    return $self;
+  }
+  
+  private static method _new_without_compile2 : Regex () {
+    my $self = new Regex;
+    
+    return $self;
+  }
+  
+  static method new_with_options2 : Regex ($regex_string : string, $option_chars : string) {
+    my $self = Regex->_new_without_compile2();
+    
+    if ($option_chars) {
+      my $options_h = Hash->new({});
+      
+      my $option_chars_length = length $option_chars;
+      for (my $i = 0; $i < $option_chars_length; $i++) {
+        my $option_char = $option_chars->[$i];
+        if ($option_char == 's') {
+          my $found = $options_h->get("s");
+          if ($found) {
+            die "s option must be used once";
+          }
+          $self->{single_line_mode} = 1;
+          $options_h->set_int("s" => 1);
+        }
+        elsif ($option_char == 'a') {
+          my $found = $options_h->get("a");
+          if ($found) {
+            die "a option must be used once";
+          }
+          $self->{ascii_mode} = 1;
+          $options_h->set_int("a" => 1);
+        }
+        elsif ($option_char == 'i') {
+          my $found = $options_h->get("i");
+          if ($found) {
+            die "a option must be used once";
+          }
+          $self->{ignore_case} = 1;
+          $options_h->set_int("i" => 1);
+        }
+      }
+    }
+    
+    $self->compile2($regex_string);
+    
+    return $self;
+  }
+  
+  native method compile2 : void ($regex_string : string);
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   use Unicode;
   use List;
   use IntList;
@@ -30,21 +129,21 @@ class Regex : precompile {
   }
 
   native static method re2_test : void ();
-
-  static method new : Regex ($re_str_and_options : string[]...) {
+  
+  static method new : Regex ($regex_string_and_options : string[]...) {
     
-    my $re_str = $re_str_and_options->[0];
+    my $regex_string = $regex_string_and_options->[0];
     my $options = (string)undef;
-    if (@$re_str_and_options > 1) {
-      $options = $re_str_and_options->[1];
+    if (@$regex_string_and_options > 1) {
+      $options = $regex_string_and_options->[1];
     }
     
-    my $self = Regex->new_with_options($re_str, $options);
+    my $self = Regex->new_with_options($regex_string, $options);
     
     return $self;
   }
 
-  static method new_with_options : Regex ($re_str : string, $option_chars : string) {
+  static method new_with_options : Regex ($regex_string : string, $option_chars : string) {
     my $self = Regex->_new_without_compile();
     
     if ($option_chars) {
@@ -80,7 +179,7 @@ class Regex : precompile {
       }
     }
     
-    $self->compile($re_str);
+    $self->compile($regex_string);
     
     return $self;
   }
@@ -95,15 +194,15 @@ class Regex : precompile {
     return $self;
   }
   
-  private method compile : void ($re_str : string) {
+  private method compile : void ($regex_string : string) {
     
-    unless ($re_str) {
+    unless ($regex_string) {
       die "Regex string must be defined";
     }
     
-    my $re_str_length = length $re_str;
+    my $regex_string_length = length $regex_string;
     
-    if ($re_str_length == 0) {
+    if ($regex_string_length == 0) {
       die "Regex string must have length";
     }
     
@@ -124,7 +223,7 @@ class Regex : precompile {
     
     my $char_class_parsing = 0;
     my $quantifier_parsing = 0;
-    while ((my $code_point = Unicode->uchar($re_str, \$pos)) >= 0) {
+    while ((my $code_point = Unicode->uchar($regex_string, \$pos)) >= 0) {
       
       my $before_is_hyphen = $self->{before_is_hyphen};
       $self->{before_is_hyphen} = 0;
@@ -136,7 +235,7 @@ class Regex : precompile {
       
       switch ($code_point) {
         case '\\': {
-          my $next_code_point = Unicode->uchar($re_str, \$pos);
+          my $next_code_point = Unicode->uchar($regex_string, \$pos);
           if ($code_point < 0) {
             die "Invalid regex. Last is \\ ";
           }
@@ -807,5 +906,6 @@ class Regex : precompile {
 
     return $negate_code_point_rainges;
   }
+
 }
 
