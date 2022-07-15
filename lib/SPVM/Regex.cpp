@@ -61,8 +61,6 @@ int32_t SPVM__Regex__compile2(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   RE2* re2 = new RE2(regex_string);
   
-  spvm_warn("DDDDDDD %s", regex_string);
-  
   if (!re2->ok()) {
     return env->die(env, stack, "The regex string can't be compiled for syntax error", FILE_NAME, __LINE__);
   }

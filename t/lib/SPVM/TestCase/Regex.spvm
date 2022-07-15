@@ -1484,7 +1484,7 @@ class TestCase::Regex {
   }
 
   static method match2 : int () {
-    my $re = Regex->new2("(c)");
+    my $re = Regex->new2("c");
     
     my $string = "abc";
     my $match_pos = $re->match2($string, 0);

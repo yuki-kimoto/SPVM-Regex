@@ -59,7 +59,9 @@ class Regex {
       }
     }
     
-    $self->compile2($regex_string);
+    my $capture_regex_string = "(" . $regex_string . ")";
+    
+    $self->compile2($capture_regex_string);
     
     return $self;
   }
