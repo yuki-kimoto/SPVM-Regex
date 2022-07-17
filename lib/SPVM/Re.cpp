@@ -69,7 +69,8 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
     return env->die(env, stack, "The string offset must be greater than or equal to 0", FILE_NAME, __LINE__);
   }
   if (!(offset < string_length)) {
-    return env->die(env, stack, "The string offset must be less than the string length", FILE_NAME, __LINE__);
+    stack[0].ival = 0;
+    return 0;
   }
   
   void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "Re", "re2", "Re::Re2", &e, FILE_NAME, __LINE__);
