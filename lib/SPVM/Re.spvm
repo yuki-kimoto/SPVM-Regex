@@ -4,7 +4,6 @@ class Re {
   
   has re2 : Re::Re2;
   
-  # Version 2
   static method new : Re ($pattern_and_flags : string[]...) {
     
     my $pattern = $pattern_and_flags->[0];
@@ -15,13 +14,13 @@ class Re {
     
     my $self = new Re;
     
-    my $capture_pattern_string = "(" . $pattern . ")";
+    $pattern = "($pattern)";
     
     if ($flags) {
-      $capture_pattern_string = "(?$flags:re)" . $capture_pattern_string;
+      $pattern = "(?$flags:re)$pattern";
     }
     
-    $self->compile($capture_pattern_string);
+    $self->compile($pattern);
     
     return $self;
   }
