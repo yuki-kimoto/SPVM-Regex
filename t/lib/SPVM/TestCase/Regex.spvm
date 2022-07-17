@@ -1487,7 +1487,8 @@ class TestCase::Regex {
     my $re = Regex->new2("c");
     
     my $string = "abc";
-    my $match_pos = $re->match2($string, 0);
+    my $offset = 0;
+    my $match_pos = $re->match2($string);
     
     warn "$match_pos";
     

@@ -76,7 +76,7 @@ int32_t SPVM__Regex__compile2(SPVM_ENV* env, SPVM_VALUE* stack) {
   return 0;
 }
 
-int32_t SPVM__Regex__match2(SPVM_ENV* env, SPVM_VALUE* stack) {
+int32_t SPVM__Regex__match2_g(SPVM_ENV* env, SPVM_VALUE* stack) {
   (void)env;
   (void)stack;
   
@@ -93,7 +93,8 @@ int32_t SPVM__Regex__match2(SPVM_ENV* env, SPVM_VALUE* stack) {
   const char* string = env->get_chars(env, stack, obj_string);
   int32_t string_length = env->length(env, stack, obj_string);
   
-  int32_t string_offset = stack[2].ival;
+  int32_t* string_offset_ref = stack[2].iref;
+  int32_t string_offset = *string_offset_ref;
   if (string_offset < 0) {
     return env->die(env, stack, "The string offset must be greater than or equal to 0", FILE_NAME, __LINE__);
   }
@@ -133,13 +134,16 @@ int32_t SPVM__Regex__match2(SPVM_ENV* env, SPVM_VALUE* stack) {
       // std::cout << "PPPP " << ws[i] << std::endl;
     }
     
-    int32_t match_pos = ws[0].data() - string;
+    int32_t match_pos = ws[0].data() - (string - string_offset);
+    
+    *string_offset_ref += match_pos;
     
     stack[0].ival = match_pos;
   }
   else {
     stack[0].ival = -1;
   }
+  
   
   return 0;
 }

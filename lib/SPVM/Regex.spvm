@@ -68,16 +68,12 @@ class Regex {
   
   native method compile2 : void ($regex_string : string);
   
-  native method match2 : int ($target : string, $target_base_index : int);
+  method match2 : int ($string : string) {
+    my $offset = 0;
+    return $self->match2_g($string, \$offset);
+  }
   
-  
-  
-  
-  
-  
-  
-  
-  
+  native method match2_g : int ($target : string, $offset : int*);
   
   
   
