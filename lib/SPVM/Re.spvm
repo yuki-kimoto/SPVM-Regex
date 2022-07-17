@@ -14,13 +14,13 @@ class Re {
     
     my $self = new Re;
     
-    $pattern = "($pattern)";
+    my $re2_pattern = "($pattern)";
     
     if ($flags) {
-      $pattern = "(?$flags:re)$pattern";
+      $re2_pattern = "(?$flags:re)$pattern";
     }
     
-    $self->compile($pattern);
+    $self->compile($re2_pattern);
     
     return $self;
   }
