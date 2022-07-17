@@ -100,10 +100,6 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t match = RE2::PartialMatchN(string_piece, *re2, &(args[0]), groupSize);
   
   if (match) {
-    for (int i = 0; i < groupSize; ++i) {
-      // std::cout << "PPPP " << ws[i] << std::endl;
-    }
-    
     int32_t next_offset = (ws[0].data() - string) + ws[0].length();
     
     *offset_ref = next_offset;
