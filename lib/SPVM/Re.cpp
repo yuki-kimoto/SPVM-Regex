@@ -97,7 +97,6 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
     argv[i] = &ws[i];  
   }
       
-  const RE2::Arg* args_tmp[10];
   int32_t match = RE2::PartialMatchN(string_piece, *re2, &(args[0]), groupSize);
   
   if (match) {
