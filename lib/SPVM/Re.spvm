@@ -1,0 +1,38 @@
+class Re {
+  use Re::Re2;
+  use Hash;
+  
+  has re2 : Re::Re2;
+  
+  # Version 2
+  static method new : Re ($pattern_and_flags : string[]...) {
+    
+    my $pattern = $pattern_and_flags->[0];
+    my $flags = (string)undef;
+    if (@$pattern_and_flags > 1) {
+      $flags = $pattern_and_flags->[1];
+    }
+    
+    my $self = new Re;
+    
+    my $capture_pattern_string = "(" . $pattern . ")";
+    
+    if ($flags) {
+      $capture_pattern_string = "(?$flags:re)" . $capture_pattern_string;
+    }
+    
+    $self->compile($capture_pattern_string);
+    
+    return $self;
+  }
+  
+  native method compile : void ($pattern : string);
+  
+  method match : int ($string : string) {
+    my $offset = 0;
+    return $self->match_g($string, \$offset);
+  }
+  
+  native method match_g : int ($target : string, $offset : int*);
+}
+

@@ -1,0 +1,19 @@
+class TestCase::Re {
+  use Re;
+  
+  static method match : int () {
+    my $re = Re->new("c");
+    
+    my $string = "abc";
+    my $offset = 0;
+    my $match_pos = $re->match($string);
+    
+    warn "$match_pos";
+    
+    unless ($match_pos == 2) {
+      return 0;
+    }
+    
+    return 1;
+  }
+}
