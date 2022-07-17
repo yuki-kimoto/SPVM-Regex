@@ -8,17 +8,11 @@ use lib "$FindBin::Bin/lib";
 BEGIN { $ENV{SPVM_BUILD_DIR} = "$FindBin::Bin/.spvm_build" };
 
 use SPVM 'TestCase::Regex';
-use SPVM 'TestCase::Re';
 
 # Start objects count
 my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
 
 SPVM::Regex->re2_test;
-
-# Re
-{
-  ok(SPVM::TestCase::Re->match);
-}
 
 # SPVM::Regex
 {

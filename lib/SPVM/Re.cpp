@@ -63,12 +63,12 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
   const char* string = env->get_chars(env, stack, obj_string);
   int32_t string_length = env->length(env, stack, obj_string);
   
-  int32_t* string_offset_ref = stack[2].iref;
-  int32_t string_offset = *string_offset_ref;
-  if (string_offset < 0) {
+  int32_t* offset_ref = stack[2].iref;
+  int32_t offset = *offset_ref;
+  if (offset < 0) {
     return env->die(env, stack, "The string offset must be greater than or equal to 0", FILE_NAME, __LINE__);
   }
-  if (!(string_offset < string_length)) {
+  if (!(offset < string_length)) {
     return env->die(env, stack, "The string offset must be less than the string length", FILE_NAME, __LINE__);
   }
   
@@ -82,7 +82,7 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
   RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
 
   re2::StringPiece string_piece;
-  string_piece.set(string + string_offset, string_length - string_offset);
+  string_piece.set(string + offset, string_length - offset);
 
   re2::StringPiece result;
   
@@ -104,16 +104,15 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
       // std::cout << "PPPP " << ws[i] << std::endl;
     }
     
-    int32_t match_pos = ws[0].data() - (string - string_offset);
+    int32_t next_offset = (ws[0].data() - string) + ws[0].length();
     
-    *string_offset_ref += match_pos;
+    *offset_ref = next_offset;
     
-    stack[0].ival = match_pos;
+    stack[0].ival = 1;
   }
   else {
-    stack[0].ival = -1;
+    stack[0].ival = 0;
   }
-  
   
   return 0;
 }

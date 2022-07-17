@@ -5,13 +5,30 @@ class TestCase::Re {
     my $re = Re->new("c");
     
     my $string = "abc";
-    my $offset = 0;
-    my $match_pos = $re->match($string);
+    my $match = $re->match($string);
     
-    warn "$match_pos";
-    
-    unless ($match_pos == 2) {
+    unless ($match) {
       return 0;
+    }
+    
+    return 1;
+  }
+
+  static method match_g : int () {
+    my $re = Re->new("c");
+    
+    my $string = "abc";
+    my $offset = 0;
+    {
+      my $match = $re->match_g($string, \$offset);
+      
+      unless ($match) {
+        return 0;
+      }
+      
+      unless ($offset == 3) {
+        return 0;
+      }
     }
     
     return 1;
