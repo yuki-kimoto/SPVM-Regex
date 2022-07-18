@@ -1,5 +1,6 @@
 class Re {
   use Fn;
+  use Re::Replacer;
   use Re::Re2;
   use Hash;
   
@@ -59,13 +60,11 @@ class Re {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
 
-=pod
-
   method replace  : string ($string : string, $offset : int, $replace_string : string) {
     return $self->replace_common($string, $offset, $replace_string, {global => 0});
   }
   
-  method replace_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+  method replace_cb  : string ($string : string, $offset : int, $replace_cb : Re::Replacer) {
     return $self->replace_common($string, $offset, $replace_cb, {global => 0});
   }
   
@@ -73,11 +72,11 @@ class Re {
     return $self->replace_common($string, $offset, $replace_string, {global => 1});
   }
   
-  method replace_g_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+  method replace_g_cb  : string ($string : string, $offset : int, $replace_cb : Re::Replacer) {
     return $self->replace_common($string, $offset, $replace_cb, {global => 1});
   }
   
-  private method replace_common : string ($string : string, $offset : int, $replace : object, $options : object[]) {
+  private precompile method replace_common : string ($string : string, $offset : int, $replace : object, $options : object[]) {
     
     my $opt = Hash->new($options);
     
@@ -96,61 +95,63 @@ class Re {
       die "The offset must be greater than or equal to 0";
     }
     
-    my $match = 0;
     my $result : string;
     my $result_buffer = StringBuffer->new;
     my $string_length = length $string;
     
+    my $match_count = 0;
     while (1) {
       my $match = $self->match_g($string, \$offset);
       
-      my $match_start = $self->match_start;
-      my $match_end = $match_start + $self->match_length;
+      if ($match) {
+        $match_count++;
+      }
+      else {
+        last;
+      }
       
       my $replace_string : string;
       if ($replace isa string) {
         $replace_string = (string)$replace;
       }
-      elsif ($replace isa Regex::Replacer) {
-        my $replace_string_buffer = StringBuffer->new;
-        my $replace_stringr = (Regex::Replacer)$replace;
-        my $cb_result = $replace_stringr->($self);
-        $replace_string_buffer->push($cb_result);
-        $replace_string = $replace_string_buffer->to_string;
+      elsif ($replace isa Re::Replacer) {
+        my $replacer = (Re::Replacer)$replace;
+        $replace_string = $replacer->($self);
       }
       else {
-        die "Invalid replace argument";
+        die "The replace argument must be a string or a Re::Replacer object";
       }
       
-      my $match_length = $self->match_length;
       my $replace_string_length = length $replace_string;
       
+      my $match_start = $self->match_start;
+      my $match_length = $self->match_length;
+
       my $result_length = $string_length + $replace_string_length - $match_length;
       
       $result = (mutable string)new_string_len($result_length);
       
-      my $rest_length = $string_length - $match_end;
+      my $next_offset = $match_start + $match_length;
+      my $rest_length = $string_length - $next_offset;
       
       my $before_result = (mutable string)Fn->substr($string, $offset, $match_start - $offset);
       $result_buffer->push($before_result);
       $result_buffer->push($replace_string);
       
-      $match++;
-      
       unless ($global) {
         last;
       }
-      $offset = $match_end;
+      $offset = $next_offset;
     }
     
-    unless ($match) {
+    if ($match_count) {
+      $result = $result_buffer->to_string;
+    }
+    else {
       $result = copy $string;
     }
     
     return $result;
   }
-
-=cut
-
 }
 
