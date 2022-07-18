@@ -18,7 +18,7 @@ class Re {
     my $re2_pattern = "($pattern)";
     
     if ($flags) {
-      $re2_pattern = "(?$flags:re)$pattern";
+      $re2_pattern = "(?$flags)$re2_pattern";
     }
     
     $self->compile($re2_pattern);

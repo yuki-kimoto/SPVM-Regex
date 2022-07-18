@@ -37,6 +37,18 @@ class TestCase::Re {
         return 0;
       }
     }
+
+    # Ignore case
+    {
+      my $re = Re->new("abc", "i");
+      
+      my $string = "ABC";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
     
     return 1;
   }
