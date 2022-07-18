@@ -2,13 +2,40 @@ class TestCase::Re {
   use Re;
   
   static method match : int () {
-    my $re = Re->new("c");
+    # Simple
+    {
+      my $re = Re->new("c");
+      
+      my $string = "abc";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
     
-    my $string = "abc";
-    my $match = $re->match($string);
-    
-    unless ($match) {
-      return 0;
+    # Captures
+    {
+      my $re = Re->new("^(\d+):(\d+):(\d+)$");
+      
+      my $string = "12:34:56";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+      
+      unless ($re->cap1 eq "12") {
+        return 0;
+      }
+      
+      unless ($re->cap2 eq "34") {
+        return 0;
+      }
+      
+      unless ($re->cap3 eq "56") {
+        return 0;
+      }
     }
     
     return 1;
