@@ -5,6 +5,8 @@ class Re {
   
   has re2 : Re::Re2;
   has captures : ro string[];
+  has match_start : ro int;
+  has match_length : ro int;
   
   static method new : Re ($pattern_and_flags : string[]...) {
     
