@@ -87,21 +87,39 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
 
   re2::StringPiece result;
   
-  int32_t groupSize = re2->NumberOfCapturingGroups();
+  int32_t captures_length = re2->NumberOfCapturingGroups();
 
-  std::vector<re2::RE2::Arg> argv(groupSize);
-  std::vector<re2::RE2::Arg*> args(groupSize);  
-  std::vector<re2::StringPiece> ws(groupSize);  
-  for (int i = 0; i < groupSize; ++i) {  
-    args[i] = &argv[i];  
-    argv[i] = &ws[i];  
+  std::vector<re2::RE2::Arg*> captures_args(captures_length);  
+  std::vector<re2::RE2::Arg> captures_arg(captures_length);
+  std::vector<re2::StringPiece> captures(captures_length);  
+  for (int32_t i = 0; i < captures_length; ++i) {  
+    captures_arg[i] = &captures[i];  
+    captures_args[i] = &captures_arg[i];  
   }
       
-  int32_t match = RE2::PartialMatchN(string_piece, *re2, &(args[0]), groupSize);
+  int32_t match = RE2::PartialMatchN(string_piece, *re2, &(captures_args[0]), captures_length);
   
   if (match) {
-    int32_t next_offset = (ws[0].data() - string) + ws[0].length();
+    // Captures
+    {
+      void* obj_captures = env->new_object_array(env, stack, SPVM_NATIVE_C_BASIC_TYPE_ID_STRING, captures_length);
+      if (!obj_captures) {
+        return env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);
+      }
+      for (int32_t i = 0; i < captures_length; ++i) {
+        if (i != 0) {
+          captures_arg[i] = &captures[i];
+          captures_args[i] = &captures_arg[i];  
+          void* obj_capture = env->new_string(env, stack, captures[i].data(), captures[i].length());
+          env->set_elem_object(env, stack, obj_captures, i, obj_capture);
+        }
+      }
+      env->set_field_object_by_name(env, stack, obj_self, "Re", "captures", "string[]", obj_captures, &e, FILE_NAME, __LINE__);
+      if (e) { return e; }
+    }
     
+    // Next offset
+    int32_t next_offset = (captures[0].data() - string) + captures[0].length();
     *offset_ref = next_offset;
     
     stack[0].ival = 1;
