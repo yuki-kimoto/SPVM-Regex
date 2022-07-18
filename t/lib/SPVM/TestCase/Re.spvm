@@ -53,14 +53,14 @@ class TestCase::Re {
     return 1;
   }
 
-  static method match_g : int () {
+  static method match_offset : int () {
     {
       my $re = Re->new("bc");
       
       my $string = "abcdbc";
       my $offset = 0;
       {
-        my $match = $re->match_g($string, \$offset);
+        my $match = $re->match_offset($string, \$offset);
         
         unless ($match) {
           return 0;
@@ -72,7 +72,7 @@ class TestCase::Re {
       }
 
       {
-        my $match = $re->match_g($string, \$offset);
+        my $match = $re->match_offset($string, \$offset);
         
         unless ($match) {
           return 0;
@@ -84,7 +84,7 @@ class TestCase::Re {
       }
 
       {
-        my $match = $re->match_g($string, \$offset);
+        my $match = $re->match_offset($string, \$offset);
         
         if ($match) {
           return 0;
@@ -99,7 +99,7 @@ class TestCase::Re {
       my $offset = 0;
       
       my $match_count = 0;
-      while ($re->match_g($string, \$offset)) {
+      while ($re->match_offset($string, \$offset)) {
         $match_count++;
       }
       
@@ -107,6 +107,23 @@ class TestCase::Re {
         return 0;
       }
       unless ($offset == 6) {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
+  static method replace : int () {
+    {
+      my $re = Re->new("bc");
+      
+      my $string = "abcdbc";
+      my $offset = 0;
+      
+      my $replaced = $re->replace($string, "BC");
+      
+      unless ($replaced eq "aBCdbc") {
         return 0;
       }
     }

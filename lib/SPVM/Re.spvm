@@ -34,10 +34,10 @@ class Re {
   
   method match : int ($string : string) {
     my $offset = 0;
-    return $self->match_g($string, \$offset);
+    return $self->match_offset($string, \$offset);
   }
-  
-  native method match_g : int ($string : string, $offset : int*);
+
+  native method match_offset : int ($string : string, $offset : int*);
 
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
@@ -60,26 +60,31 @@ class Re {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
 
-  method replace  : string ($string : string, $offset : int, $replace_string : string) {
-    return $self->replace_common($string, $offset, $replace_string, {global => 0});
+  method replace  : string ($string : string, $replace_string : string) {
+    my $offset = 0;
+    return $self->replace_common($string, \$offset, $replace_string, {global => 0});
   }
   
-  method replace_cb  : string ($string : string, $offset : int, $replace_cb : Re::Replacer) {
-    return $self->replace_common($string, $offset, $replace_cb, {global => 0});
+  method replace_cb  : string ($string : string, $replace_cb : Re::Replacer) {
+    my $offset = 0;
+    return $self->replace_common($string, \$offset, $replace_cb, {global => 0});
   }
   
-  method replace_g  : string ($string : string, $offset : int, $replace_string : string) {
-    return $self->replace_common($string, $offset, $replace_string, {global => 1});
+  method replace_g  : string ($string : string, $replace_string : string) {
+    my $offset = 0;
+    return $self->replace_common($string, \$offset, $replace_string, {global => 1});
   }
   
-  method replace_g_cb  : string ($string : string, $offset : int, $replace_cb : Re::Replacer) {
-    return $self->replace_common($string, $offset, $replace_cb, {global => 1});
+  method replace_g_cb  : string ($string : string, $replace_cb : Re::Replacer) {
+    my $offset = 0;
+    return $self->replace_common($string, \$offset, $replace_cb, {global => 1});
   }
   
-  private precompile method replace_common : string ($string : string, $offset : int, $replace : object, $options : object[]) {
+  private precompile method replace_common : string ($string : string, $offset_ref : int*, $replace : object, $options : object[]) {
     
     my $opt = Hash->new($options);
     
+    my $offset = $$offset_ref;
     my $original_offset = $offset;
     
     my $global = 0;
@@ -101,7 +106,7 @@ class Re {
     
     my $match_count = 0;
     while (1) {
-      my $match = $self->match_g($string, \$offset);
+      my $match = $self->match_offset($string, \$offset);
       
       if ($match) {
         $match_count++;
@@ -133,6 +138,8 @@ class Re {
       
       my $next_offset = $match_start + $match_length;
       my $rest_length = $string_length - $next_offset;
+      
+      warn "$global $string $offset, $match_start - $offset";
       
       my $before_result = (mutable string)Fn->substr($string, $offset, $match_start - $offset);
       $result_buffer->push($before_result);

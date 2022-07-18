@@ -46,7 +46,7 @@ int32_t SPVM__Re__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   return 0;
 }
 
-int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
+int32_t SPVM__Re__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
   (void)env;
   (void)stack;
   
