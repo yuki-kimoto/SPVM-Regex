@@ -107,7 +107,17 @@ int32_t SPVM__Re__match_g(SPVM_ENV* env, SPVM_VALUE* stack) {
         return env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);
       }
       for (int32_t i = 0; i < captures_length; ++i) {
-        if (i != 0) {
+        if (i == 0) {
+          int32_t match_start = (captures[0].data() - string);
+          int32_t match_length = captures[0].length();
+          
+          env->set_field_int_by_name(env, stack, obj_self, "Re", "match_start", match_start, &e, FILE_NAME, __LINE__);
+          if (e) { return e; }
+          
+          env->set_field_int_by_name(env, stack, obj_self, "Re", "match_length", match_length, &e, FILE_NAME, __LINE__);
+          if (e) { return e; }
+        }
+        else {
           captures_arg[i] = &captures[i];
           captures_args[i] = &captures_arg[i];  
           void* obj_capture = env->new_string(env, stack, captures[i].data(), captures[i].length());
