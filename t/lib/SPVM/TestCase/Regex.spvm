@@ -1492,6 +1492,54 @@ class TestCase::Regex {
       }
     }
     
+    # Simple
+    {
+      my $re = Regex->new("c");
+      
+      my $string = "abc";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    # Captures
+    {
+      my $re = Regex->new("^(\d+):(\d+):(\d+)$");
+      
+      my $string = "12:34:56";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+      
+      unless ($re->cap1 eq "12") {
+        return 0;
+      }
+      
+      unless ($re->cap2 eq "34") {
+        return 0;
+      }
+      
+      unless ($re->cap3 eq "56") {
+        return 0;
+      }
+    }
+
+    # Ignore case
+    {
+      my $re = Regex->new("abc", "i");
+      
+      my $string = "ABC";
+      my $match = $re->match($string);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
     return 1;
   }
 }

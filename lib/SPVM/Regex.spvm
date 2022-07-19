@@ -19,7 +19,6 @@ class Regex {
   has string_start : byte;
   has string_end : byte;
   has single_line_mode : byte;
-  has ascii_mode : byte;
   has ignore_case : byte;
   has replace_count : ro int;
   has before_is_hyphen : byte;
@@ -59,14 +58,6 @@ class Regex {
           }
           $self->{single_line_mode} = 1;
           $flags_h->set_int("s" => 1);
-        }
-        elsif ($flag == 'a') {
-          my $found = $flags_h->get("a");
-          if ($found) {
-            die "a option must be used once";
-          }
-          $self->{ascii_mode} = 1;
-          $flags_h->set_int("a" => 1);
         }
         elsif ($flag == 'i') {
           my $found = $flags_h->get("i");
@@ -142,93 +133,63 @@ class Regex {
           
           switch ($next_code_point) {
             case 'd': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = [(int)'0', '9'];
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\d must be used with ascii option";
+              my $cur_code_point_range = [(int)'0', '9'];
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }
             case 'D': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = $self->negate_code_point_ranges([(int)'0', '9']);
-                
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\D must be used with ascii option";
+              my $cur_code_point_range = $self->negate_code_point_ranges([(int)'0', '9']);
+              
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }
             case 'w': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = [(int)'0', '9', 'A', 'Z', '_', '_', 'a', 'z'];
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\w  must be used with ascii option";
+              my $cur_code_point_range = [(int)'0', '9', 'A', 'Z', '_', '_', 'a', 'z'];
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }
             case 'W': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = $self->negate_code_point_ranges([(int)'0', '9', 'A', 'Z', '_', '_', 'a', 'z']);
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\W must be used with ascii option";
+              my $cur_code_point_range = $self->negate_code_point_ranges([(int)'0', '9', 'A', 'Z', '_', '_', 'a', 'z']);
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }
             case 's': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = [(int)'\t', '\t', '\n', '\n', '\f', '\f', '\r', '\r', ' ', ' '];
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\s must be used with ascii option";
+              my $cur_code_point_range = [(int)'\t', '\t', '\n', '\n', '\f', '\f', '\r', '\r', ' ', ' '];
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }
             case 'S': {
-              if ($self->{ascii_mode}) {
-                unless ($char_class_parsing) {
-                  $finish_code_point_ranges = 1;
-                }
-                my $cur_code_point_range = $self->negate_code_point_ranges([(int)'\t', '\t', '\n', '\n', '\f', '\f', '\r', '\r', ' ', ' ']);
-                for (my $i = 0; $i < @$cur_code_point_range; $i++) {
-                  $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
-                }
+              unless ($char_class_parsing) {
+                $finish_code_point_ranges = 1;
               }
-              else {
-                die "\S must be used with ascii option";
+              my $cur_code_point_range = $self->negate_code_point_ranges([(int)'\t', '\t', '\n', '\n', '\f', '\f', '\r', '\r', ' ', ' ']);
+              for (my $i = 0; $i < @$cur_code_point_range; $i++) {
+                $cur_code_point_ranges_list->push($cur_code_point_range->[$i]);
               }
               break;
             }

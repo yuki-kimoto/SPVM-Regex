@@ -130,13 +130,13 @@ L<Regex|SPVM::Regex> provides the methodset of Perl regular expression. The targ
   $    last of string
   .    all character except "\n"
   
-  #    Default mode     ASCII mode
-  \d   Not supported    [0-9]
-  \D   Not supported    not \d
-  \s   Not supported    " ", "\t", "\f", "\r", "\n"
-  \S   Not supported    not \s
-  \w   Not supported    [a-zA-Z0-9_]
-  \W   Not supported    not \w
+  # Character class
+  \d   [0-9]
+  \D   not \d
+  \s   " ", "\t", "\f", "\r", "\n"
+  \S   not \s
+  \w   [a-zA-Z0-9_]
+  \W   not \w
   
   # Character class and the negatiton
   [a-z0-9]
@@ -148,7 +148,6 @@ L<Regex|SPVM::Regex> provides the methodset of Perl regular expression. The targ
 B<Regex Options:>
 
   s    single line mode
-  a    ascii mode
 
 Regex options is used by C<new_with_options> method.
 
