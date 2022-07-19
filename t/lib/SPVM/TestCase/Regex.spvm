@@ -21,7 +21,7 @@ class TestCase::Regex {
       unless ($re->replaced_count == 2) {
         return 0;
       }
-      
+
       unless ($result eq "ppzABCbcPQRSzABCbcPQRSz") {
         return 0;
       }
