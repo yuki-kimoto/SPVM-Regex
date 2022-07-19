@@ -31,56 +31,56 @@ class Regex {
 
   native static method re2_test : void ();
   
-  static method new : Regex ($regex_string_and_options : string[]...) {
+  static method new : Regex ($pattern_and_flags : string[]...) {
     
-    my $regex_string = $regex_string_and_options->[0];
+    my $pattern = $pattern_and_flags->[0];
     my $options = (string)undef;
-    if (@$regex_string_and_options > 1) {
-      $options = $regex_string_and_options->[1];
+    if (@$pattern_and_flags > 1) {
+      $options = $pattern_and_flags->[1];
     }
     
-    my $self = Regex->new_with_options($regex_string, $options);
+    my $self = Regex->new_with_options($pattern, $options);
     
     return $self;
   }
 
-  static method new_with_options : Regex ($regex_string : string, $option_chars : string) {
+  static method new_with_options : Regex ($pattern : string, $flags : string) {
     my $self = Regex->_new_without_compile();
     
-    if ($option_chars) {
-      my $options_h = Hash->new({});
+    if ($flags) {
+      my $flags_h = Hash->new({});
       
-      my $option_chars_length = length $option_chars;
-      for (my $i = 0; $i < $option_chars_length; $i++) {
-        my $option_char = $option_chars->[$i];
-        if ($option_char == 's') {
-          my $found = $options_h->get("s");
+      my $flags_length = length $flags;
+      for (my $i = 0; $i < $flags_length; $i++) {
+        my $flag = $flags->[$i];
+        if ($flag == 's') {
+          my $found = $flags_h->get("s");
           if ($found) {
             die "s option must be used once";
           }
           $self->{single_line_mode} = 1;
-          $options_h->set_int("s" => 1);
+          $flags_h->set_int("s" => 1);
         }
-        elsif ($option_char == 'a') {
-          my $found = $options_h->get("a");
+        elsif ($flag == 'a') {
+          my $found = $flags_h->get("a");
           if ($found) {
             die "a option must be used once";
           }
           $self->{ascii_mode} = 1;
-          $options_h->set_int("a" => 1);
+          $flags_h->set_int("a" => 1);
         }
-        elsif ($option_char == 'i') {
-          my $found = $options_h->get("i");
+        elsif ($flag == 'i') {
+          my $found = $flags_h->get("i");
           if ($found) {
             die "a option must be used once";
           }
           $self->{ignore_case} = 1;
-          $options_h->set_int("i" => 1);
+          $flags_h->set_int("i" => 1);
         }
       }
     }
     
-    $self->compile($regex_string);
+    $self->compile($pattern);
     
     return $self;
   }
@@ -95,15 +95,15 @@ class Regex {
     return $self;
   }
   
-  private method compile : void ($regex_string : string) {
+  private method compile : void ($pattern : string) {
     
-    unless ($regex_string) {
+    unless ($pattern) {
       die "Regex string must be defined";
     }
     
-    my $regex_string_length = length $regex_string;
+    my $pattern_length = length $pattern;
     
-    if ($regex_string_length == 0) {
+    if ($pattern_length == 0) {
       die "Regex string must have length";
     }
     
@@ -124,7 +124,7 @@ class Regex {
     
     my $char_class_parsing = 0;
     my $quantifier_parsing = 0;
-    while ((my $code_point = Unicode->uchar($regex_string, \$pos)) >= 0) {
+    while ((my $code_point = Unicode->uchar($pattern, \$pos)) >= 0) {
       
       my $before_is_hyphen = $self->{before_is_hyphen};
       $self->{before_is_hyphen} = 0;
@@ -136,7 +136,7 @@ class Regex {
       
       switch ($code_point) {
         case '\\': {
-          my $next_code_point = Unicode->uchar($regex_string, \$pos);
+          my $next_code_point = Unicode->uchar($pattern, \$pos);
           if ($code_point < 0) {
             die "Invalid regex. Last is \\ ";
           }
