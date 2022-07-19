@@ -658,7 +658,11 @@ class Regex {
       $result_buffer->push($first_string);
     }
     
-    while (my $match = $self->match_offset($string, \$offset)) {
+    while (1) {
+      my $match = $self->match_offset($string, \$offset);
+      unless ($match) {
+        last;
+      }
       
       my $match_start = $self->match_start;
       my $match_end = $match_start + $self->match_length;
