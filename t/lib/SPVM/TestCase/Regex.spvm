@@ -7,13 +7,13 @@ class TestCase::Regex {
     return 1;
   }
 
-  static method replace_all_cb : int () {
+  static method replace_g_cb : int () {
 
     # Replace all callback with capture
     {
       my $re = Regex->new("a(bc)");
       my $target = "ppzabczabcz";
-      my $result = $re->replace_all_cb_offset($target, 0, method : string ($re : Regex) {
+      my $result = $re->replace_g_cb_offset($target, 0, method : string ($re : Regex) {
         return "ABC" . $re->captures->[0] . "PQRS";
       });
       
@@ -29,12 +29,12 @@ class TestCase::Regex {
     return 1;
   }
 
-  static method replace_all : int () {
+  static method replace_g : int () {
     # Replace all
     {
       my $re = Regex->new("abc");
       my $target = "ppzabczabcz";
-      my $result = $re->replace_all_offset($target, 0, "ABC");
+      my $result = $re->replace_g_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 2) {
         return 0;
@@ -49,7 +49,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("abc");
       my $target = "ppzabczabczabcz";
-      my $result = $re->replace_all_offset($target, 6, "ABC");
+      my $result = $re->replace_g_offset($target, 6, "ABC");
       
       unless ($re->replace_count == 2) {
         return 0;
@@ -64,7 +64,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("a\d+b", "a");
       my $target = "za123bz";
-      my $result = $re->replace_all_offset($target, 0, "ABC");
+      my $result = $re->replace_g_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 1) {
         return 0;
@@ -75,11 +75,11 @@ class TestCase::Regex {
       }
     }
 
-    # Replace all - Not replace_all
+    # Replace all - Not replace_g
     {
       my $re = Regex->new("a\d+b", "a");
       my $target = "pppp";
-      my $result = $re->replace_all_offset($target, 0, "ABC");
+      my $result = $re->replace_g_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 0) {
         return 0;

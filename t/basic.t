@@ -16,8 +16,8 @@ SPVM::Regex->re2_test;
 
 # SPVM::Regex
 {
-  ok(SPVM::TestCase::Regex->replace_all_cb);
-  ok(SPVM::TestCase::Regex->replace_all);
+  ok(SPVM::TestCase::Regex->replace_g_cb);
+  ok(SPVM::TestCase::Regex->replace_g);
   ok(SPVM::TestCase::Regex->replace);
   ok(SPVM::TestCase::Regex->replace_cb);
   ok(SPVM::TestCase::Regex->match_start_and_end);

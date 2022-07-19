@@ -639,19 +639,19 @@ class Regex {
   }
   
   method replace_offset  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, $offset, $replace, {replace_all => 0});
+    return $self->replace_opt($string, $offset, $replace, {replace_g => 0});
   }
 
   method replace_cb_offset  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset, $replace_cb, {replace_all => 0});
+    return $self->replace_opt($string, $offset, $replace_cb, {replace_g => 0});
   }
 
-  method replace_all_offset  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, $offset, $replace, {replace_all => 1});
+  method replace_g_offset  : string ($string : string, $offset : int, $replace : string) {
+    return $self->replace_opt($string, $offset, $replace, {replace_g => 1});
   }
 
-  method replace_all_cb_offset  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset, $replace_cb, {replace_all => 1});
+  method replace_g_cb_offset  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+    return $self->replace_opt($string, $offset, $replace_cb, {replace_g => 1});
   }
   
   private method replace_opt  : string ($string : string, $offset : int, $replace_object : object, $options : object[]) {
@@ -660,9 +660,9 @@ class Regex {
     
     my $original_target_base_index = $offset;
     
-    my $replace_all = 0;
-    if (my $replace_all_obj = $opt->get("replace_all")) {
-      $replace_all = (int)$replace_all_obj;
+    my $replace_g = 0;
+    if (my $replace_g_obj = $opt->get("replace_g")) {
+      $replace_g = (int)$replace_g_obj;
     }
     $self->{replace_count} = 0;
     
@@ -737,7 +737,7 @@ class Regex {
       
       $replace_count++;
       
-      unless ($replace_all) {
+      unless ($replace_g) {
         last;
       }
       $offset = $match_end;
