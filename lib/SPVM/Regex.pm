@@ -181,14 +181,6 @@ Create a new L<Regex|SPVM::Regex> object and compile the regex.
   my $re = Regex->new("^ab+c");
   my $re = Regex->new("^ab+c", "s");
 
-=head2 new_with_options
-
-  static method new_with_options : Regex ($re_str : string, $option_chars : string) {
-  
-Create a new L<Regex|SPVM::Regex> object and compile the regex with the options.
-
-  my $re = Regex->new("^ab+c", "s");
-
 =head1 Instance Methods
 
 =head2 captures
