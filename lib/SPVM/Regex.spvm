@@ -1,28 +1,29 @@
 class Regex {
+  use Regex;
+  use Fn;
+  use Regex::Replacer;
+  use Regex::Re2;
+  use Hash;
+  
+  has match_start : ro int;
+  has match_length : ro int;
+  has captures : ro string[];
+  
   use Unicode;
   use List;
   use IntList;
-  use Hash;
   use StringBuffer;
   use Regex::Replacer;
   use Regex::Pattern;
-  use Fn;
   has patterns : List;
   has string_start : byte;
   has string_end : byte;
   has single_line_mode : byte;
   has ascii_mode : byte;
   has ignore_case : byte;
-  
-  has captures : ro string[];
-  
-  has match_start : ro int;
-  has match_length : ro int;
-  
   has replace_count : ro int;
   has before_is_hyphen : byte;
   has before_is_open_bracket : byte;
-  
   private enum {
     QUANTIFIER_STATUS_NOT_STARTED,
     QUANTIFIER_STATUS_MIN,
