@@ -462,10 +462,6 @@ class Regex {
     }
   }
 
-  method match_offset_old : int ($string : string, $offset : int) {
-    return $self->match_offset($string, \$offset);
-  }
-  
   method match : int ($string : string) {
     my $offset = 0;
     return $self->match_offset($string, \$offset);
@@ -702,7 +698,7 @@ class Regex {
       $result_buffer->push($first_string);
     }
     
-    while (my $match = $self->match_offset_old($string, $offset)) {
+    while (my $match = $self->match_offset($string, \$offset)) {
       
       my $match_start = $self->match_start;
       my $match_end = $match_start + $self->match_length;
