@@ -637,21 +637,37 @@ class Regex {
     
     return $really_match;
   }
+
+  method replace  : string ($string : string, $offset : int, $replace : string) {
+    return $self->replace_opt($string, $offset, $replace, {global => 0});
+  }
+
+  method replace_cbt  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+    return $self->replace_opt($string, $offset, $replace_cb, {global => 0});
+  }
+
+  method replace_g  : string ($string : string, $offset : int, $replace : string) {
+    return $self->replace_opt($string, $offset, $replace, {global => 1});
+  }
+
+  method replace_g_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+    return $self->replace_opt($string, $offset, $replace_cb, {global => 1});
+  }
   
   method replace_offset  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, $offset, $replace, {replace_g => 0});
+    return $self->replace_opt($string, $offset, $replace, {global => 0});
   }
 
   method replace_cb_offset  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset, $replace_cb, {replace_g => 0});
+    return $self->replace_opt($string, $offset, $replace_cb, {global => 0});
   }
 
   method replace_g_offset  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, $offset, $replace, {replace_g => 1});
+    return $self->replace_opt($string, $offset, $replace, {global => 1});
   }
 
   method replace_g_cb_offset  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset, $replace_cb, {replace_g => 1});
+    return $self->replace_opt($string, $offset, $replace_cb, {global => 1});
   }
   
   private method replace_opt  : string ($string : string, $offset : int, $replace_object : object, $options : object[]) {
@@ -661,7 +677,7 @@ class Regex {
     my $original_target_base_index = $offset;
     
     my $replace_g = 0;
-    if (my $replace_g_obj = $opt->get("replace_g")) {
+    if (my $replace_g_obj = $opt->get("global")) {
       $replace_g = (int)$replace_g_obj;
     }
     $self->{replace_count} = 0;
