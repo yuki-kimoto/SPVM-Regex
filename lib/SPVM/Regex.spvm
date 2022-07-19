@@ -461,8 +461,14 @@ class Regex {
       }
     }
   }
-  
+
   method match_offset : int ($string : string, $offset : int) {
+    return $self->match_offset_v2($string, \$offset);
+  }
+  
+  method match_offset_v2 : int ($string : string, $offset_ref : int*) {
+    
+    my $offset = $$offset_ref;
     
     unless ($string) {
       die "Target string must be defined";
