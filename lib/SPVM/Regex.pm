@@ -181,31 +181,27 @@ Create a new L<Regex|SPVM::Regex> object and compile the regex.
   my $re = Regex->new("^ab+c");
   my $re = Regex->new("^ab+c", "s");
 
-=head1 Instance Methods
+=head1 Fields
 
 =head2 captures
 
-  static method captures : string[] ()
+  has captures : ro string[];
 
-Get the strings captured by "match" method.
+Get the captured strings.
 
 =head2  match_start
 
-  static method match_start : int ()
+  has match_start : ro int;
 
-Get the start byte offset of the string matched by "match" method method.
+Get the start byte offset of the matched string.
 
 =head2 match_length
 
-  static method match_length : int ()
+  has match_length : ro int;
 
-Get the byte length of the string matched by "match" method method.
+Get the length of the matched string.
 
-=head2 replace_count
-
-  static method replace_count : int ();
-
-Get the replace count of the strings replaced by "replace" or "replace_all" method.
+=head1 Instance Methods
 
 =head2 match
 
