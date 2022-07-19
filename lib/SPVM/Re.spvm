@@ -103,6 +103,7 @@ class Re {
     my $result : string;
     my $result_buffer = StringBuffer->new;
     my $string_length = length $string;
+    $result_buffer->push($string);
     
     my $match_count = 0;
     while (1) {
@@ -132,31 +133,17 @@ class Re {
       my $match_start = $self->match_start;
       my $match_length = $self->match_length;
 
-      my $result_length = $string_length + $replace_string_length - $match_length;
-      
-      $result = (mutable string)new_string_len($result_length);
-      
-      my $next_offset = $match_start + $match_length;
-      my $rest_length = $string_length - $next_offset;
-      
-      warn "$global $string $offset, $match_start - $offset";
-      
-      my $before_result = (mutable string)Fn->substr($string, $offset, $match_start - $offset);
-      $result_buffer->push($before_result);
-      $result_buffer->push($replace_string);
+      $result_buffer->replace($match_start, $match_length, $replace_string);
       
       unless ($global) {
         last;
       }
+      
+      my $next_offset = $match_start + $match_length;
       $offset = $next_offset;
     }
     
-    if ($match_count) {
-      $result = $result_buffer->to_string;
-    }
-    else {
-      $result = copy $string;
-    }
+    $result = $result_buffer->to_string;
     
     return $result;
   }
