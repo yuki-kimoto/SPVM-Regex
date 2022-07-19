@@ -17,6 +17,7 @@ my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
   ok(SPVM::TestCase::Re->match);
   ok(SPVM::TestCase::Re->match_offset);
   ok(SPVM::TestCase::Re->replace);
+  ok(SPVM::TestCase::Re->extra);
 }
 
 # All object is freed

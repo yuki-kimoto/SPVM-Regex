@@ -130,4 +130,15 @@ class TestCase::Re {
     
     return 1;
   }
+
+  static method extra : int () {
+    eval { Re->new("[z-a]"); };
+    unless (Fn->contains($@, "The regex pattern ([z-a]) can't be compiled. [Error]invalid character class range: z-a. [Fragment]z-a")) {
+      return 0;
+    }
+    
+    $@ = undef;
+    
+    return 1;
+  }
 }
