@@ -4,11 +4,11 @@ our $VERSION = '0.05';
 
 1;
 
-=head1 NAME
+=head1 Name
 
-SPVM::Regex - Regular expression
+SPVM::Regex - Regular Expression
 
-=head1 SYNOPSYS
+=head1 Usage
   
   use Regex;
   
@@ -109,13 +109,13 @@ SPVM::Regex - Regular expression
     }
   }
 
-=head1 DESCRIPTION
+=head1 Description
 
 L<Regex|SPVM::Regex> provides regular expression functions.
 
 This module is very unstable compared to other modules. So many changes will be performed.
 
-=head1 REGULAR EXPRESSION SYNTAX
+=head1 Regular Expression Syntax
 
 L<Regex|SPVM::Regex> provides the methodset of Perl regular expression. The target string and regex string is interpretted as UTF-8 string.
   
