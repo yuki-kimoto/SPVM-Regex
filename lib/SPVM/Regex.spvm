@@ -659,7 +659,8 @@ class Regex {
     }
     
     while (1) {
-      my $match = $self->match_offset($string, \$offset);
+      my $updated_offset = $offset;
+      my $match = $self->match_offset($string, \$updated_offset);
       unless ($match) {
         last;
       }
