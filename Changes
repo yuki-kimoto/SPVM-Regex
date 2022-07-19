@@ -1,3 +1,7 @@
+0.07  2022-07-15
+  [Document Fix]
+    * Fix document of cap1 to cap20 simple mistake.
+    
 0.06  2022-07-15
   [Incompatible Changes]
     * Regex 0.06 binds Google Re2.
