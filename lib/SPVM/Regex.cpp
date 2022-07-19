@@ -20,19 +20,24 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
 
   void* obj_self = stack[0].oval;
   
-  void* obj_regex_string = stack[1].oval;
+  void* obj_pattern = stack[1].oval;
   
-  if (!obj_regex_string) {
+  if (!obj_pattern) {
     return env->die(env, stack, "The regex string must be defined", FILE_NAME, __LINE__);
   }
   
-  const char* regex_string = env->get_chars(env, stack, obj_regex_string);
-  int32_t regex_string_length = env->length(env, stack, obj_regex_string);
+  const char* pattern = env->get_chars(env, stack, obj_pattern);
+  int32_t pattern_length = env->length(env, stack, obj_pattern);
   
-  RE2* re2 = new RE2(regex_string);
+  RE2::Options options;
+  options.set_log_errors(false);
+  RE2* re2 = new RE2(pattern, options);
+  
+  std::string error = re2->error();
+  std::string error_arg = re2->error_arg();
   
   if (!re2->ok()) {
-    return env->die(env, stack, "The regex string can't be compiled for syntax error", FILE_NAME, __LINE__);
+    return env->die(env, stack, "The regex pattern %s can't be compiled. [Error]%s. [Fragment]%s", pattern, error.data(), error_arg.data(), FILE_NAME, __LINE__);
   }
   
   void* obj_re2 = env->new_object_by_name(env, stack, "Regex::Re2", &e, FILE_NAME, __LINE__);
