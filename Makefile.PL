@@ -39,9 +39,7 @@ sub MY::postamble {
   my $make_rule = '';
   
   $make_rule .= SPVM::Builder::Util::API::create_make_rule_native('Regex');
-  $make_rule .= SPVM::Builder::Util::API::create_make_rule_native('Re');
-
-  $make_rule .= SPVM::Builder::Util::API::create_make_rule_precompile('Re');
+  $make_rule .= SPVM::Builder::Util::API::create_make_rule_precompile('Regex');
   
   return $make_rule;
 }

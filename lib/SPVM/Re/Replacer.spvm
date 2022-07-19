@@ -1,4 +1,0 @@
-class Re::Replacer : interface_t {
-  use Re;
-  required method : string ($re : Re);
-}
