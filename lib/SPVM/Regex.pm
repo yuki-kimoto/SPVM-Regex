@@ -16,33 +16,37 @@ SPVM::Regex - Regular expression
   {
     my $re = Regex->new("ab*c");
     my $string = "zabcz";
-    my $match = $re->match_offset($string, 0);
+    my $offset = 0;
+    my $match = $re->match_offset($string, $offset);
   }
 
   # Pattern match - UTF-8
   {
     my $re = Regex->new("あ+");
     my $string = "いあああい";
-    my $match = $re->match_offset($string, 0);
+    my $offset = 0;
+    my $match = $re->match_offset($string, $offset);
   }
 
   # Pattern match - Character class and the nagation
   {
     my $re = Regex->new("[A-Z]+[^A-Z]+");
     my $string = "ABCzab";
-    my $match = $re->match_offset($string, 0);
+    my $offset = 0;
+    my $match = $re->match_offset($string, $offset);
   }
 
   # Pattern match with captures
   {
     my $re = Regex->new("^(\w+) (\w+) (\w+)$");
     my $string = "abc1 abc2 abc3";
-    my $match = $re->match_offset($string, 0);
+    my $offset = 0;
+    my $match = $re->match_offset($string, $offset);
     
     if ($match) {
-      my $cap1 = $re->captures->[0];
-      my $cap2 = $re->captures->[1];
-      my $cpa3 = $re->captures->[2];
+      my $cap1 = $re->cap1;
+      my $cap2 = $re->cap2;
+      my $cpa3 = $re->cap3;
     }
   }
   
@@ -93,7 +97,8 @@ SPVM::Regex - Regular expression
     my $re = Regex->new("(.+)", "s");
     my $string = "abc\ndef";
     
-    my $match = $re->match_offset($string, 0);
+    my $offset = 0;
+    my $match = $re->match_offset($string, $offset);
     
     unless ($match) {
       return 0;
