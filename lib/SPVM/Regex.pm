@@ -17,7 +17,7 @@ SPVM::Regex - Regular Expression
     my $re = Regex->new("ab*c");
     my $string = "zabcz";
     my $offset = 0;
-    my $match = $re->match_offset($string, $offset);
+    my $match = $re->match_offset($string, \$offset);
   }
 
   # Pattern match - UTF-8
@@ -25,7 +25,7 @@ SPVM::Regex - Regular Expression
     my $re = Regex->new("あ+");
     my $string = "いあああい";
     my $offset = 0;
-    my $match = $re->match_offset($string, $offset);
+    my $match = $re->match_offset($string, \$offset);
   }
 
   # Pattern match - Character class and the nagation
@@ -33,7 +33,7 @@ SPVM::Regex - Regular Expression
     my $re = Regex->new("[A-Z]+[^A-Z]+");
     my $string = "ABCzab";
     my $offset = 0;
-    my $match = $re->match_offset($string, $offset);
+    my $match = $re->match_offset($string, \$offset);
   }
 
   # Pattern match with captures
@@ -41,7 +41,7 @@ SPVM::Regex - Regular Expression
     my $re = Regex->new("^(\w+) (\w+) (\w+)$");
     my $string = "abc1 abc2 abc3";
     my $offset = 0;
-    my $match = $re->match_offset($string, $offset);
+    my $match = $re->match_offset($string, \$offset);
     
     if ($match) {
       my $cap1 = $re->cap1;
@@ -98,7 +98,7 @@ SPVM::Regex - Regular Expression
     my $string = "abc\ndef";
     
     my $offset = 0;
-    my $match = $re->match_offset($string, $offset);
+    my $match = $re->match_offset($string, \$offset);
     
     unless ($match) {
       return 0;
@@ -217,7 +217,7 @@ Get the replace count of the strings replaced by "replace" or "replace_all" meth
 
 =head2 match_offset
 
-  method match_offset : int ($string : string, $offset : int)
+  method match_offset : int ($string : string, $offset_ref : int*)
 
 Execute pattern matching to the specific string and the start byte offset of the string.
 

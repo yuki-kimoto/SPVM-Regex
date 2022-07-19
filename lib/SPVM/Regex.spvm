@@ -463,10 +463,10 @@ class Regex {
   }
 
   method match_offset_old : int ($string : string, $offset : int) {
-    return $self->match_offset_v2($string, \$offset);
+    return $self->match_offset($string, \$offset);
   }
   
-  method match_offset_v2 : int ($string : string, $offset_ref : int*) {
+  method match_offset : int ($string : string, $offset_ref : int*) {
     
     my $offset = $$offset_ref;
     

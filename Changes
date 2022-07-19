@@ -1,8 +1,15 @@
 0.05_01  2022-07-15
   [Incompatible Changes]
+    * Change match method name and the definition
+      [Before]
+      method match : int ($string : string, $offset : int)
+      
+      [After]
+      method match_offset : int ($string : string, $offset_ref : int*)
+    
   [Changes]
-  * Need SPVM::Resource::Re2::V2022_06_01 0.05.
-  * Need SPVM 0.9615.
+    * Need SPVM::Resource::Re2::V2022_06_01 0.05.
+    * Need SPVM 0.9615.
 0.05  2022-06-23
   * Catch up with SPVM 0.9612.
 
