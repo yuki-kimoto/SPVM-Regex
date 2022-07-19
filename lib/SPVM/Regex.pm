@@ -1,8 +1,10 @@
 package SPVM::Regex;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 1;
+
+=encoding utf8
 
 =head1 Name
 
@@ -250,119 +252,119 @@ The offset is updated to the next starting position.
 
   method cap1 : string ()
 
-The alias for C<$re->captures->[1]>.
+The alias for C<$re-E<gt>captures-E<gt>[1]>.
 
 =head2 cap2
 
   method cap2 : string ()
 
-The alias for C<$re->captures->[2]>.
+The alias for C<$re-E<gt>captures-E<gt>[2]>.
 
 =head2 cap3
 
   method cap3 : string ()
 
-The alias for C<$re->captures->[3]>.
+The alias for C<$re-E<gt>captures-E<gt>[3]>.
 
 =head2 cap4
 
   method cap4 : string ()
 
-The alias for C<$re->captures->[4]>.
+The alias for C<$re-E<gt>captures-E<gt>[4]>.
 
 =head2 cap5
 
   method cap5 : string ()
 
-The alias for C<$re->captures->[5]>.
+The alias for C<$re-E<gt>captures-E<gt>[5]>.
 
 =head2 cap6
 
   method cap6 : string ()
 
-The alias for C<$re->captures->[6]>.
+The alias for C<$re-E<gt>captures-E<gt>[6]>.
 
 =head2 cap7
 
   method cap7 : string ()
 
-The alias for C<$re->captures->[7]>.
+The alias for C<$re-E<gt>captures-E<gt>[7]>.
 
 =head2 cap8
 
   method cap8 : string ()
 
-The alias for C<$re->captures->[8]>.
+The alias for C<$re-E<gt>captures-E<gt>[8]>.
 
 =head2 cap9
 
   method cap9 : string ()
 
-The alias for C<$re->captures->[9]>.
+The alias for C<$re-E<gt>captures-E<gt>[9]>.
 
 =head2 cap10
 
   method cap10 : string ()
 
-The alias for C<$re->captures->[10]>.
+The alias for C<$re-E<gt>captures-E<gt>[10]>.
 
 =head2 cap11
 
   method cap11 : string ()
 
-The alias for C<$re->captures->[11]>.
+The alias for C<$re-E<gt>captures-E<gt>[11]>.
 
 =head2 cap12
 
   method cap12 : string ()
 
-The alias for C<$re->captures->[12]>.
+The alias for C<$re-E<gt>captures-E<gt>[12]>.
 
 =head2 cap13
 
   method cap13 : string ()
 
-The alias for C<$re->captures->[13]>.
+The alias for C<$re-E<gt>captures-E<gt>[13]>.
 
 =head2 cap14
 
   method cap14 : string ()
 
-The alias for C<$re->captures->[14]>.
+The alias for C<$re-E<gt>captures-E<gt>[14]>.
 
 =head2 cap15
 
   method cap15 : string ()
 
-The alias for C<$re->captures->[15]>.
+The alias for C<$re-E<gt>captures-E<gt>[15]>.
 
 =head2 cap16
 
   method cap16 : string ()
 
-The alias for C<$re->captures->[16]>.
+The alias for C<$re-E<gt>captures-E<gt>[16]>.
 
 =head2 cap17
 
   method cap17 : string ()
 
-The alias for C<$re->captures->[17]>.
+The alias for C<$re-E<gt>captures-E<gt>[17]>.
 
 =head2 cap18
 
   method cap18 : string ()
 
-The alias for C<$re->captures->[18]>.
+The alias for C<$re-E<gt>captures-E<gt>[18]>.
 
 =head2 cap19
 
   method cap19 : string ()
 
-The alias for C<$re->captures->[19]>.
+The alias for C<$re-E<gt>captures-E<gt>[19]>.
 
 =head2 cap20
 
   method cap20 : string ()
 
-The alias for C<$re->captures->[20]>.
+The alias for C<$re-E<gt>captures-E<gt>[20]>.
 
