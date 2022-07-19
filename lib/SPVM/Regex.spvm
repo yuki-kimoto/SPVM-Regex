@@ -589,6 +589,8 @@ class Regex {
     if ($really_match) {
       $self->{match_start} = $offset_before;
       $self->{match_length} = $string_index - $self->{match_start};
+      
+      $$offset_ref = $self->{match_start} + $self->{match_length};
     }
     
     return $really_match;

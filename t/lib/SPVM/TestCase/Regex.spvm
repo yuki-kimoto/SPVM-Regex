@@ -1539,6 +1539,63 @@ class TestCase::Regex {
         return 0;
       }
     }
+
+    {
+      my $re = Regex->new("bc");
+      
+      my $string = "abcdbc";
+      my $offset = 0;
+      {
+        my $match = $re->match_offset($string, \$offset);
+        
+        unless ($match) {
+          return 0;
+        }
+        
+        unless ($offset == 3) {
+          return 0;
+        }
+      }
+
+      {
+        my $match = $re->match_offset($string, \$offset);
+        
+        unless ($match) {
+          return 0;
+        }
+        
+        unless ($offset == 6) {
+          return 0;
+        }
+      }
+
+      {
+        my $match = $re->match_offset($string, \$offset);
+        
+        if ($match) {
+          return 0;
+        }
+      }
+    }
+    
+    {
+      my $re = Regex->new("bc");
+      
+      my $string = "abcdbc";
+      my $offset = 0;
+      
+      my $match_count = 0;
+      while ($re->match_offset($string, \$offset)) {
+        $match_count++;
+      }
+      
+      unless ($match_count == 2) {
+        return 0;
+      }
+      unless ($offset == 6) {
+        return 0;
+      }
+    }
     
     return 1;
   }
