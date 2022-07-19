@@ -638,19 +638,23 @@ class Regex {
     return $really_match;
   }
 
-  method replace  : string ($string : string, $offset : int, $replace : string) {
+  method replace  : string ($string : string, $replace : string) {
+    my $offset = 0;
     return $self->replace_opt($string, $offset, $replace, {global => 0});
   }
 
-  method replace_cbt  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+  method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
+    my $offset = 0;
     return $self->replace_opt($string, $offset, $replace_cb, {global => 0});
   }
 
-  method replace_g  : string ($string : string, $offset : int, $replace : string) {
+  method replace_g  : string ($string : string, $replace : string) {
+    my $offset = 0;
     return $self->replace_opt($string, $offset, $replace, {global => 1});
   }
 
-  method replace_g_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
+  method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
+    my $offset = 0;
     return $self->replace_opt($string, $offset, $replace_cb, {global => 1});
   }
   
