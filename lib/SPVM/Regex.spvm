@@ -29,8 +29,6 @@ class Regex {
     QUANTIFIER_STATUS_MAX,
   }
 
-  native static method re2_test : void ();
-  
   static method new : Regex ($pattern_and_flags : string[]...) {
     
     my $pattern = $pattern_and_flags->[0];

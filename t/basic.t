@@ -12,8 +12,6 @@ use SPVM 'TestCase::Regex';
 # Start objects count
 my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
 
-SPVM::Regex->re2_test;
-
 # SPVM::Regex
 {
   ok(SPVM::TestCase::Regex->replace_g_cb);
