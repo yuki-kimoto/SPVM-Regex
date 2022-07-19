@@ -65,7 +65,7 @@ class TestCase::Regex {
 
     # Replace all with number
     {
-      my $re = Regex->new("a\d+b", "a");
+      my $re = Regex->new("a\d+b");
       my $target = "za123bz";
       my $offset = 0;
       my $result = $re->replace_g_offset($target, \$offset, "ABC");
@@ -81,7 +81,7 @@ class TestCase::Regex {
 
     # Replace all - Not replace_g
     {
-      my $re = Regex->new("a\d+b", "a");
+      my $re = Regex->new("a\d+b");
       my $target = "pppp";
       my $offset = 0;
       my $result = $re->replace_g_offset($target, \$offset, "ABC");
@@ -133,7 +133,7 @@ class TestCase::Regex {
 
     # Replace with number
     {
-      my $re = Regex->new("a\d+b", "a");
+      my $re = Regex->new("a\d+b");
       my $target = "za123bz";
       my $offset = 0;
       my $result = $re->replace_offset($target, \$offset, "ABC");
@@ -149,7 +149,7 @@ class TestCase::Regex {
 
     # Replace - Not replaced
     {
-      my $re = Regex->new("a\d+b", "a");
+      my $re = Regex->new("a\d+b");
       my $target = "pppp";
       my $offset = 0;
       my $result = $re->replace_offset($target, \$offset, "ABC");
@@ -322,7 +322,7 @@ class TestCase::Regex {
 
     # Capture char class-and quantifier
     {
-      my $re = Regex->new("\-(\w+)\-", "a");
+      my $re = Regex->new("\-(\w+)\-");
       my $target = "-abc89-";
       my $match = $re->match($target);
       
@@ -338,7 +338,7 @@ class TestCase::Regex {
 
     # Capture many strings 
     {
-      my $re = Regex->new("\-(\w+) (\w+) (\w+) (\w+) (\w+)", "a");
+      my $re = Regex->new("\-(\w+) (\w+) (\w+) (\w+) (\w+)");
       my $target = "-abc1 abc2 abc3 abc4 abc5 abc6-";
       my $match = $re->match($target);
       
@@ -523,7 +523,7 @@ class TestCase::Regex {
       }
       
       {
-        my $re = Regex->new("^[a-c\dx-z]+$", "a");
+        my $re = Regex->new("^[a-c\dx-z]+$");
         my $target = "ac09xz";
         my $match = $re->match($target);
         unless ($match) {
@@ -534,7 +534,7 @@ class TestCase::Regex {
 
     # Match char class-\d
     {
-      my $re = Regex->new("[\da]+", "a");
+      my $re = Regex->new("[\da]+");
       my $target = "z01az";
       
       my $match = $re->match($target);
@@ -546,7 +546,7 @@ class TestCase::Regex {
 
     # Not Match char class
     {
-      my $re = Regex->new("[bcd\d]+", "a");
+      my $re = Regex->new("[bcd\d]+");
       my $target = "ae";
       
       my $match = $re->match($target);
@@ -558,7 +558,7 @@ class TestCase::Regex {
 
     # ^[\d\D]+
     {
-      my $re = Regex->new("^[\d\D]+$", "a");
+      my $re = Regex->new("^[\d\D]+$");
       
       my $target = "abc123";
       
@@ -571,7 +571,7 @@ class TestCase::Regex {
 
     # ^[^\d\D]+
     {
-      my $re = Regex->new("^[^\d\D]+$", "a");
+      my $re = Regex->new("^[^\d\D]+$");
       
       {
         my $target = "abc";
@@ -723,7 +723,7 @@ class TestCase::Regex {
 
     # Match not space
     {
-      my $re = Regex->new("\s+\S+\s+", "a");
+      my $re = Regex->new("\s+\S+\s+");
       my $target = "\f\tzacz \r\n";
       
       my $match = $re->match($target);
@@ -735,7 +735,7 @@ class TestCase::Regex {
 
     # Not Match not space
     {
-      my $re = Regex->new("\S+", "a");
+      my $re = Regex->new("\S+");
       my $target = "\f\t \r\n";
       
       my $match = $re->match($target);
@@ -751,7 +751,7 @@ class TestCase::Regex {
 
     # Match space
     {
-      my $re = Regex->new("a\s+c", "a");
+      my $re = Regex->new("a\s+c");
       my $target = "za\f\t\r\n cz";
       
       my $match = $re->match($target);
@@ -763,7 +763,7 @@ class TestCase::Regex {
 
     # Not Match
     {
-      my $re = Regex->new("\s+", "a");
+      my $re = Regex->new("\s+");
       my $target = "\aabc\0";
       
       my $match = $re->match($target);
@@ -780,7 +780,7 @@ class TestCase::Regex {
 
     # Match not number
     {
-      my $re = Regex->new("\w\W+\w", "a");
+      my $re = Regex->new("\w\W+\w");
       my $target = "0-:9";
       
       my $match = $re->match($target);
@@ -792,7 +792,7 @@ class TestCase::Regex {
     
     # Match not a-z
     {
-      my $re = Regex->new("\w\W+\w", "a");
+      my $re = Regex->new("\w\W+\w");
       my $target = "ab`{yz";
       
       my $match = $re->match($target);
@@ -804,7 +804,7 @@ class TestCase::Regex {
 
     # Match not A-Z
     {
-      my $re = Regex->new("\w\W+\w", "a");
+      my $re = Regex->new("\w\W+\w");
       my $target = "AB`{YZ";
       
       my $match = $re->match($target);
@@ -816,7 +816,7 @@ class TestCase::Regex {
 
     # Match not _
     {
-      my $re = Regex->new("\w\W+\w", "a");
+      my $re = Regex->new("\w\W+\w");
       my $target = "_^`_";
       
       my $match = $re->match($target);
@@ -828,7 +828,7 @@ class TestCase::Regex {
 
     # not Match 
     {
-      my $re = Regex->new("\W+", "a");
+      my $re = Regex->new("\W+");
       my $target = "azAZ_09";
       
       my $match = $re->match($target);
@@ -845,7 +845,7 @@ class TestCase::Regex {
 
     # Match number
     {
-      my $re = Regex->new("\-\w+\:", "a");
+      my $re = Regex->new("\-\w+\:");
       my $target = "-0123456789:";
       
       my $match = $re->match($target);
@@ -857,7 +857,7 @@ class TestCase::Regex {
     
     # Match a-z
     {
-      my $re = Regex->new("\`\w+\{", "a");
+      my $re = Regex->new("\`\w+\{");
       my $target = "`abyz{";
       
       my $match = $re->match($target);
@@ -869,7 +869,7 @@ class TestCase::Regex {
 
     # Match A-Z
     {
-      my $re = Regex->new("\`\w+\{", "a");
+      my $re = Regex->new("\`\w+\{");
       my $target = "`ABYZ{";
       
       my $match = $re->match($target);
@@ -881,7 +881,7 @@ class TestCase::Regex {
 
     # Match _
     {
-      my $re = Regex->new("\^\w+\`", "a");
+      my $re = Regex->new("\^\w+\`");
       my $target = "^__`";
       
       my $match = $re->match($target);
@@ -893,7 +893,7 @@ class TestCase::Regex {
 
     # Match Not
     {
-      my $re = Regex->new("\w+", "a");
+      my $re = Regex->new("\w+");
       my $target = "{}あいう";
       
       my $match = $re->match($target);
@@ -910,7 +910,7 @@ class TestCase::Regex {
 
     # Match not number
     {
-      my $re = Regex->new("0\D+9", "a");
+      my $re = Regex->new("0\D+9");
       my $target = "0abc9";
       
       my $match = $re->match($target);
@@ -927,7 +927,7 @@ class TestCase::Regex {
 
     # Match number
     {
-      my $re = Regex->new("a\d+c", "a");
+      my $re = Regex->new("a\d+c");
       my $target = "za0123456789cz";
       
       my $match = $re->match($target);
@@ -940,7 +940,7 @@ class TestCase::Regex {
     # Match number and not number
     {
       {
-        my $re = Regex->new("\d+\D+\d+", "a");
+        my $re = Regex->new("\d+\D+\d+");
         my $target = "123abc789";
         
         my $match = $re->match($target);
