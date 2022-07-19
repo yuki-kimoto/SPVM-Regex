@@ -310,59 +310,59 @@ The alias for C<$re->captures->[10]>.
 
   method cap11 : string ()
 
-The alias for C<$re->cap1tures->[11]>.
+The alias for C<$re->captures->[11]>.
 
 =head2 cap12
 
   method cap12 : string ()
 
-The alias for C<$re->cap1tures->[12]>.
+The alias for C<$re->captures->[12]>.
 
 =head2 cap13
 
   method cap13 : string ()
 
-The alias for C<$re->cap1tures->[13]>.
+The alias for C<$re->captures->[13]>.
 
 =head2 cap14
 
   method cap14 : string ()
 
-The alias for C<$re->cap1tures->[14]>.
+The alias for C<$re->captures->[14]>.
 
 =head2 cap15
 
   method cap15 : string ()
 
-The alias for C<$re->cap1tures->[15]>.
+The alias for C<$re->captures->[15]>.
 
 =head2 cap16
 
   method cap16 : string ()
 
-The alias for C<$re->cap1tures->[16]>.
+The alias for C<$re->captures->[16]>.
 
 =head2 cap17
 
   method cap17 : string ()
 
-The alias for C<$re->cap1tures->[17]>.
+The alias for C<$re->captures->[17]>.
 
 =head2 cap18
 
   method cap18 : string ()
 
-The alias for C<$re->cap1tures->[18]>.
+The alias for C<$re->captures->[18]>.
 
 =head2 cap19
 
   method cap19 : string ()
 
-The alias for C<$re->cap1tures->[19]>.
+The alias for C<$re->captures->[19]>.
 
 =head2 cap20
 
   method cap20 : string ()
 
-The alias for C<$re->cap1tures->[20]>.
+The alias for C<$re->captures->[20]>.
 
