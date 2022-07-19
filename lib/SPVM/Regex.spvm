@@ -462,7 +462,7 @@ class Regex {
     }
   }
   
-  method match : int ($target : string, $target_base_index : int) {
+  method match : int ($target : string, $offset : int) {
     
     unless ($target) {
       die "Target string must be defined";
@@ -473,16 +473,16 @@ class Regex {
     
     my $match_all = 0;
     my $target_index = 0;
-    my $target_base_index_before : int;
+    my $offset_before : int;
     my $ignore_case = $self->{ignore_case};
     while (1) {
-      $target_base_index_before = $target_base_index;
-      my $target_base_uchar = Unicode->uchar($target, \$target_base_index);
+      $offset_before = $offset;
+      my $target_base_uchar = Unicode->uchar($target, \$offset);
       unless ($target_base_uchar >= 0) {
         last;
       }
       
-      $target_index =  $target_base_index_before;
+      $target_index =  $offset_before;
       
       my $pattern_index = 0;
       
@@ -620,7 +620,7 @@ class Regex {
     }
     
     if ($really_match) {
-      $self->{match_start} = $target_base_index_before;
+      $self->{match_start} = $offset_before;
       $self->{match_length} = $target_index - $self->{match_start};
     }
     
@@ -643,11 +643,11 @@ class Regex {
     return $self->replace_opt($target, $target_offset, $replace_cb, {replace_all => 1});
   }
   
-  private method replace_opt  : string ($target : string, $target_base_index : int, $replace_object : object, $options : object[]) {
+  private method replace_opt  : string ($target : string, $offset : int, $replace_object : object, $options : object[]) {
     
     my $opt = Hash->new($options);
     
-    my $original_target_base_index = $target_base_index;
+    my $original_target_base_index = $offset;
     
     my $replace_all = 0;
     if (my $replace_all_obj = $opt->get("replace_all")) {
@@ -664,12 +664,12 @@ class Regex {
     my $result_buffer = StringBuffer->new;
     my $tarlength = length $target;
     
-    if ($target_base_index > 0) {
-      my $first_string = Fn->substr($target, 0, $target_base_index);
+    if ($offset > 0) {
+      my $first_string = Fn->substr($target, 0, $offset);
       $result_buffer->push($first_string);
     }
     
-    while (my $match = $self->match($target, $target_base_index)) {
+    while (my $match = $self->match($target, $offset)) {
       
       my $match_start = $self->match_start;
       my $match_end = $match_start + $self->match_length;
@@ -720,7 +720,7 @@ class Regex {
       
       my $rest_length = $tarlength - $match_end;
       
-      my $before_result = (mutable string)Fn->substr($target, $target_base_index, $match_start - $target_base_index);
+      my $before_result = (mutable string)Fn->substr($target, $offset, $match_start - $offset);
       $result_buffer->push($before_result);
       $result_buffer->push($replace);
       
@@ -729,7 +729,7 @@ class Regex {
       unless ($replace_all) {
         last;
       }
-      $target_base_index = $match_end;
+      $offset = $match_end;
     }
     
     
