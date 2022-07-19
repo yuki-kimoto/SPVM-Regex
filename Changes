@@ -5,8 +5,10 @@
       method match : int ($string : string, $offset : int)
       
       [After]
-      method match_offset : int ($string : string, $offset_ref : int*)
-    
+      method match : int ($string : string)
+   * Add match_offset method
+     method match_offset : int ($string : string, $offset_ref : int*)
+  
   [Changes]
     * Need SPVM::Resource::Re2::V2022_06_01 0.05.
     * Need SPVM 0.9615.

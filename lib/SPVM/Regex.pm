@@ -215,13 +215,22 @@ Get the byte length of the string matched by "match" method method.
 
 Get the replace count of the strings replaced by "replace" or "replace_all" method.
 
+=head2 match
+
+  method match : int ($string : string)
+
+The Alias for the following L<match|/"match_offset"> method.
+
+  my $offset = 0;
+  $self->match_offset($string, \$offset);
+
 =head2 match_offset
 
   method match_offset : int ($string : string, $offset_ref : int*)
 
 Execute pattern matching to the specific string and the start byte offset of the string.
 
-If the pattern match succeeds, 1 is returned, otherwise 0 is returned.
+If the pattern match succeeds, C<1> is returned, otherwise C<0> is returned.
 
 You can get captured strings using "captures" method,
 and get the byte offset of the matched whole string using "match_start" method,

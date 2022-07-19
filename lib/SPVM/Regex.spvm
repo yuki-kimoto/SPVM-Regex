@@ -466,6 +466,11 @@ class Regex {
     return $self->match_offset($string, \$offset);
   }
   
+  method match : int ($string : string) {
+    my $offset = 0;
+    return $self->match_offset($string, \$offset);
+  }
+  
   method match_offset : int ($string : string, $offset_ref : int*) {
     
     my $offset = $$offset_ref;
