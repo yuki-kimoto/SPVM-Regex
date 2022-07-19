@@ -1596,6 +1596,19 @@ class TestCase::Regex {
         return 0;
       }
     }
+
+    {
+      my $re = Regex->new("bc");
+      
+      my $string = "abcdbc";
+      my $offset = 0;
+      
+      my $replaced = $re->replace($string, "BC");
+      
+      unless ($replaced eq "aBCdbc") {
+        return 0;
+      }
+    }
     
     return 1;
   }
