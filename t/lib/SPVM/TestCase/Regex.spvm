@@ -1482,20 +1482,4 @@ class TestCase::Regex {
     
     return 1;
   }
-
-  static method match2 : int () {
-    my $re = Regex->new2("c");
-    
-    my $string = "abc";
-    my $offset = 0;
-    my $match_pos = $re->match2($string);
-    
-    warn "$match_pos";
-    
-    unless ($match_pos == 2) {
-      return 0;
-    }
-    
-    return 1;
-  }
 }
