@@ -58,7 +58,7 @@ SPVM::Regex - Regular Expression
     # "ppzABCz"
     my $result = $re->replace($string, 0, "ABC");
     
-    my $replace_count = $re->replace_count;
+    my $replaced_count = $re->replaced_count;
   }
 
   # Replace with a callback and capture
@@ -169,17 +169,6 @@ If 0 width quantifir is between two same set of characters after a quantifier, i
   Regex->new("\d+\D*\d+");
   Regex->new("\d+\D?\d+");
 
-=head1 Class Methods
-
-=head2 new
-
-  static method new : Regex ($re_str_and_options : string[]...)
-
-Create a new L<Regex|SPVM::Regex> object and compile the regex.
-
-  my $re = Regex->new("^ab+c");
-  my $re = Regex->new("^ab+c", "s");
-
 =head1 Fields
 
 =head2 captures
@@ -199,6 +188,23 @@ Get the start byte offset of the matched string.
   has match_length : ro int;
 
 Get the length of the matched string.
+
+=head2 replaced_count
+
+  has replaced_count : ro int;
+
+Get the replaced count.
+
+=head1 Class Methods
+
+=head2 new
+
+  static method new : Regex ($re_str_and_options : string[]...)
+
+Create a new L<Regex|SPVM::Regex> object and compile the regex.
+
+  my $re = Regex->new("^ab+c");
+  my $re = Regex->new("^ab+c", "s");
 
 =head1 Instance Methods
 
@@ -251,58 +257,119 @@ Replace all of the target strings specified with the start byte offset with repl
 
   method cap1 : string ()
 
-The alias for C<$re->captures->[0]>.
+The alias for C<$re->captures->[1]>.
 
 =head2 cap2
 
   method cap2 : string ()
 
-The alias for C<$re->captures->[1]>.
+The alias for C<$re->captures->[2]>.
 
 =head2 cap3
 
   method cap3 : string ()
 
-The alias for C<$re->captures->[2]>.
+The alias for C<$re->captures->[3]>.
 
 =head2 cap4
 
   method cap4 : string ()
 
-The alias for C<$re->captures->[3]>.
+The alias for C<$re->captures->[4]>.
 
 =head2 cap5
 
   method cap5 : string ()
 
-The alias for C<$re->captures->[4]>.
+The alias for C<$re->captures->[5]>.
 
 =head2 cap6
 
   method cap6 : string ()
 
-The alias for C<$re->captures->[5]>.
+The alias for C<$re->captures->[6]>.
 
 =head2 cap7
 
   method cap7 : string ()
 
-The alias for C<$re->captures->[6]>.
+The alias for C<$re->captures->[7]>.
 
 =head2 cap8
 
   method cap8 : string ()
 
-The alias for C<$re->captures->[7]>.
+The alias for C<$re->captures->[8]>.
 
 =head2 cap9
 
   method cap9 : string ()
 
-The alias for C<$re->captures->[8]>.
+The alias for C<$re->captures->[9]>.
 
 =head2 cap10
 
   method cap10 : string ()
 
-The alias for C<$re->captures->[9]>.
+The alias for C<$re->captures->[10]>.
+
+=head2 cap11
+
+  method cap11 : string ()
+
+The alias for C<$re->cap1tures->[11]>.
+
+=head2 cap12
+
+  method cap12 : string ()
+
+The alias for C<$re->cap1tures->[12]>.
+
+=head2 cap13
+
+  method cap13 : string ()
+
+The alias for C<$re->cap1tures->[13]>.
+
+=head2 cap14
+
+  method cap14 : string ()
+
+The alias for C<$re->cap1tures->[14]>.
+
+=head2 cap15
+
+  method cap15 : string ()
+
+The alias for C<$re->cap1tures->[15]>.
+
+=head2 cap16
+
+  method cap16 : string ()
+
+The alias for C<$re->cap1tures->[16]>.
+
+=head2 cap17
+
+  method cap17 : string ()
+
+The alias for C<$re->cap1tures->[17]>.
+
+=head2 cap18
+
+  method cap18 : string ()
+
+The alias for C<$re->cap1tures->[18]>.
+
+=head2 cap19
+
+  method cap19 : string ()
+
+The alias for C<$re->cap1tures->[19]>.
+
+=head2 cap20
+
+  method cap20 : string ()
+
+The alias for C<$re->cap1tures->[20]>.
+
