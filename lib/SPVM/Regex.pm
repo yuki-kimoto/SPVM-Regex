@@ -15,29 +15,29 @@ SPVM::Regex - Regular expression
   # Pattern match
   {
     my $re = Regex->new("ab*c");
-    my $target = "zabcz";
-    my $match = $re->match($target, 0);
+    my $string = "zabcz";
+    my $match = $re->match_offset($string, 0);
   }
 
   # Pattern match - UTF-8
   {
     my $re = Regex->new("あ+");
-    my $target = "いあああい";
-    my $match = $re->match($target, 0);
+    my $string = "いあああい";
+    my $match = $re->match_offset($string, 0);
   }
 
   # Pattern match - Character class and the nagation
   {
     my $re = Regex->new("[A-Z]+[^A-Z]+");
-    my $target = "ABCzab";
-    my $match = $re->match($target, 0);
+    my $string = "ABCzab";
+    my $match = $re->match_offset($string, 0);
   }
 
   # Pattern match with captures
   {
     my $re = Regex->new("^(\w+) (\w+) (\w+)$");
-    my $target = "abc1 abc2 abc3";
-    my $match = $re->match($target, 0);
+    my $string = "abc1 abc2 abc3";
+    my $match = $re->match_offset($string, 0);
     
     if ($match) {
       my $cap1 = $re->captures->[0];
@@ -49,10 +49,10 @@ SPVM::Regex - Regular expression
   # Replace
   {
     my $re = Regex->new("abc");
-    my $target = "ppzabcz";
+    my $string = "ppzabcz";
     
     # "ppzABCz"
-    my $result = $re->replace($target, 0, "ABC");
+    my $result = $re->replace($string, 0, "ABC");
     
     my $replace_count = $re->replace_count;
   }
@@ -60,10 +60,10 @@ SPVM::Regex - Regular expression
   # Replace with a callback and capture
   {
     my $re = Regex->new("a(bc)");
-    my $target = "ppzabcz";
+    my $string = "ppzabcz";
     
     # "ppzABbcCz"
-    my $result = $re->replace_cb($target, 0, method : string ($re : Regex) {
+    my $result = $re->replace_cb($string, 0, method : string ($re : Regex) {
       return "AB" . $re->captures->[0] . "C";
     });
   }
@@ -71,19 +71,19 @@ SPVM::Regex - Regular expression
   # Replace all
   {
     my $re = Regex->new("abc");
-    my $target = "ppzabczabcz";
+    my $string = "ppzabczabcz";
     
     # "ppzABCzABCz"
-    my $result = $re->replace_all($target, 0, "ABC");
+    my $result = $re->replace_all($string, 0, "ABC");
   }
 
   # Replace all with a callback and capture
   {
     my $re = Regex->new("a(bc)");
-    my $target = "ppzabczabcz";
+    my $string = "ppzabczabcz";
     
     # "ppzABCbcPQRSzABCbcPQRSz"
-    my $result = $re->replace_all_cb($target, 0, method : string ($re : Regex) {
+    my $result = $re->replace_all_cb($string, 0, method : string ($re : Regex) {
       return "ABC" . $re->captures->[0] . "PQRS";
     });
   }
@@ -91,9 +91,9 @@ SPVM::Regex - Regular expression
   # . - single line mode
   {
     my $re = Regex->new("(.+)", "s");
-    my $target = "abc\ndef";
+    my $string = "abc\ndef";
     
-    my $match = $re->match($target, 0);
+    my $match = $re->match_offset($string, 0);
     
     unless ($match) {
       return 0;
@@ -165,7 +165,7 @@ If 0 width quantifir is between two same set of characters after a quantifier, i
   Regex->new("\d+\D*\d+");
   Regex->new("\d+\D?\d+");
 
-=head1 CLASS METHODS
+=head1 Class Methods
 
 =head2 new
 
@@ -184,7 +184,7 @@ Create a new L<Regex|SPVM::Regex> object and compile the regex with the options.
 
   my $re = Regex->new("^ab+c", "s");
 
-=head1 INSTANCE METHODS
+=head1 Instance Methods
 
 =head2 captures
 
@@ -210,9 +210,9 @@ Get the byte length of the string matched by "match" method method.
 
 Get the replace count of the strings replaced by "replace" or "replace_all" method.
 
-=head2 match
+=head2 match_offset
 
-  method match : int ($target : string, $target_offset : int)
+  method match_offset : int ($string : string, $offset : int)
 
 Execute pattern matching to the specific string and the start byte offset of the string.
 
@@ -224,25 +224,25 @@ and get the length of the matched whole string using "match_length" method.
 
 =head2 replace
 
-  method replace  : string ($target : string, $target_offset : int, $replace : string)
+  method replace  : string ($string : string, $offset : int, $replace : string)
 
 Replace the target string specified with the start byte offset with replace string.
 
 =head2 replace_cb
 
-  method replace_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer)
+  method replace_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer)
 
 Replace the target string specified with the start byte offset with replace callback. The callback must have the L<Regex::Replacer|SPVM::Regex::Replacer> interface..
 
 =head2 replace_all
 
-  method replace_all  : string ($target : string, $target_offset : int, $replace : string)
+  method replace_all  : string ($string : string, $offset : int, $replace : string)
 
 Replace all of the target strings specified with the start byte offset with replace string.
 
 =head2 replace_all_cb
 
-  method replace_all_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer)
+  method replace_all_cb  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer)
 
 Replace all of the target strings specified with the start byte offset with replace callback. The callback must have the L<Regex::Replacer|SPVM::Regex::Replacer> interface.
 
