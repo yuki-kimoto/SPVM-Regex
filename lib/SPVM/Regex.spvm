@@ -462,9 +462,9 @@ class Regex {
     }
   }
   
-  method match : int ($target : string, $offset : int) {
+  method match_offset : int ($string : string, $offset : int) {
     
-    unless ($target) {
+    unless ($string) {
       die "Target string must be defined";
     }
     
@@ -472,17 +472,17 @@ class Regex {
     my $patterns_length = $patterns->length;
     
     my $match_all = 0;
-    my $target_index = 0;
+    my $string_index = 0;
     my $offset_before : int;
     my $ignore_case = $self->{ignore_case};
     while (1) {
       $offset_before = $offset;
-      my $target_base_uchar = Unicode->uchar($target, \$offset);
-      unless ($target_base_uchar >= 0) {
+      my $string_base_uchar = Unicode->uchar($string, \$offset);
+      unless ($string_base_uchar >= 0) {
         last;
       }
       
-      $target_index =  $offset_before;
+      $string_index =  $offset_before;
       
       my $pattern_index = 0;
       
@@ -496,19 +496,19 @@ class Regex {
         my $negate = $pattern->{negate};
         
         if ($pattern->{capture_begin}) {
-          $pattern_capture_begin_index = $target_index;
+          $pattern_capture_begin_index = $string_index;
         }
         
-        my $target_before_index = $target_index;
-        my $target_uchar = Unicode->uchar($target, \$target_index);
-        unless ($target_uchar >= 0) {
+        my $string_before_index = $string_index;
+        my $string_uchar = Unicode->uchar($string, \$string_index);
+        unless ($string_uchar >= 0) {
           last;
         }
         
         
         my $match_repeat = 0;
         my $repeat_count = 0;
-        my $repeat_before_target_index = $target_before_index;
+        my $repeat_before_target_index = $string_before_index;
         
         # Match uchar repeat
         for (my $repeat_index = 0; $repeat_index < $max_repeat; $repeat_index++) {
@@ -521,25 +521,25 @@ class Regex {
             my $code_point_max = $code_point_range->[$min_max_index + 1];
             
             # Match a code point
-            if ($target_uchar >= $code_point_min && $target_uchar <= $code_point_max) {
+            if ($string_uchar >= $code_point_min && $string_uchar <= $code_point_max) {
               $match_char = 1;
             }
             
             unless ($match_char) {
               # Try ignore case
               if ($ignore_case) {
-                my $target_uchar_reverse_case = -1;
+                my $string_uchar_reverse_case = -1;
                 # a-z
-                if ($target_uchar >= 0x61 && $target_uchar <= 0x7A) {
-                  $target_uchar_reverse_case = $target_uchar - 32;
+                if ($string_uchar >= 0x61 && $string_uchar <= 0x7A) {
+                  $string_uchar_reverse_case = $string_uchar - 32;
                 }
                 # A-Z
-                elsif ($target_uchar >= 0x41 && $target_uchar <= 0x5A) {
-                  $target_uchar_reverse_case = $target_uchar + 32;
+                elsif ($string_uchar >= 0x41 && $string_uchar <= 0x5A) {
+                  $string_uchar_reverse_case = $string_uchar + 32;
                 }
                 
-                if ($target_uchar_reverse_case >= 0) {
-                  if ($target_uchar_reverse_case >= $code_point_min && $target_uchar_reverse_case <= $code_point_max) {
+                if ($string_uchar_reverse_case >= 0) {
+                  if ($string_uchar_reverse_case >= $code_point_min && $string_uchar_reverse_case <= $code_point_max) {
                     $match_char = 1;
                   }
                 }
@@ -559,15 +559,15 @@ class Regex {
           # Increment repeat count
           if ($match_char) {
             $repeat_count++;
-            $repeat_before_target_index = $target_index;
+            $repeat_before_target_index = $string_index;
 
-            if ($target_index == length $target) {
+            if ($string_index == length $string) {
               last;
             }
             
-            $target_uchar = Unicode->uchar($target, \$target_index);
+            $string_uchar = Unicode->uchar($string, \$string_index);
             
-            $target_before_index = $target_index;
+            $string_before_index = $string_index;
           }
           else {
             last;
@@ -579,14 +579,14 @@ class Regex {
         
         if ($match_repeat) {
           if ($pattern->{capture_end}) {
-            $self->{captures}[$capture_count] = Fn->substr($target, $pattern_capture_begin_index, $repeat_before_target_index - $pattern_capture_begin_index);
+            $self->{captures}[$capture_count] = Fn->substr($string, $pattern_capture_begin_index, $repeat_before_target_index - $pattern_capture_begin_index);
             $capture_count++;
             if ($capture_count > 255) {
               die "Too many captures";
             }
           }
           $pattern_index++;
-          $target_index = $repeat_before_target_index;
+          $string_index = $repeat_before_target_index;
           if ($pattern_index == $patterns_length) {
             last;
           }
@@ -610,7 +610,7 @@ class Regex {
     my $really_match = 0;
     if ($match_all) {
       if ($self->{string_end}) {
-        if ($target_index == length $target) {
+        if ($string_index == length $string) {
           $really_match = 1;
         }
       }
@@ -621,29 +621,29 @@ class Regex {
     
     if ($really_match) {
       $self->{match_start} = $offset_before;
-      $self->{match_length} = $target_index - $self->{match_start};
+      $self->{match_length} = $string_index - $self->{match_start};
     }
     
     return $really_match;
   }
   
-  method replace  : string ($target : string, $target_offset : int, $replace : string) {
-    return $self->replace_opt($target, $target_offset, $replace, {replace_all => 0});
+  method replace  : string ($string : string, $string_offset : int, $replace : string) {
+    return $self->replace_opt($string, $string_offset, $replace, {replace_all => 0});
   }
 
-  method replace_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($target, $target_offset, $replace_cb, {replace_all => 0});
+  method replace_cb  : string ($string : string, $string_offset : int, $replace_cb : Regex::Replacer) {
+    return $self->replace_opt($string, $string_offset, $replace_cb, {replace_all => 0});
   }
 
-  method replace_all  : string ($target : string, $target_offset : int, $replace : string) {
-    return $self->replace_opt($target, $target_offset, $replace, {replace_all => 1});
+  method replace_all  : string ($string : string, $string_offset : int, $replace : string) {
+    return $self->replace_opt($string, $string_offset, $replace, {replace_all => 1});
   }
 
-  method replace_all_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($target, $target_offset, $replace_cb, {replace_all => 1});
+  method replace_all_cb  : string ($string : string, $string_offset : int, $replace_cb : Regex::Replacer) {
+    return $self->replace_opt($string, $string_offset, $replace_cb, {replace_all => 1});
   }
   
-  private method replace_opt  : string ($target : string, $offset : int, $replace_object : object, $options : object[]) {
+  private method replace_opt  : string ($string : string, $offset : int, $replace_object : object, $options : object[]) {
     
     my $opt = Hash->new($options);
     
@@ -655,21 +655,21 @@ class Regex {
     }
     $self->{replace_count} = 0;
     
-    unless ($target) {
-      return $target;
+    unless ($string) {
+      return $string;
     }
     
     my $result : string;
     my $replace_count = 0;
     my $result_buffer = StringBuffer->new;
-    my $tarlength = length $target;
+    my $tarlength = length $string;
     
     if ($offset > 0) {
-      my $first_string = Fn->substr($target, 0, $offset);
+      my $first_string = Fn->substr($string, 0, $offset);
       $result_buffer->push($first_string);
     }
     
-    while (my $match = $self->match($target, $offset)) {
+    while (my $match = $self->match_offset($string, $offset)) {
       
       my $match_start = $self->match_start;
       my $match_end = $match_start + $self->match_length;
@@ -720,7 +720,7 @@ class Regex {
       
       my $rest_length = $tarlength - $match_end;
       
-      my $before_result = (mutable string)Fn->substr($target, $offset, $match_start - $offset);
+      my $before_result = (mutable string)Fn->substr($string, $offset, $match_start - $offset);
       $result_buffer->push($before_result);
       $result_buffer->push($replace);
       
@@ -734,14 +734,14 @@ class Regex {
     
     
     if ($replace_count == 0) {
-      $result = Fn->copy_string($target);
+      $result = Fn->copy_string($string);
     }
     else {
       my $match_end = $self->match_start + $self->match_length;
       my $rest_length = $tarlength - $match_end;
       
       if ($rest_length > 0) {
-        my $rest_string = Fn->substr($target, $match_end, $rest_length);
+        my $rest_string = Fn->substr($string, $match_end, $rest_length);
         $result_buffer->push($rest_string);
       }
       
