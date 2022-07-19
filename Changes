@@ -1,14 +1,47 @@
-0.05_01  2022-07-15
+0.06  2022-07-15
   [Incompatible Changes]
-    * Change match method name and the definition
+    * Regex 0.06 binds Google Re2.
+    * Change the field and method definitions
       [Before]
-      method match : int ($string : string, $offset : int)
       
       [After]
-      method match : int ($string : string)
-   * Add match_offset method
-     method match_offset : int ($string : string, $offset_ref : int*)
-  
+      has captures : ro string[];
+      has match_start : ro int;
+      has match_length : ro int;
+      has replaced_count : ro int;
+      static method new : Regex ($pattern_and_flags : string[]...) {
+      method compile : void ($pattern : string);
+      method match : int ($string : string) {
+      method match_offset : int ($string : string, $offset : int*);
+      method cap1 : string () { return $self->captures->[1]; }
+      method cap2 : string () { return $self->captures->[2]; }
+      method cap3 : string () { return $self->captures->[3]; }
+      method cap4 : string () { return $self->captures->[4]; }
+      method cap5 : string () { return $self->captures->[5]; }
+      method cap6 : string () { return $self->captures->[6]; }
+      method cap7 : string () { return $self->captures->[7]; }
+      method cap8 : string () { return $self->captures->[8]; }
+      method cap9 : string () { return $self->captures->[9]; }
+      method cap10 : string () { return $self->captures->[10]; }
+      method cap11 : string () { return $self->captures->[11]; }
+      method cap12 : string () { return $self->captures->[12]; }
+      method cap13 : string () { return $self->captures->[13]; }
+      method cap14 : string () { return $self->captures->[14]; }
+      method cap15 : string () { return $self->captures->[15]; }
+      method cap16 : string () { return $self->captures->[16]; }
+      method cap17 : string () { return $self->captures->[17]; }
+      method cap18 : string () { return $self->captures->[18]; }
+      method cap19 : string () { return $self->captures->[19]; }
+      method cap20 : string () { return $self->captures->[20]; }
+      method replace  : string ($string : string, $replace_string : string) {
+      method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
+      method replace_g  : string ($string : string, $replace_string : string) {
+      method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
+      method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
+      method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
+      method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
+      method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
+      
   [Changes]
     * Need SPVM::Resource::Re2::V2022_06_01 0.05.
     * Need SPVM 0.9615.
