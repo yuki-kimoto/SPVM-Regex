@@ -8,6 +8,7 @@ class Regex {
   has match_start : ro int;
   has match_length : ro int;
   has captures : ro string[];
+  has replaced_count : ro int;
   
   use Unicode;
   use List;
@@ -20,7 +21,6 @@ class Regex {
   has string_end : byte;
   has single_line_mode : byte;
   has ignore_case : byte;
-  has replace_count : ro int;
   has before_is_hyphen : byte;
   has before_is_open_bracket : byte;
   private enum {
@@ -644,14 +644,14 @@ class Regex {
     if (my $replace_g_obj = $opt->get("global")) {
       $replace_g = (int)$replace_g_obj;
     }
-    $self->{replace_count} = 0;
+    $self->{replaced_count} = 0;
     
     unless ($string) {
       return $string;
     }
     
     my $result : string;
-    my $replace_count = 0;
+    my $replaced_count = 0;
     my $result_buffer = StringBuffer->new;
     my $tarlength = length $string;
     
@@ -720,7 +720,7 @@ class Regex {
       $result_buffer->push($before_result);
       $result_buffer->push($replace);
       
-      $replace_count++;
+      $replaced_count++;
       
       unless ($replace_g) {
         last;
@@ -729,7 +729,7 @@ class Regex {
     }
     
     
-    if ($replace_count == 0) {
+    if ($replaced_count == 0) {
       $result = Fn->copy_string($string);
     }
     else {
@@ -744,7 +744,7 @@ class Regex {
       $result = $result_buffer->to_string;
     }
     
-    $self->{replace_count} = $replace_count;
+    $self->{replaced_count} = $replaced_count;
     
     return $result;
   }

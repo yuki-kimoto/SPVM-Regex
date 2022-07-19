@@ -8,6 +8,7 @@ class Re {
   has captures : ro string[];
   has match_start : ro int;
   has match_length : ro int;
+  has replaced_count : ro int;
   
   static method new : Re ($pattern_and_flags : string[]...) {
     
@@ -150,6 +151,8 @@ class Re {
       my $match_length = $self->match_length;
 
       $result_buffer->replace($match_start, $match_length, $replace_string);
+      
+      $self->{replaced_count} = $match_count;
       
       unless ($global) {
         last;
