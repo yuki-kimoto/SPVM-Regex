@@ -674,22 +674,6 @@ class Regex {
     return $self->replace_opt($string, $offset_ref, $replace_cb, {global => 1});
   }
   
-  method replace_offset_old  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, \$offset, $replace, {global => 0});
-  }
-
-  method replace_cb_offset_old  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, \$offset, $replace_cb, {global => 0});
-  }
-
-  method replace_g_offset_old  : string ($string : string, $offset : int, $replace : string) {
-    return $self->replace_opt($string, \$offset, $replace, {global => 1});
-  }
-
-  method replace_g_cb_offset_old  : string ($string : string, $offset : int, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, \$offset, $replace_cb, {global => 1});
-  }
-  
   private method replace_opt  : string ($string : string, $offset_ref : int*, $replace_object : object, $options : object[]) {
     
     my $offset = $$offset_ref;
