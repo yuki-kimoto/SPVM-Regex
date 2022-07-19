@@ -34,7 +34,6 @@
       has match_length : ro int;
       has replaced_count : ro int;
       static method new : Regex ($pattern_and_flags : string[]...)
-      method compile : void ($pattern : string);
       method match : int ($string : string)
       method match_offset : int ($string : string, $offset : int*);
       method cap1 : string ()

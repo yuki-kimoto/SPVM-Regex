@@ -31,7 +31,7 @@ class Regex {
     return $self;
   }
   
-  native method compile : void ($pattern : string);
+  private native method compile : void ($pattern : string);
   
   method match : int ($string : string) {
     my $offset = 0;
