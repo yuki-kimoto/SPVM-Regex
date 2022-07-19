@@ -3,44 +3,68 @@
     * Regex 0.06 binds Google Re2.
     * Change the field and method definitions
       [Before]
+      has captures : ro string[];
+      has match_start : ro int;
+      has match_length : ro int;
+      has replace_count : ro int;
+      has before_is_hyphen : byte;
+      has before_is_open_bracket : byte;
+      native static method re2_test : void ();
+      static method new : Regex ($re_str_and_options : string[]...)
+      static method new_with_options : Regex ($re_str : string, $option_chars : string)
+      method match : int ($target : string, $target_base_index : int)
+      method replace  : string ($target : string, $target_offset : int, $replace : string)
+      method replace_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer)
+      method replace_all  : string ($target : string, $target_offset : int, $replace : string)
+      method replace_all_cb  : string ($target : string, $target_offset : int, $replace_cb : Regex::Replacer)
+      method cap1 : string ()
+      method cap2 : string ()
+      method cap3 : string ()
+      method cap4 : string ()
+      method cap5 : string ()
+      method cap6 : string ()
+      method cap7 : string ()
+      method cap8 : string ()
+      method cap9 : string ()
+      method cap10 : string ()
       
       [After]
       has captures : ro string[];
       has match_start : ro int;
       has match_length : ro int;
       has replaced_count : ro int;
-      static method new : Regex ($pattern_and_flags : string[]...) {
+      static method new : Regex ($pattern_and_flags : string[]...)
       method compile : void ($pattern : string);
-      method match : int ($string : string) {
+      method match : int ($string : string)
       method match_offset : int ($string : string, $offset : int*);
-      method cap1 : string () { return $self->captures->[1]; }
-      method cap2 : string () { return $self->captures->[2]; }
-      method cap3 : string () { return $self->captures->[3]; }
-      method cap4 : string () { return $self->captures->[4]; }
-      method cap5 : string () { return $self->captures->[5]; }
-      method cap6 : string () { return $self->captures->[6]; }
-      method cap7 : string () { return $self->captures->[7]; }
-      method cap8 : string () { return $self->captures->[8]; }
-      method cap9 : string () { return $self->captures->[9]; }
-      method cap10 : string () { return $self->captures->[10]; }
-      method cap11 : string () { return $self->captures->[11]; }
-      method cap12 : string () { return $self->captures->[12]; }
-      method cap13 : string () { return $self->captures->[13]; }
-      method cap14 : string () { return $self->captures->[14]; }
-      method cap15 : string () { return $self->captures->[15]; }
-      method cap16 : string () { return $self->captures->[16]; }
-      method cap17 : string () { return $self->captures->[17]; }
-      method cap18 : string () { return $self->captures->[18]; }
-      method cap19 : string () { return $self->captures->[19]; }
-      method cap20 : string () { return $self->captures->[20]; }
-      method replace  : string ($string : string, $replace_string : string) {
-      method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
-      method replace_g  : string ($string : string, $replace_string : string) {
-      method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
-      method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
-      method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
-      method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
-      method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
+      method cap1 : string ()
+      method cap2 : string ()
+      method cap3 : string ()
+      method cap4 : string ()
+      method cap5 : string ()
+      method cap6 : string ()
+      method cap7 : string ()
+      method cap8 : string ()
+      method cap9 : string ()
+      method cap10 : string ()
+      method cap11 : string ()
+      method cap12 : string ()
+      method cap13 : string ()
+      method cap14 : string ()
+      method cap15 : string ()
+      method cap16 : string ()
+      method cap17 : string ()
+      method cap18 : string ()
+      method cap19 : string ()
+      method cap20 : string ()
+      method replace  : string ($string : string, $replace_string : string)
+      method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer)
+      method replace_g  : string ($string : string, $replace_string : string)
+      method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer)
+      method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+      method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
       
   [Changes]
     * Need SPVM::Resource::Re2::V2022_06_01 0.05.
