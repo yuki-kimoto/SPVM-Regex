@@ -636,41 +636,41 @@ class Regex {
 
   method replace  : string ($string : string, $replace : string) {
     my $offset = 0;
-    return $self->replace_opt($string, \$offset, $replace, {global => 0});
+    return $self->replace_common($string, \$offset, $replace, {global => 0});
   }
 
   method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_opt($string, \$offset, $replace_cb, {global => 0});
+    return $self->replace_common($string, \$offset, $replace_cb, {global => 0});
   }
 
   method replace_g  : string ($string : string, $replace : string) {
     my $offset = 0;
-    return $self->replace_opt($string, \$offset, $replace, {global => 1});
+    return $self->replace_common($string, \$offset, $replace, {global => 1});
   }
 
   method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_opt($string, \$offset, $replace_cb, {global => 1});
+    return $self->replace_common($string, \$offset, $replace_cb, {global => 1});
   }
 
   method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
-    return $self->replace_opt($string, $offset_ref, $replace, {global => 0});
+    return $self->replace_common($string, $offset_ref, $replace, {global => 0});
   }
 
   method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset_ref, $replace_cb, {global => 0});
+    return $self->replace_common($string, $offset_ref, $replace_cb, {global => 0});
   }
 
   method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
-    return $self->replace_opt($string, $offset_ref, $replace, {global => 1});
+    return $self->replace_common($string, $offset_ref, $replace, {global => 1});
   }
 
   method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
-    return $self->replace_opt($string, $offset_ref, $replace_cb, {global => 1});
+    return $self->replace_common($string, $offset_ref, $replace_cb, {global => 1});
   }
   
-  private method replace_opt  : string ($string : string, $offset_ref : int*, $replace_object : object, $options : object[]) {
+  private method replace_common  : string ($string : string, $offset_ref : int*, $replace_object : object, $options : object[]) {
     
     my $offset = $$offset_ref;
     
