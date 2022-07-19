@@ -43,7 +43,7 @@ class Regex {
     return $self;
   }
 
-  static method new_with_options : Regex ($pattern : string, $flags : string) {
+  private static method new_with_options : Regex ($pattern : string, $flags : string) {
     my $self = Regex->_new_without_compile();
     
     if ($flags) {
