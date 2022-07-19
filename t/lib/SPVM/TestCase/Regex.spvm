@@ -13,7 +13,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("a(bc)");
       my $target = "ppzabczabcz";
-      my $result = $re->replace_all_cb($target, 0, method : string ($re : Regex) {
+      my $result = $re->replace_all_cb_offset($target, 0, method : string ($re : Regex) {
         return "ABC" . $re->captures->[0] . "PQRS";
       });
       
@@ -34,7 +34,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("abc");
       my $target = "ppzabczabcz";
-      my $result = $re->replace_all($target, 0, "ABC");
+      my $result = $re->replace_all_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 2) {
         return 0;
@@ -49,7 +49,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("abc");
       my $target = "ppzabczabczabcz";
-      my $result = $re->replace_all($target, 6, "ABC");
+      my $result = $re->replace_all_offset($target, 6, "ABC");
       
       unless ($re->replace_count == 2) {
         return 0;
@@ -64,7 +64,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("a\d+b", "a");
       my $target = "za123bz";
-      my $result = $re->replace_all($target, 0, "ABC");
+      my $result = $re->replace_all_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 1) {
         return 0;
@@ -79,7 +79,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("a\d+b", "a");
       my $target = "pppp";
-      my $result = $re->replace_all($target, 0, "ABC");
+      my $result = $re->replace_all_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 0) {
         return 0;
@@ -98,7 +98,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("abc");
       my $target = "ppzabcz";
-      my $result = $re->replace($target, 0, "ABC");
+      my $result = $re->replace_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 1) {
         return 0;
@@ -113,7 +113,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("abc");
       my $target = "ppzabczabczabcz";
-      my $result = $re->replace($target, 6, "ABC");
+      my $result = $re->replace_offset($target, 6, "ABC");
       
       unless ($re->replace_count == 1) {
         return 0;
@@ -128,7 +128,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new_with_options("a\d+b", "a");
       my $target = "za123bz";
-      my $result = $re->replace($target, 0, "ABC");
+      my $result = $re->replace_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 1) {
         return 0;
@@ -143,7 +143,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new_with_options("a\d+b", "a");
       my $target = "pppp";
-      my $result = $re->replace($target, 0, "ABC");
+      my $result = $re->replace_offset($target, 0, "ABC");
       
       unless ($re->replace_count == 0) {
         return 0;
@@ -162,7 +162,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("a(bc)");
       my $target = "ppzabcz";
-      my $result = $re->replace_cb($target, 0, method : string ($re : Regex) {
+      my $result = $re->replace_cb_offset($target, 0, method : string ($re : Regex) {
         return "AB" . $re->captures->[0] . "C";
       });
       
