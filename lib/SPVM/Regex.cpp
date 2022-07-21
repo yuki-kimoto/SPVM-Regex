@@ -87,8 +87,8 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
 
-  re2::StringPiece string_piece;
-  string_piece.set(string + offset, string_length - offset);
+  re2::StringPiece stp_string;
+  stp_string.set(string + offset, string_length - offset);
 
   re2::StringPiece result;
   
@@ -102,7 +102,7 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
     captures_args[i] = &captures_arg[i];  
   }
       
-  int32_t match = RE2::PartialMatchN(string_piece, *re2, &(captures_args[0]), captures_length);
+  int32_t match = RE2::PartialMatchN(stp_string, *re2, &(captures_args[0]), captures_length);
   
   if (match) {
     // Captures
