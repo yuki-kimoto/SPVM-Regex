@@ -57,93 +57,81 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
   (void)stack;
   
   int32_t e = 0;
-  re2::StringPiece* submatch = NULL;
   
-  {
-    void* obj_self = stack[0].oval;
-    
-    void* obj_string = stack[1].oval;
-    
-    if (!obj_string) {
-      e = env->die(env, stack, "The string must be defined", FILE_NAME, __LINE__);
-      goto END_OF_FUNC; 
-    }
-    
-    const char* string = env->get_chars(env, stack, obj_string);
-    int32_t string_length = env->length(env, stack, obj_string);
-    
-    int32_t* offset_ref = stack[2].iref;
-    int32_t offset = *offset_ref;
-    if (offset < 0) {
-      e = env->die(env, stack, "The string offset must be greater than or equal to 0", FILE_NAME, __LINE__);
-      goto END_OF_FUNC; 
-    }
-    if (!(offset < string_length)) {
-      stack[0].ival = 0;
-      goto END_OF_FUNC;
-    }
-    
-    void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "Regex", "re2", "Regex::Re2", &e, FILE_NAME, __LINE__);
-    if (e) {goto END_OF_FUNC; }
-    
-    if (!obj_re2) {
-      e = env->die(env, stack, "The regex compililation is not yet performed", FILE_NAME, __LINE__);
-      goto END_OF_FUNC; 
-    }
-    
-    RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
-    
-    re2::StringPiece stp_string(string, string_length);
-    
-    int32_t captures_length = re2->NumberOfCapturingGroups();
-    int32_t doller0_and_captures_length = captures_length + 1;
-    
-    std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
-    
-    int32_t match = re2->Match(stp_string, offset, string_length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
-    
-    if (match) {
-      // Captures
-      {
-        void* obj_captures = env->new_object_array(env, stack, SPVM_NATIVE_C_BASIC_TYPE_ID_STRING, doller0_and_captures_length);
-        if (!obj_captures) {
-          e = env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);
-          goto END_OF_FUNC; 
-        }
-        for (int32_t i = 0; i < doller0_and_captures_length; ++i) {
-          if (i == 0) {
-            int32_t match_start = (submatch[0].data() - string);
-            int32_t match_length = submatch[0].length();
-            
-            env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_start", match_start, &e, FILE_NAME, __LINE__);
-            if (e) { goto END_OF_FUNC; }
-            
-            env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_length", match_length, &e, FILE_NAME, __LINE__);
-            if (e) { goto END_OF_FUNC; }
-          }
-          else {
-            void* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
-            env->set_elem_object(env, stack, obj_captures, i, obj_capture);
-          }
-        }
-        env->set_field_object_by_name(env, stack, obj_self, "Regex", "captures", "string[]", obj_captures, &e, FILE_NAME, __LINE__);
-        if (e) { goto END_OF_FUNC; }
-      }
-      
-      // Next offset
-      int32_t next_offset = (submatch[0].data() - string) + submatch[0].length();
-      *offset_ref = next_offset;
-      
-      stack[0].ival = 1;
-    }
-    else {
-      stack[0].ival = 0;
-    }
+  void* obj_self = stack[0].oval;
+  
+  void* obj_string = stack[1].oval;
+  
+  if (!obj_string) {
+    return env->die(env, stack, "The string must be defined", FILE_NAME, __LINE__);
   }
   
-  END_OF_FUNC:
+  const char* string = env->get_chars(env, stack, obj_string);
+  int32_t string_length = env->length(env, stack, obj_string);
   
+  int32_t* offset_ref = stack[2].iref;
+  int32_t offset = *offset_ref;
+  if (offset < 0) {
+    return env->die(env, stack, "The string offset must be greater than or equal to 0", FILE_NAME, __LINE__);
+  }
+  if (!(offset < string_length)) {
+    stack[0].ival = 0;
+    return 0;
+  }
+  
+  void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "Regex", "re2", "Regex::Re2", &e, FILE_NAME, __LINE__);
   if (e) { return e; }
+  
+  if (!obj_re2) {
+    return env->die(env, stack, "The regex compililation is not yet performed", FILE_NAME, __LINE__);
+  }
+  
+  RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
+  
+  re2::StringPiece stp_string(string, string_length);
+  
+  int32_t captures_length = re2->NumberOfCapturingGroups();
+  int32_t doller0_and_captures_length = captures_length + 1;
+  
+  std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
+  int32_t match = re2->Match(stp_string, offset, string_length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  
+  if (match) {
+    // Captures
+    {
+      void* obj_captures = env->new_object_array(env, stack, SPVM_NATIVE_C_BASIC_TYPE_ID_STRING, doller0_and_captures_length);
+      if (!obj_captures) {
+        return env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);; 
+      }
+      for (int32_t i = 0; i < doller0_and_captures_length; ++i) {
+        if (i == 0) {
+          int32_t match_start = (submatch[0].data() - string);
+          int32_t match_length = submatch[0].length();
+          
+          env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_start", match_start, &e, FILE_NAME, __LINE__);
+          if (e) { return e; }
+          
+          env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_length", match_length, &e, FILE_NAME, __LINE__);
+          if (e) { return e; }
+        }
+        else {
+          void* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
+          env->set_elem_object(env, stack, obj_captures, i, obj_capture);
+        }
+      }
+      env->set_field_object_by_name(env, stack, obj_self, "Regex", "captures", "string[]", obj_captures, &e, FILE_NAME, __LINE__);
+      if (e) { return e; }
+    }
+    
+    // Next offset
+    int32_t next_offset = (submatch[0].data() - string) + submatch[0].length();
+    *offset_ref = next_offset;
+    
+    stack[0].ival = 1;
+  }
+  else {
+    stack[0].ival = 0;
+  }
   
   return 0;
 }
