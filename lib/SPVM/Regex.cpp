@@ -145,13 +145,22 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
 }
 
 int32_t SPVM__Regex__DESTROY(SPVM_ENV* env, SPVM_VALUE* stack) {
+  int32_t e;
+  
   void* obj_self = stack[0].oval;
+
+  void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "Regex", "re2", "Regex::Re2", &e, FILE_NAME, __LINE__);
+  if (e) { return e; }
   
-  RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_self);
-  
-  if (re2) {
-    delete re2;
-    env->set_pointer(env, stack, obj_self, NULL);
+  if (obj_re2) {
+    // Free RE2 object
+    RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
+    if (re2) {
+      delete re2;
+      env->set_pointer(env, stack, obj_re2, NULL);
+    }
   }
+  
+  return 0;
 }
 }

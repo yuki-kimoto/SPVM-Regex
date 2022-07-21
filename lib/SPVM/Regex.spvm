@@ -31,6 +31,8 @@ class Regex {
     return $self;
   }
   
+  native method DESTROY : void ();
+  
   private native method compile : void ($pattern : string);
   
   method match : int ($string : string) {
