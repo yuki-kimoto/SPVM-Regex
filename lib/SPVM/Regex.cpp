@@ -33,17 +33,17 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   RE2::Options options;
   options.set_log_errors(false);
   re2::StringPiece stp_pattern(pattern, pattern_length);
-  RE2* re2 = new RE2(stp_pattern, options);
+  
+  std::unique_ptr<RE2> re2(new RE2(stp_pattern, options));
   
   std::string error = re2->error();
   std::string error_arg = re2->error_arg();
   
   if (!re2->ok()) {
-    delete re2;
     return env->die(env, stack, "The regex pattern %s can't be compiled. [Error]%s. [Fragment]%s", pattern, error.data(), error_arg.data(), FILE_NAME, __LINE__);
   }
   
-  void* obj_re2 = env->new_pointer_by_name(env, stack, "Regex::Re2", re2, &e, FILE_NAME, __LINE__);
+  void* obj_re2 = env->new_pointer_by_name(env, stack, "Regex::Re2", re2.release(), &e, FILE_NAME, __LINE__);
   if (e) { return e; }
   
   env->set_field_object_by_name(env, stack, obj_self, "Regex", "re2", "Regex::Re2", obj_re2, &e, FILE_NAME, __LINE__);
