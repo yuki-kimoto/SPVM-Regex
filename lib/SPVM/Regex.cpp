@@ -40,10 +40,8 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
     return env->die(env, stack, "The regex pattern %s can't be compiled. [Error]%s. [Fragment]%s", pattern, error.data(), error_arg.data(), FILE_NAME, __LINE__);
   }
   
-  void* obj_re2 = env->new_object_by_name(env, stack, "Regex::Re2", &e, FILE_NAME, __LINE__);
+  void* obj_re2 = env->new_pointer_by_name(env, stack, "Regex::Re2", re2, &e, FILE_NAME, __LINE__);
   if (e) { return e; }
-  
-  env->set_pointer(env, stack, obj_re2, re2);
   
   env->set_field_object_by_name(env, stack, obj_self, "Regex", "re2", "Regex::Re2", obj_re2, &e, FILE_NAME, __LINE__);
   if (e) { return e; }
