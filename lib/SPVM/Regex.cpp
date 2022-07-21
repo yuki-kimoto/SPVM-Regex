@@ -86,14 +86,12 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
   }
   
   RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
-
+  
   re2::StringPiece stp_string;
   stp_string.set(string + offset, string_length - offset);
-
-  re2::StringPiece result;
   
   int32_t captures_length = re2->NumberOfCapturingGroups();
-
+  
   std::vector<re2::RE2::Arg*> captures_args(captures_length);  
   std::vector<re2::RE2::Arg> captures_arg(captures_length);
   std::vector<re2::StringPiece> captures(captures_length);  
