@@ -98,8 +98,9 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
     int32_t captures_length = re2->NumberOfCapturingGroups();
     int32_t doller0_and_captures_length = captures_length + 1;
     
-    submatch = new re2::StringPiece[doller0_and_captures_length];
-    int32_t match = re2->Match(stp_string, offset, string_length, re2::RE2::Anchor::UNANCHORED, submatch, doller0_and_captures_length);
+    std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
+    
+    int32_t match = re2->Match(stp_string, offset, string_length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
     
     if (match) {
       // Captures
@@ -141,10 +142,6 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
   }
   
   END_OF_FUNC:
-  
-  if (submatch) {
-    delete[] submatch;
-  }
   
   if (e) { return e; }
   
