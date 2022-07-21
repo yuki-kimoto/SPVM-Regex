@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <cstdio>
 #include <vector>
-#include<memory>
+#include <memory>
 
 const char* FILE_NAME = "SPVM/Regex.cpp";
 
@@ -100,7 +100,8 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
     {
       void* obj_captures = env->new_object_array(env, stack, SPVM_NATIVE_C_BASIC_TYPE_ID_STRING, doller0_and_captures_length);
       if (!obj_captures) {
-        return env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);
+        e = env->die(env, stack, "Captures can't be created", FILE_NAME, __LINE__);
+        goto END_OF_FUNC;
       }
       for (int32_t i = 0; i < doller0_and_captures_length; ++i) {
         if (i == 0) {
@@ -108,10 +109,10 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
           int32_t match_length = submatch[0].length();
           
           env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_start", match_start, &e, FILE_NAME, __LINE__);
-          if (e) { delete submatch; return e; }
+          if (e) { goto END_OF_FUNC; }
           
           env->set_field_int_by_name(env, stack, obj_self, "Regex", "match_length", match_length, &e, FILE_NAME, __LINE__);
-          if (e) { delete submatch; return e; }
+          if (e) { goto END_OF_FUNC; }
         }
         else {
           void* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
@@ -119,7 +120,7 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
         }
       }
       env->set_field_object_by_name(env, stack, obj_self, "Regex", "captures", "string[]", obj_captures, &e, FILE_NAME, __LINE__);
-      if (e) { delete submatch; return e; }
+      if (e) { goto END_OF_FUNC; }
     }
     
     // Next offset
@@ -132,7 +133,11 @@ int32_t SPVM__Regex__match_offset(SPVM_ENV* env, SPVM_VALUE* stack) {
     stack[0].ival = 0;
   }
   
-  delete submatch;
+  END_OF_FUNC:
+  
+  delete[] submatch;
+  
+  if (e) { return e; }
   
   return 0;
 }
