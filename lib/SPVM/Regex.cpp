@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <cstdio>
 #include <vector>
+#include<memory>
 
 const char* FILE_NAME = "SPVM/Regex.cpp";
 
@@ -31,7 +32,8 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   RE2::Options options;
   options.set_log_errors(false);
-  RE2* re2 = new RE2(pattern, options);
+  re2::StringPiece stp_pattern(pattern, pattern_length);
+  RE2* re2 = new RE2(stp_pattern, options);
   
   std::string error = re2->error();
   std::string error_arg = re2->error_arg();
