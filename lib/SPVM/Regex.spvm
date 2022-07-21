@@ -20,7 +20,7 @@ class Regex {
     
     my $self = new Regex;
     
-    my $re2_pattern = "($pattern)";
+    my $re2_pattern = $pattern;
     
     if ($flags) {
       $re2_pattern = "(?$flags)$re2_pattern";
