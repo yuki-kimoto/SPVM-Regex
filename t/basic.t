@@ -41,6 +41,7 @@ my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
   # Extra
   {
     ok(SPVM::TestCase::Regex->extra== 1);
+    is(SPVM::TestCase::Regex->extra_url_escape, 1);
   }
 }
 
