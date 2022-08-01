@@ -1,3 +1,9 @@
+0.10 2022-08-01
+  [Internal Ineffective Changes]
+    * Use get_field_object_by_name_v2 in SPVM/Regex.cpp
+    * Use set_field_object_by_name_v2 in SPVM/Regex.cpp
+  [Pre Requirement Changes]
+    * SPVM 0.9632 is needed.
 0.09 2022-08-01
   [Internal Changes]
     * Remove unused SPVM::Pattern class
