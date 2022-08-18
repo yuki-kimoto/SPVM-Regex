@@ -9,9 +9,8 @@
       method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string)
       [After]
       method match_forward : int ($string : string, $offset : int*);
-      method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string)
-      method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string)
-      method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_forward  : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*)
+      method replace_g_forward  : string ($string : string, $replace :object of string|Regex::Replacer, $offset_ref : int*)
    * The following methods of the Regex class are removed.
       method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
       method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
