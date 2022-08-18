@@ -6,6 +6,8 @@
       
       [After]
       method match : int ($string : string, $offset = 0 : int, $length = -1 : int)
+  [Bug Fix]
+    * Fix the bug that the replace offset is over the length of the string. This maybe raises some moery leak.
   [Requirement Changes]
     * Need SPVM 0.9643+.
   [Incompatible Changes]
@@ -41,7 +43,6 @@
      method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[])
      method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[])
      precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $length = -1 : int, $options = undef : object[])
-
 
   [Changes]
     * The definitions of the following methods of the Regex class.
