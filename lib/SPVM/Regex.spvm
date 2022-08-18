@@ -73,10 +73,6 @@ class Regex {
     return $self->replace_common($string, $replace, {global => 1}, \$offset);
   }
   
-  method replace_g_forward  : string ($string : string, $replace :object of string|Regex::Replacer, $offset_ref : int*) {
-    return $self->replace_common($string, $replace, {global => 1}, $offset_ref);
-  }
-  
   precompile method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
     
     my $opt = Hash->new($options);

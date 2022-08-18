@@ -13,7 +13,9 @@
       method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
       method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
       method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string)
-   
+   * Remove the following methods of the Regex
+      method replace_g_forward  : string ($string : string, $replace :object of string|Regex::Replacer, $offset_ref : int*);
+
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.

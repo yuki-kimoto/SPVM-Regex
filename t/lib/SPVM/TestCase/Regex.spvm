@@ -13,7 +13,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "ppzabczabcz";
       my $offset = 0;
-      my $result = $re->replace_g_forward($target, "ABC", \$offset);
+      my $result = $re->replace_common($target, "ABC", {global => 1}, \$offset);
       
       unless ($re->replaced_count == 2) {
         return 0;
@@ -29,7 +29,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "ppzabczabczabcz";
       my $offset = 6;
-      my $result = $re->replace_g_forward($target, "ABC", \$offset);
+      my $result = $re->replace_common($target, "ABC", {global => 1}, \$offset);
       
       unless ($re->replaced_count == 2) {
         return 0;
@@ -45,7 +45,7 @@ class TestCase::Regex {
       my $re = Regex->new("a\d+b");
       my $target = "za123bz";
       my $offset = 0;
-      my $result = $re->replace_g_forward($target, "ABC", \$offset);
+      my $result = $re->replace_common($target, "ABC", {global => 1}, \$offset);
       
       unless ($re->replaced_count == 1) {
         return 0;
@@ -61,7 +61,7 @@ class TestCase::Regex {
       my $re = Regex->new("a\d+b");
       my $target = "pppp";
       my $offset = 0;
-      my $result = $re->replace_g_forward($target, "ABC", \$offset);
+      my $result = $re->replace_common($target, "ABC", {global => 1}, \$offset);
       
       unless ($re->replaced_count == 0) {
         return 0;
