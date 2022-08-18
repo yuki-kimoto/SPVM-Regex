@@ -65,7 +65,7 @@ class Regex {
 
   method replace  : string ($string : string, $replace : object of string|Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_common($string, $replace, {global => 0}, \$offset);
+    return $self->replace_common($string, $replace, {}, \$offset);
   }
   
   method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer) {
@@ -73,15 +73,11 @@ class Regex {
     return $self->replace_common($string, $replace, {global => 1}, \$offset);
   }
   
-  method replace_forward  : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*) {
-    return $self->replace_common($string, $replace, {global => 0}, $offset_ref);
-  }
-  
   method replace_g_forward  : string ($string : string, $replace :object of string|Regex::Replacer, $offset_ref : int*) {
     return $self->replace_common($string, $replace, {global => 1}, $offset_ref);
   }
   
-  private precompile method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
+  precompile method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
     
     my $opt = Hash->new($options);
     
