@@ -32,6 +32,17 @@
       static method new : Regex ($pattern_and_flags : string[]...)
       {After]
       static method new : Regex ($pattern : string, $flags = undef : string)
+   * The definitions of the following methods of the Regex class.
+     [Before]
+     method replace  : string ($string : string, $replace : object of string|Regex::Replacer)
+     method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer)
+     precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options = undef : object[])
+     [After]
+     method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[])
+     method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[])
+     precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $length = -1 : int, $options = undef : object[])
+
+
   [Changes]
     * The definitions of the following methods of the Regex class.
       [Before]

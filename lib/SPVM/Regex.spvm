@@ -3,6 +3,7 @@ class Regex {
   use Regex::Replacer;
   use Regex::Re2;
   use Hash;
+  use List;
   
   has re2 : Regex::Re2;
   has captures : ro string[];
@@ -56,17 +57,19 @@ class Regex {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
 
-  method replace  : string ($string : string, $replace : object of string|Regex::Replacer) {
-    my $offset = 0;
-    return $self->replace_common($string, $replace, \$offset, {});
+  method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[]) {
+    return $self->replace_common($string, $replace, \$offset, $length);
   }
   
-  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer) {
-    my $offset = 0;
-    return $self->replace_common($string, $replace, \$offset, {global => 1});
+  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[]) {
+    my $new_options_list = List->new($options);
+    $new_options_list->push("global");
+    $new_options_list->push(1);
+    $options = $new_options_list->to_array;
+    return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   
-  precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options = undef : object[]) {
+  precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $length = -1 : int, $options = undef : object[]) {
     
     my $opt = Hash->new($options);
     
