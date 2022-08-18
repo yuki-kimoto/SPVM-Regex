@@ -63,40 +63,22 @@ class Regex {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
 
-  method replace  : string ($string : string, $replace_string : string) {
+  method replace  : string ($string : string, $replace : object of string|Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_common($string, \$offset, $replace_string, {global => 0});
+    return $self->replace_common($string, \$offset, $replace, {global => 0});
   }
   
-  method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
+  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_common($string, \$offset, $replace_cb, {global => 0});
+    return $self->replace_common($string, \$offset, $replace, {global => 1});
   }
   
-  method replace_g  : string ($string : string, $replace_string : string) {
-    my $offset = 0;
-    return $self->replace_common($string, \$offset, $replace_string, {global => 1});
-  }
-  
-  method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer) {
-    my $offset = 0;
-    return $self->replace_common($string, \$offset, $replace_cb, {global => 1});
-  }
-  
-  method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string) {
+  method replace_forward  : string ($string : string, $offset_ref : int*, $replace : object of string|Regex::Replacer) {
     return $self->replace_common($string, $offset_ref, $replace, {global => 0});
   }
   
-  method replace_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
-    return $self->replace_common($string, $offset_ref, $replace_cb, {global => 0});
-  }
-  
-  method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace : string) {
+  method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace :object of string|Regex::Replacer) {
     return $self->replace_common($string, $offset_ref, $replace, {global => 1});
-  }
-  
-  method replace_g_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
-    return $self->replace_common($string, $offset_ref, $replace_cb, {global => 1});
   }
   
   private precompile method replace_common : string ($string : string, $offset_ref : int*, $replace : object, $options : object[]) {

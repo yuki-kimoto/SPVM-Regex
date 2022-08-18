@@ -14,10 +14,8 @@ my $start_memory_blocks_count = SPVM::get_memory_blocks_count();
 
 # SPVM::Regex
 {
-  ok(SPVM::TestCase::Regex->replace_g_cb== 1);
   ok(SPVM::TestCase::Regex->replace_g== 1);
   ok(SPVM::TestCase::Regex->replace== 1);
-  ok(SPVM::TestCase::Regex->replace_cb== 1);
   ok(SPVM::TestCase::Regex->match_start_and_end== 1);
   ok(SPVM::TestCase::Regex->match_capture== 1);
   ok(SPVM::TestCase::Regex->match_char_class_range== 1);

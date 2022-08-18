@@ -7,45 +7,6 @@ class TestCase::Regex {
     return 1;
   }
 
-  static method replace_g_cb : int () {
-
-    # Replace all callback with capture
-    {
-      my $re = Regex->new("a(bc)");
-      my $target = "ppzabczabcz";
-      my $offset = 0;
-      my $result = $re->replace_g_cb_forward($target, \$offset, method : string ($re : Regex) {
-        return "ABC" . $re->captures->[1] . "PQRS";
-      });
-      
-      unless ($re->replaced_count == 2) {
-        return 0;
-      }
-
-      unless ($result eq "ppzABCbcPQRSzABCbcPQRSz") {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("a(bc)");
-      my $target = "ppzabczabcz";
-      my $result = $re->replace_g_cb($target, method : string ($re : Regex) {
-        return "ABC" . $re->captures->[1] . "PQRS";
-      });
-      
-      unless ($re->replaced_count == 2) {
-        return 0;
-      }
-
-      unless ($result eq "ppzABCbcPQRSzABCbcPQRSz") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-
   static method replace_g : int () {
     # Replace all
     {
@@ -188,7 +149,7 @@ class TestCase::Regex {
       my $re = Regex->new("a(bc)");
       my $target = "ppzabcz";
       my $offset = 0;
-      my $result = $re->replace_cb_forward($target, \$offset, method : string ($re : Regex) {
+      my $result = $re->replace_forward($target, \$offset, method : string ($re : Regex) {
         return "AB" . $re->captures->[1] . "C";
       });
       
@@ -1595,7 +1556,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("([^A-Za-z0-9\-\._~])");
       my $target = "business;23";
-      my $result = $re->replace_g_cb($target, method : string ($re : Regex) {
+      my $result = $re->replace_g($target, method : string ($re : Regex) {
         my $bytes = $re->cap1;
         
         my $escaped_char_buffer = StringBuffer->new;
