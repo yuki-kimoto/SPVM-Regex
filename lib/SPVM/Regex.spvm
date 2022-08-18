@@ -35,12 +35,11 @@ class Regex {
   
   private native method compile : void ($pattern : string);
   
-  method match : int ($string : string) {
-    my $offset = 0;
-    return $self->match_forward($string, \$offset);
+  method match : int ($string : string, $offset = 0 : int, $length = -1 : int) {
+    return $self->match_forward($string, \$offset, $length);
   }
 
-  native method match_forward : int ($string : string, $offset : int*);
+  native method match_forward : int ($string : string, $offset : int*, $length = -1 : int);
 
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
