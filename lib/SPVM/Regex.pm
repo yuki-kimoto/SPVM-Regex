@@ -165,14 +165,14 @@ Create a new L<Regex|SPVM::Regex> object and compile the regex pattern with the 
 
   method match : int ($string : string)
 
-The Alias for the following L<match_offset|/"match_offset"> method.
+The Alias for the following L<match_forward|/"match_forward"> method.
 
   my $offset = 0;
-  $re->match_offset($string, \$offset);
+  $re->match_forward($string, \$offset);
 
-=head2 match_offset
+=head2 match_forward
 
-  method match_offset : int ($string : string, $offset_ref : int*)
+  method match_forward : int ($string : string, $offset_ref : int*)
 
 Execute pattern matching to the string and the starting offset of the string.
 

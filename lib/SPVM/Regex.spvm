@@ -37,10 +37,10 @@ class Regex {
   
   method match : int ($string : string) {
     my $offset = 0;
-    return $self->match_offset($string, \$offset);
+    return $self->match_forward($string, \$offset);
   }
 
-  native method match_offset : int ($string : string, $offset : int*);
+  native method match_forward : int ($string : string, $offset : int*);
 
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
@@ -128,7 +128,7 @@ class Regex {
     while (1) {
       my $result_buffer_value = $result_buffer->to_string;
       
-      my $match = $self->match_offset($result_buffer_value, \$offset);
+      my $match = $self->match_forward($result_buffer_value, \$offset);
       
       if ($match) {
         $match_count++;

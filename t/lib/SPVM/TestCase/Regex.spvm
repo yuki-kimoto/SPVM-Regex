@@ -1310,14 +1310,14 @@ class TestCase::Regex {
     return 1;
   }
 
-  static method match_offset : int () {
+  static method match_forward : int () {
 
     # Not Match string
     {
       my $re = Regex->new("abc");
       my $target = "zabcz";
       
-      my $match = (my $offset = 2, $re->match_offset($target, \$offset));
+      my $match = (my $offset = 2, $re->match_forward($target, \$offset));
       
       if ($match) {
         return 0;
@@ -1329,7 +1329,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "zabcz";
       
-      my $match = (my $offset = 1, $re->match_offset($target, \$offset));
+      my $match = (my $offset = 1, $re->match_forward($target, \$offset));
       
       unless ($match) {
         return 0;
@@ -1524,7 +1524,7 @@ class TestCase::Regex {
       my $string = "abcdbc";
       my $offset = 0;
       {
-        my $match = $re->match_offset($string, \$offset);
+        my $match = $re->match_forward($string, \$offset);
         
         unless ($match) {
           return 0;
@@ -1536,7 +1536,7 @@ class TestCase::Regex {
       }
 
       {
-        my $match = $re->match_offset($string, \$offset);
+        my $match = $re->match_forward($string, \$offset);
         
         unless ($match) {
           return 0;
@@ -1548,7 +1548,7 @@ class TestCase::Regex {
       }
 
       {
-        my $match = $re->match_offset($string, \$offset);
+        my $match = $re->match_forward($string, \$offset);
         
         if ($match) {
           return 0;
@@ -1563,7 +1563,7 @@ class TestCase::Regex {
       my $offset = 0;
       
       my $match_count = 0;
-      while ($re->match_offset($string, \$offset)) {
+      while ($re->match_forward($string, \$offset)) {
         $match_count++;
       }
       
