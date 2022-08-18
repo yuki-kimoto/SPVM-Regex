@@ -1,3 +1,6 @@
+0.12 2022-08-18
+  [Requirement Cnahges]
+    * Need SPVM 0.9643+.
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.
