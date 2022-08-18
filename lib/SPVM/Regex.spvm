@@ -65,15 +65,15 @@ class Regex {
 
   method replace  : string ($string : string, $replace : object of string|Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_common($string, $replace, {}, \$offset);
+    return $self->replace_common($string, $replace, \$offset, {});
   }
   
   method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer) {
     my $offset = 0;
-    return $self->replace_common($string, $replace, {global => 1}, \$offset);
+    return $self->replace_common($string, $replace, \$offset, {global => 1});
   }
   
-  precompile method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
+  precompile method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options : object[]) {
     
     my $opt = Hash->new($options);
     

@@ -15,7 +15,12 @@
       method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string)
    * Remove the following methods of the Regex
       method replace_g_forward  : string ($string : string, $replace :object of string|Regex::Replacer, $offset_ref : int*);
-
+   * The definitions of the following methods of the Regex class.
+     [Before]
+     method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
+     [After]
+     method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options : object[]) {
+  
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.
