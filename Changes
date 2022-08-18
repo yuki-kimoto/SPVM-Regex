@@ -27,12 +27,18 @@
      method replace_common : string ($string : string, $replace : object, $options : object[], $offset_ref : int*) {
      [After]
      method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options : object[]) {
-    * The definitions of the following methods of the Regex class.
+   * The definitions of the following methods of the Regex class.
       [Before]
       static method new : Regex ($pattern_and_flags : string[]...)
       {After]
       static method new : Regex ($pattern : string, $flags = undef : string)
-    
+  [Changes]
+    * The definitions of the following methods of the Regex class.
+      [Before]
+      method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options : object[]) {
+      [After]
+      method replace_common : string ($string : string, $replace : object, $offset_ref : int*, $options = undef : object[]) {
+  
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.
