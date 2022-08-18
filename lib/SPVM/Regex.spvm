@@ -10,13 +10,7 @@ class Regex {
   has match_length : ro int;
   has replaced_count : ro int;
   
-  static method new : Regex ($pattern_and_flags : string[]...) {
-    
-    my $pattern = $pattern_and_flags->[0];
-    my $flags = (string)undef;
-    if (@$pattern_and_flags > 1) {
-      $flags = $pattern_and_flags->[1];
-    }
+  static method new : Regex ($pattern : string, $flags = undef : string) {
     
     my $self = new Regex;
     
