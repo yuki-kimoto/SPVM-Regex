@@ -6,6 +6,8 @@
       
       [After]
       method match : int ($string : string, $offset = 0 : int, $length = -1 : int)
+  [Document Fix]
+    * Fix many document mistakes.
   [Bug Fix]
     * Fix the bug that the replace offset is over the length of the string. This maybe raises some moery leak.
   [Requirement Changes]
