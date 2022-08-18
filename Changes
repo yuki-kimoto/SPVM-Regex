@@ -1,6 +1,13 @@
 0.12 2022-08-18
   [Requirement Changes]
     * Need SPVM 0.9643+.
+  [Incompatible Changes]
+    * The match_offset method is renamed to match_foward.
+      [Before]
+      native method match_offset : int ($string : string, $offset : int*);
+      [After]
+      native method match_forward : int ($string : string, $offset : int*);
+    
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.
