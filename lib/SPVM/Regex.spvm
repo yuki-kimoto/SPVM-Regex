@@ -83,19 +83,19 @@ class Regex {
     return $self->replace_common($string, \$offset, $replace_cb, {global => 1});
   }
   
-  method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
+  method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string) {
     return $self->replace_common($string, $offset_ref, $replace, {global => 0});
   }
   
-  method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
+  method replace_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
     return $self->replace_common($string, $offset_ref, $replace_cb, {global => 0});
   }
   
-  method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string) {
+  method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace : string) {
     return $self->replace_common($string, $offset_ref, $replace, {global => 1});
   }
   
-  method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
+  method replace_g_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer) {
     return $self->replace_common($string, $offset_ref, $replace_cb, {global => 1});
   }
   

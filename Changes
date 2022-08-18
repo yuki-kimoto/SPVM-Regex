@@ -2,12 +2,21 @@
   [Requirement Changes]
     * Need SPVM 0.9643+.
   [Incompatible Changes]
-    * The match_offset method is renamed to match_foward.
+    * The definitions of the following methods
       [Before]
-      native method match_offset : int ($string : string, $offset : int*);
+      method match_offset : int ($string : string, $offset : int*);
+      method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+      method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
       [After]
-      native method match_forward : int ($string : string, $offset : int*);
-    
+      method match_forward : int ($string : string, $offset : int*);
+      method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+      method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace : string)
+      method replace_g_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+       
 0.11 2022-08-08
   [Text Fix]
     * Fix tests for SPVM upgrading.

@@ -184,65 +184,65 @@ If the pattern matching is successful, return C<1>, otherwise return C<0>.
 
   method replace  : string ($string : string, $replace : string)
 
-The Alias for the following L<replace_offset|/"replace_offset"> method.
+The Alias for the following L<replace_forward|/"replace_forward"> method.
 
   my $offset = 0;
-  $re->replace_offset($string, \$offset, $replace);
+  $re->replace_forward($string, \$offset, $replace);
 
 =head2 replace_cb
 
   method replace_cb  : string ($string : string, $replace_cb : Regex::Replacer)
 
-The Alias for the following L<replace_cb_offset|/"replace_cb_offset"> method.
+The Alias for the following L<replace_cb_forward|/"replace_cb_forward"> method.
 
   my $offset = 0;
-  $re->replace_cb_offset($string, \$offset, $replace_cb);
+  $re->replace_cb_forward($string, \$offset, $replace_cb);
 
 =head2 replace_g
 
   method replace_g  : string ($string : string, $replace : string)
 
-The Alias for the following L<replace_g_offset|/"replace_g_offset"> method.
+The Alias for the following L<replace_g_forward|/"replace_g_forward"> method.
 
   my $offset = 0;
-  $re->replace_g_offset($string, \$offset, $replace);
+  $re->replace_g_forward($string, \$offset, $replace);
 
 =head2 replace_g_cb
 
   method replace_g_cb  : string ($string : string, $replace_cb : Regex::Replacer)
 
-The Alias for the following L<replace_g_cb_offset|/"replace_g_cb_offset"> method.
+The Alias for the following L<replace_g_cb_forward|/"replace_g_cb_forward"> method.
 
   my $offset = 0;
-  $re->replace_g_cb_offset($string, \$offset, $replace_cb);
+  $re->replace_g_cb_forward($string, \$offset, $replace_cb);
 
-=head2 replace_offset
+=head2 replace_forward
 
-  method replace_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+  method replace_forward  : string ($string : string, $offset_ref : int*, $replace : string)
 
 Replace the part of the pattern matching in the string with the replacement string from the starting offset of the string.
 
 The offset is updated to the next starting position.
 
-=head2 replace_cb_offset
+=head2 replace_cb_forward
 
-  method replace_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+  method replace_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
 
 Replace the part of the pattern matching with the replacement callback that is L<Regex::Replacer|SPVM::Regex::Replacer> object from the starting offset of the string.
 
 The offset is updated to the next starting position.
 
-=head2 replace_g_offset
+=head2 replace_g_forward
 
-  method replace_g_offset  : string ($string : string, $offset_ref : int*, $replace : string)
+  method replace_g_forward  : string ($string : string, $offset_ref : int*, $replace : string)
 
 Replace all of the part of the pattern matching with the replacement string from the starting offset of the string.
 
 The offset is updated to the next starting position.
 
-=head2 replace_g_cb_offset
+=head2 replace_g_cb_forward
 
-  method replace_g_cb_offset  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
+  method replace_g_cb_forward  : string ($string : string, $offset_ref : int*, $replace_cb : Regex::Replacer)
 
 Replace all of the part of the pattern matching with the replacement callback that is L<Regex::Replacer|SPVM::Regex::Replacer> object from the starting offset of the string.
 
