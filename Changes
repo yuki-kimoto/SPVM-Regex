@@ -1,7 +1,6 @@
-0.15 2022-11-14
+0.14 2022-10-01
   [Prerequirement Changes]
     * SPVM::Regex needs SPVM 0.9661+.
-0.14 2022-10-01
   [Test Improvement]
     * Added the test of \b.
   [Document Improvement]
