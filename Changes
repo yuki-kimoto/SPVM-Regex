@@ -1,3 +1,6 @@
+0.16 2022-12-26
+  [Prerequirement Bug Fix]
+    * Fixed prerequirement in Makefile.PL because 'SPVM::Resource::Re2::V2022_06_01 is needed when "perl Makefile.PL" is executed.
 0.15 2022-12-23
   [Prerequirement Changes]
     * SPVM 0.9670+ is needed.
