@@ -1389,6 +1389,22 @@ class TestCase::Regex {
         return 0;
       }
     }
+
+    {
+      my $path = "/..";
+      $path = Regex->new("^/\.\.$")->replace($path, "/");
+      unless ($path eq "/") {
+        return 0;
+      }
+    }
+    
+    {
+      my $path = "/..";
+      my $match = Regex->new("^/\.\.$")->match($path);
+      unless ($match) {
+        return 0;
+      }
+    }
     
     # Capture syntax suger
     {

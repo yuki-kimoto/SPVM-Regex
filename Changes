@@ -1,3 +1,18 @@
+0.17 2022-12-26
+  [Bug Fix]
+    * Fixed unexpetedly replacement bug. This reason maybe memory, but I don't understand the detail of the reason.
+    
+    {
+      my $path = "/..";
+      $path = Regex->new("^/\.\.$")->replace($path, "/");
+      unless ($path eq "/") {
+        return 0;
+      }
+    }
+
+  [Performance Degration]
+    * For the above bug fix, performance degration occurs. This will be fixed in the future.
+    
 0.16 2022-12-26
   [Prerequirement Bug Fix]
     * Fixed prerequirement in Makefile.PL because 'SPVM::Resource::Re2::V2022_06_01 is needed when "perl Makefile.PL" is executed.
