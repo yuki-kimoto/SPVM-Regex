@@ -39,6 +39,10 @@ WriteMakefile(
         url  => 'https://github.com/yuki-kimoto/SPVM-Regex.git',
         web  => 'https://github.com/yuki-kimoto/SPVM-Regex',
       },
+      bugtracker => {
+        web => "https://github.com/yuki-kimoto/SPVM-Regex/issues",
+      },
+
     },
   },
   NORECURS => 1,
