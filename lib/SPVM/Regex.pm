@@ -368,7 +368,9 @@ L<Yuki Kimoto|https://github.com/yuki-kimoto>
 
 =over 2
 
-L<Ryunosuke Murakami|https://github.com/ryun0suke22>
+=item * L<Ryunosuke Murakami|https://github.com/ryun0suke22>
+
+=item * L<greengorcer|https://github.com/greengorcer>
 
 =back
 
