@@ -29,3 +29,10 @@ L<Regex::Replacer|SPVM::Regex::Replacer> is the interface type for the regex rep
   required method : string ($re : Regex)
 
 The implementation must receive a L<Regex|SPVM::Regex> object and return the string after the replacement.
+
+=head1 Copyright & License
+
+Copyright (c) 2023 Yuki Kimoto
+
+MIT License
+
