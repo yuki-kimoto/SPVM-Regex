@@ -14,7 +14,7 @@ SPVM::Regex - Regular Expressions
 
 The Regex class of L<SPVM> has methods for regular expressions.
 
-L<Google RE2|https://github.com/google/re2> is used for the implementation of regular expressions
+L<Google RE2|https://github.com/google/re2> is used as the regular expression library.
 
 =head1 Usage
   
@@ -112,9 +112,17 @@ L<Google RE2|https://github.com/google/re2> is used for the implementation of re
     }
   }
 
+=head1 Dependent Resources
+
+=over 2
+
+=item * L<SPVM::Resource::RE2>
+
+=back
+
 =head1 Regular Expression Syntax
 
-See L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax>.
+L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax>
 
 =head1 Fields
 
@@ -122,25 +130,25 @@ See L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax>.
 
   has captures : ro string[];
 
-Gets the captured strings.
+The captured strings.
 
 =head2  match_start
 
   has match_start : ro int;
 
-Gets the start offset of the matched string.
+The start offset of the matched string.
 
 =head2 match_length
 
   has match_length : ro int;
 
-Gets the length of the matched string.
+The length of the matched string.
 
 =head2 replaced_count
 
   has replaced_count : ro int;
 
-Gets the replaced count.
+The replaced count.
 
 =head1 Class Methods
 
@@ -148,7 +156,7 @@ Gets the replaced count.
 
   static method new : Regex ($pattern : string, $flags = undef : string)
 
-Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $pattern with the flags $flags.
+Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $pattern with the flags $flags, and retruns the created object.
 
   my $re = Regex->new("^ab+c");
   my $re = Regex->new("^ab+c", "s");
@@ -157,7 +165,7 @@ Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $patter
 
 =head2 match
 
-  method match : int ($string : string, $offset = 0 : int, $length = -1 : int)
+  method match : int ($string : string, $offset = 0 : int, $length = -1 : int);
 
 The alias for the following L<match_forward|/"match_forward"> method.
 
@@ -167,19 +175,19 @@ The alias for the following L<match_forward|/"match_forward"> method.
 
   method match_forward : int ($string : string, $offset : int*, $length = -1 : int)
 
-Executes pattern matching to the string range from the offset to the position proceeded by the length.
+Performs pattern matching on the substring from the offset $offset to the length $length of the string $string.
 
-The offset is updated to the next starting position.
+The $offset is updated to the next position.
 
-If the pattern matching is successful, return 1, otherwise return 0.
+If the pattern matching is successful, returns 1. Otherwise returns 0.
 
 Exceptions:
 
-The string must be defined. Otherwise an exception will be thrown.
+The $string must be defined. Otherwise an exception is thrown.
 
-The offset + the length must be less than or equal to the length of the string. Otherwise an exception will be thrown.
+The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
 
-The regex compililation is not yet performed. Otherwise an exception will be thrown.
+If the regex is not compiled, an exception is thrown.
 
 =head2 replace
 
@@ -204,23 +212,11 @@ The alias for the following L<replace_common|/"replace_common"> method.
 =head2 replace_common
 
   method replace_common : string ($string : string, $replace : object of string|Regex::Replacer,
-    $offset_ref : int*, $length = -1 : int, $options = undef : object[])
+    $offset_ref : int*, $length = -1 : int, $options = undef : object[]);
 
-Replaces the part of the pattern matching in the string range from the offset to the position proceeded by the length with the replacement string or callback.
+Replaces the substring from the offset $$offset_ref to the length $length of the string $string with the replacement string or callback $replace with the options $options.
 
-The L<options|/"Options of replace_common"> can be used.
-
-Exceptions:
-
-The string must be defined. Otherwise an exception will be thrown.
-
-The replacement must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception will be thrown.
-
-The offset must be greater than or equal to 0. Otherwise an exception will be thrown.
-
-The offset + the length must be less than or equal to the length of the string. Otherwise an exception will be thrown.
-
-Internally L<match_forward|/"match_forward"> is used for the pattern matching.
+If the $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
 
 Options:
 
@@ -232,129 +228,141 @@ If the value of the L<Int|SPVM::Int> object is a true value, the global replacem
 
 =back
 
+Exceptions:
+
+The $string must be defined. Otherwise an exception is thrown.
+
+The $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
+
+The $offset must be greater than or equal to 0. Otherwise an exception is thrown.
+
+The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+
+Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
+
 =head2 split
 
   method split : string[] ($string : string, $limit = 0 : int);
 
-The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, but the separator is a regular expression.
+The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, but the regular expression is used as the separator.
 
 =head2 cap1
 
-  method cap1 : string ()
+  method cap1 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[1]>.
 
 =head2 cap2
 
-  method cap2 : string ()
+  method cap2 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[2]>.
 
 =head2 cap3
 
-  method cap3 : string ()
+  method cap3 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[3]>.
 
 =head2 cap4
 
-  method cap4 : string ()
+  method cap4 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[4]>.
 
 =head2 cap5
 
-  method cap5 : string ()
+  method cap5 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[5]>.
 
 =head2 cap6
 
-  method cap6 : string ()
+  method cap6 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[6]>.
 
 =head2 cap7
 
-  method cap7 : string ()
+  method cap7 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[7]>.
 
 =head2 cap8
 
-  method cap8 : string ()
+  method cap8 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[8]>.
 
 =head2 cap9
 
-  method cap9 : string ()
+  method cap9 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[9]>.
 
 =head2 cap10
 
-  method cap10 : string ()
+  method cap10 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[10]>.
 
 =head2 cap11
 
-  method cap11 : string ()
+  method cap11 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[11]>.
 
 =head2 cap12
 
-  method cap12 : string ()
+  method cap12 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[12]>.
 
 =head2 cap13
 
-  method cap13 : string ()
+  method cap13 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[13]>.
 
 =head2 cap14
 
-  method cap14 : string ()
+  method cap14 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[14]>.
 
 =head2 cap15
 
-  method cap15 : string ()
+  method cap15 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[15]>.
 
 =head2 cap16
 
-  method cap16 : string ()
+  method cap16 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[16]>.
 
 =head2 cap17
 
-  method cap17 : string ()
+  method cap17 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[17]>.
 
 =head2 cap18
 
-  method cap18 : string ()
+  method cap18 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[18]>.
 
 =head2 cap19
 
-  method cap19 : string ()
+  method cap19 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[19]>.
 
 =head2 cap20
 
-  method cap20 : string ()
+  method cap20 : string ();
 
 The alias for C<$re-E<gt>captures-E<gt>[20]>.
 
