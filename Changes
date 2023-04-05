@@ -1,4 +1,8 @@
 0.23 2023-04-05
+  [Exception Message Improvement]
+    * Exception messages are improved.
+  [Document Improvement]
+    * Documents are improved.
   [License Change]
     * The license is changed to MIT License.
 0.22 2023-03-31
