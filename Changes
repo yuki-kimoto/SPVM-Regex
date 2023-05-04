@@ -1,4 +1,7 @@
 0.241 2023-05-04
+  [Prerequirement Changes]
+    * SPVM 0.971012+ is required.
+
   [New Features]
     * The Regex::Match class is added.
     * The Regex::ReplaceInfo class is added.
