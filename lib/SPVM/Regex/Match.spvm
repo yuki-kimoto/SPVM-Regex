@@ -2,7 +2,10 @@
 # MIT License
 
 class Regex::Match {
+  allow Regex;
+  
   use Hash;
+  use Array;
   
   has success : byte;
   has captures : string[];
@@ -11,7 +14,7 @@ class Regex::Match {
   has replaced_count : ro int;
   
   # Class Method
-  static method new : Regex::Match ($options : object[]) {
+  static method new : Regex::Match ($options = undef : object[]) {
     
     my $self = new Regex::Match;
     
@@ -25,9 +28,7 @@ class Regex::Match {
     
     $self->{replaced_count} = $options_h->delete_or_default_int("replaced_count", 0);
     
-    my $captures = (string[])$options_h->delete_or_default("captures", new_string_len 0);
-    
-    $self->{captures} = copy $captures;
+    my $captures = (string[])$options_h->delete_or_default("captures", [new_string_len 0]);
     
     for my $name (@{$options_h->keys}) {
       die "The \"$name\" option is not supported";

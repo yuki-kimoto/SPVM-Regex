@@ -36,6 +36,9 @@ class Regex {
   
   method match : int ($string : string, $offset = 0 : int, $length = -1 : int) {
     my $success = $self->match_forward($string, \$offset, $length);
+
+    my $match = Regex::Match->_new(0, [new_string_len 1], 0, 0, ,0);
+    
     return $success;
   }
 
