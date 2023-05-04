@@ -128,7 +128,7 @@ class Regex {
       }
       elsif ($replace isa Regex::Replacer) {
         my $replacer = (Regex::Replacer)$replace;
-        $replace_string = $replacer->($self);
+        $replace_string = $replacer->($self, $regex_match);
       }
       else {
         die "The \$replace must be a string or a Regex::Replacer object";
