@@ -68,10 +68,11 @@ class Regex {
   }
   
   method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[]) {
-    my $new_options_list = List->new($options);
-    $new_options_list->push("global");
-    $new_options_list->push(1);
-    $options = $new_options_list->to_array;
+    unless ($options) {
+      $options = {};
+    }
+    $options = Fn->merge_options({global => 1}, $options);
+    
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   

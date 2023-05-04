@@ -209,10 +209,10 @@ The alias for the following L<replace_common|/"replace_common"> method.
 
 The alias for the following L<replace_common|/"replace_common"> method.
 
-  my $new_options_list = List->new($options);
-  $new_options_list->push("global");
-  $new_options_list->push(1);
-  $options = $new_options_list->to_array;
+  unless ($options) {
+    $options = {};
+  }
+  $options = Fn->merge_options({global => 1}, $options);
   return $self->replace_common($string, $replace, \$offset, $length, $options);
 
 =head2 replace_common
