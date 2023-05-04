@@ -146,14 +146,12 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
     }
     
     {
-      int32_t replaced_count = 0;
       stack[0].ival = success;
       stack[1].oval = obj_captures;
       stack[2].ival = match_start;
       stack[3].ival = match_length;
-      stack[4].ival = replaced_count;
       
-      e = env->call_class_method_by_name(env, stack, "Regex::Match", "_new", 5, __func__, FILE_NAME, __LINE__);
+      e = env->call_class_method_by_name(env, stack, "Regex::Match", "_new", 4, __func__, FILE_NAME, __LINE__);
       if (e) { return e; }
       
       obj_regex_match = stack[0].oval;

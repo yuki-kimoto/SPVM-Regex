@@ -11,7 +11,6 @@ class Regex::Match {
   has captures : string[];
   has match_start : ro int;
   has match_length : ro int;
-  has replaced_count : ro int;
   
   # Class Method
   static method new : Regex::Match ($options = undef : object[]) {
@@ -26,8 +25,6 @@ class Regex::Match {
     
     $self->{match_length} = $options_h->delete_or_default_int("match_length", -1);
     
-    $self->{replaced_count} = $options_h->delete_or_default_int("replaced_count", 0);
-    
     my $captures = (string[])$options_h->delete_or_default("captures", [new_string_len 0]);
     
     for my $name (@{$options_h->keys}) {
@@ -37,13 +34,12 @@ class Regex::Match {
     return $self;
   }
   
-  private static method _new : Regex::Match ($success : int, $captures : string[], $match_start : int, $match_length : int, $replaced_count : int) {
+  private static method _new : Regex::Match ($success : int, $captures : string[], $match_start : int, $match_length : int) {
     my $self = &new({
       success => $success,
       captures => $captures,
       match_start => $match_start,
       match_length => $match_length,
-      replaced_count => $replaced_count,
     });
     
     return $self;
