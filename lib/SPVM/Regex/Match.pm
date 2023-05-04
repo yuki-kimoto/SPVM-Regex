@@ -70,7 +70,11 @@ Creates a new L<Regex::Match> object.
 
 Options:
 
-The options are key-value pairs. Each key must be a string type. Otherwise an exception is thrown.
+The options are key-value pairs.
+
+Each key must be a string type. Otherwise an exception is thrown.
+
+If an unsupported option is specified, an exception is thrown.
 
 =over 2
 
