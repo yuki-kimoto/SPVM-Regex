@@ -25,7 +25,7 @@ class Regex::Match {
     
     $self->{match_length} = $options_h->delete_or_default_int("match_length", -1);
     
-    my $captures = (string[])$options_h->delete_or_default("captures", [new_string_len 0]);
+    my $captures = (string[])$options_h->delete_or_default("captures", new string[0]);
     
     for my $name (@{$options_h->keys}) {
       die "The \"$name\" option is not supported";
