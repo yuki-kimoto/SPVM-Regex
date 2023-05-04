@@ -2,6 +2,7 @@
   [New Features]
     * The Regex::Match class is added.
     * The Regex::ReplaceInfo class is added.
+    * The version string can be got.
   [Changes]
     * The definition of the following methods in the Regex::Replacer interface are changed.
     

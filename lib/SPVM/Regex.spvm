@@ -2,6 +2,8 @@
 # MIT License
 
 class Regex {
+  version "0.241";
+  
   use Fn;
   use Regex::Replacer;
   use Regex::Re2;
