@@ -6,6 +6,7 @@ class Regex {
   use Regex::Replacer;
   use Regex::Re2;
   use Regex::Match;
+  use Regex::ReplaceInfo;
   use Hash;
   use List;
   
@@ -76,13 +77,13 @@ class Regex {
   
   precompile method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length = -1 : int, $options = undef : object[]) {
     
-    my $opt = Hash->new($options);
+    my $optiton_h = Hash->new($options);
     
     my $offset = $$offset_ref;
     my $original_offset = $offset;
     
     my $global = 0;
-    if (my $global_obj = $opt->get("global")) {
+    if (my $global_obj = $optiton_h->get("global")) {
       $global = (int)$global_obj;
     }
     
@@ -149,6 +150,14 @@ class Regex {
       my $next_offset = $match_start + $replace_string_length;
       $offset = $next_offset;
       $length = $result_buffer->length - $offset;
+    }
+    
+    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count});
+    
+    my $option_regex_replace_info = (Regex::ReplaceInfo[])$optiton_h->get("info");
+    
+    if ($option_regex_replace_info) {
+      $option_regex_replace_info->[0] = $regex_replace_info;
     }
     
     $result = $result_buffer->to_string;
