@@ -7,7 +7,7 @@ class Regex::Match {
   use Hash;
   use Array;
   
-  has success : byte;
+  has success : ro byte;
   has captures : string[];
   has match_start : ro int;
   has match_length : ro int;
@@ -27,7 +27,7 @@ class Regex::Match {
     
     my $captures = (string[])$options_h->delete_or_default("captures", new string[0]);
     
-    $self->{captures} = Array->copy_string($captures);
+    $self->{captures} = Array->copy_string_address($captures);
     
     for my $name (@{$options_h->keys}) {
       die "The \"$name\" option is not supported";
@@ -52,7 +52,7 @@ class Regex::Match {
     return $self->{captures}->[$index];
   }
   
-  method captures_length : string () {
+  method captures_length : int () {
     return @{$self->{captures}};
   }
   
