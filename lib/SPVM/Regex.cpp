@@ -169,10 +169,10 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
     int32_t next_offset = (submatch[0].data() - string) + submatch[0].length();
     *offset_ref = next_offset;
     
-    stack[0].ival = 1;
+    stack[0].oval = obj_regex_match;
   }
   else {
-    stack[0].ival = 0;
+    stack[0].oval = obj_regex_match;
   }
   
   return 0;
