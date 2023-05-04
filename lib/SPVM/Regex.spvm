@@ -35,7 +35,8 @@ class Regex {
   private native method compile : void ($pattern : string);
   
   method match : int ($string : string, $offset = 0 : int, $length = -1 : int) {
-    return $self->match_forward($string, \$offset, $length);
+    my $success = $self->match_forward($string, \$offset, $length);
+    return $success;
   }
 
   native method match_forward : int ($string : string, $offset : int*, $length = -1 : int);

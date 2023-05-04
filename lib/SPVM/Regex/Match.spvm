@@ -29,6 +29,22 @@ class Regex::Match {
     
     $self->{captures} = copy $captures;
     
+    for my $name (@{$options_h->keys}) {
+      die "The \"$name\" option is not supported";
+    }
+    
+    return $self;
+  }
+  
+  private static method _new : Regex::Match ($success : int, $captures : string[], $match_start : int, $match_length : int, $replaced_count : int) {
+    my $self = &new({
+      success => $success,
+      captures => $captures,
+      match_start => $match_start,
+      match_length => $match_length,
+      replaced_count => $replaced_count,
+    });
+    
     return $self;
   }
   
