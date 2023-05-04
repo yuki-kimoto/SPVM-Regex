@@ -1,5 +1,6 @@
 class TestCase::Regex {
   use Regex;
+  use Regex::ReplaceInfo;
   
   static method compile : int () {
     my $re = Regex->new("abc");
@@ -14,9 +15,10 @@ class TestCase::Regex {
       my $target = "ppzabczabcz";
       my $offset = 0;
       my $length = -1;
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1});
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
       
-      unless ($re->replaced_count == 2) {
+      unless ($replace_info_ref->[0]->replaced_count == 2) {
         return 0;
       }
       
@@ -31,9 +33,10 @@ class TestCase::Regex {
       my $target = "ppzabczabczabcz";
       my $offset = 6;
       my $length = -1;
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1});
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
       
-      unless ($re->replaced_count == 2) {
+      unless ($replace_info_ref->[0]->replaced_count == 2) {
         return 0;
       }
       
@@ -48,9 +51,10 @@ class TestCase::Regex {
       my $target = "za123bz";
       my $offset = 0;
       my $length = -1;
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1});
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
       
-      unless ($re->replaced_count == 1) {
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
       }
       
@@ -65,9 +69,10 @@ class TestCase::Regex {
       my $target = "pppp";
       my $offset = 0;
       my $length = -1;
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1});
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
       
-      unless ($re->replaced_count == 0) {
+      unless ($replace_info_ref->[0]->replaced_count == 0) {
         return 0;
       }
       
@@ -85,9 +90,10 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "ppzabcz";
       my $offset = 0;
-      my $result = $re->replace_common($target, "ABC", \$offset);
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, -1, {info => $replace_info_ref});
       
-      unless ($re->replaced_count == 1) {
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
       }
       
@@ -101,9 +107,10 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "ppzabczabczabcz";
       my $offset = 6;
-      my $result = $re->replace_common($target, "ABC", \$offset);
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, -1, {info => $replace_info_ref});
       
-      unless ($re->replaced_count == 1) {
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
       }
       
@@ -117,9 +124,10 @@ class TestCase::Regex {
       my $re = Regex->new("a\d+b");
       my $target = "za123bz";
       my $offset = 0;
-      my $result = $re->replace_common($target, "ABC", \$offset);
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, -1, {info => $replace_info_ref});
       
-      unless ($re->replaced_count == 1) {
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
       }
       
@@ -133,9 +141,10 @@ class TestCase::Regex {
       my $re = Regex->new("a\d+b");
       my $target = "pppp";
       my $offset = 0;
-      my $result = $re->replace_common($target, "ABC", \$offset);
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      my $result = $re->replace_common($target, "ABC", \$offset, -1, {info => $replace_info_ref});
       
-      unless ($re->replaced_count == 0) {
+      unless ($replace_info_ref->[0]->replaced_count == 0) {
         return 0;
       }
       
@@ -153,11 +162,12 @@ class TestCase::Regex {
       my $re = Regex->new("a(bc)");
       my $target = "ppzabcz";
       my $offset = 0;
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
       my $result = $re->replace_common($target, method : string ($re : Regex, $match : Regex::Match) {
         return "AB" . $match->captures(1) . "C";
-      }, \$offset);
+      }, \$offset, -1, {info => $replace_info_ref});
       
-      unless ($re->replaced_count == 1) {
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
       }
       
