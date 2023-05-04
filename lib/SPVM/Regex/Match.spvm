@@ -27,6 +27,8 @@ class Regex::Match {
     
     my $captures = (string[])$options_h->delete_or_default("captures", new string[0]);
     
+    $self->{captures} = Array->copy_string($captures);
+    
     for my $name (@{$options_h->keys}) {
       die "The \"$name\" option is not supported";
     }

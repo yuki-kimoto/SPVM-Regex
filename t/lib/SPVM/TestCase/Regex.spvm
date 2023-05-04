@@ -1417,7 +1417,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->cap1 eq "1") {
+      unless ($match->cap1 eq "1") {
         return 0;
       }
       unless ($re->cap2 eq "2") {
