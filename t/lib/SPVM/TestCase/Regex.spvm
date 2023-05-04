@@ -1420,31 +1420,31 @@ class TestCase::Regex {
       unless ($match->cap1 eq "1") {
         return 0;
       }
-      unless ($re->cap2 eq "2") {
+      unless ($match->cap2 eq "2") {
         return 0;
       }
-      unless ($re->cap3 eq "3") {
+      unless ($match->cap3 eq "3") {
         return 0;
       }
-      unless ($re->cap4 eq "4") {
+      unless ($match->cap4 eq "4") {
         return 0;
       }
-      unless ($re->cap5 eq "5") {
+      unless ($match->cap5 eq "5") {
         return 0;
       }
-      unless ($re->cap6 eq "6") {
+      unless ($match->cap6 eq "6") {
         return 0;
       }
-      unless ($re->cap7 eq "7") {
+      unless ($match->cap7 eq "7") {
         return 0;
       }
-      unless ($re->cap8 eq "8") {
+      unless ($match->cap8 eq "8") {
         return 0;
       }
-      unless ($re->cap9 eq "9") {
+      unless ($match->cap9 eq "9") {
         return 0;
       }
-      unless ($re->cap10 eq "10") {
+      unless ($match->cap10 eq "10") {
         return 0;
       }
     }
@@ -1482,15 +1482,15 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->cap1 eq "12") {
+      unless ($match->cap1 eq "12") {
         return 0;
       }
       
-      unless ($re->cap2 eq "34") {
+      unless ($match->cap2 eq "34") {
         return 0;
       }
       
-      unless ($re->cap3 eq "56") {
+      unless ($match->cap3 eq "56") {
         return 0;
       }
     }
@@ -1621,8 +1621,8 @@ class TestCase::Regex {
     
     # URL escape
     my $regex = Regex->new("([^A-Za-z0-9\-\._~])");
-    my $output = $regex->replace_g($input, method : string ($re : Regex) {
-      my $bytes = $re->cap1;
+    my $output = $regex->replace_g($input, method : string ($re : Regex, $match : Regex::Match) {
+      my $bytes = $match->cap1;
       
       my $escaped_char_buffer = StringBuffer->new;
       
@@ -1644,8 +1644,8 @@ class TestCase::Regex {
     
     # URL unescape
     my $regex = Regex->new("%([0-9a-fA-F]{2,2})");
-    my $output = $regex->replace_g($input, method : string ($re : Regex) {
-      my $cap1 = $re->cap1;
+    my $output = $regex->replace_g($input, method : string ($re : Regex, $match : Regex::Match) {
+      my $cap1 = $match->cap1;
       my $hex = Fn->hex($cap1);
       my $ch = (string)[(byte)$hex];
       return $ch;
