@@ -76,6 +76,11 @@ my $start_memory_blocks_count = $api->get_memory_blocks_count();
   }
 }
 
+# Version
+{
+  is($SPVM::Regex::VERSION, SPVM::Fn->get_version_string('Regex'));
+}
+
 # All object is freed
 my $end_memory_blocks_count = $api->get_memory_blocks_count();
 is($end_memory_blocks_count, $start_memory_blocks_count);
