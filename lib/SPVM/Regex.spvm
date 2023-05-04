@@ -5,6 +5,7 @@ class Regex {
   use Fn;
   use Regex::Replacer;
   use Regex::Re2;
+  use Regex::Match;
   use Hash;
   use List;
   
