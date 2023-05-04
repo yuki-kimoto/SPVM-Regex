@@ -179,10 +179,10 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->match_start == 3) {
+      unless ($match->match_start == 3) {
         return 0;
       }
-      unless ($re->match_length == 3) {
+      unless ($match->match_length == 3) {
         return 0;
       }
     }
@@ -197,10 +197,10 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->match_start == 6) {
+      unless ($match->match_start == 6) {
         return 0;
       }
-      unless ($re->match_length == 18) {
+      unless ($match->match_length == 18) {
         return 0;
       }
     }
@@ -215,10 +215,10 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->match_start == 2) {
+      unless ($match->match_start == 2) {
         return 0;
       }
-      unless ($re->match_length == 1) {
+      unless ($match->match_length == 1) {
         return 0;
       }
     }
@@ -234,10 +234,10 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($re->match_start == 0) {
+      unless ($match->match_start == 0) {
         return 0;
       }
-      unless ($re->match_length == 0) {
+      unless ($match->match_length == 0) {
         return 0;
       }
     }
