@@ -2,7 +2,7 @@
 # MIT License
 
 class Regex {
-  version "0.241";
+  version "0.241001";
   
   use Fn;
   use Regex::Replacer;

@@ -1,6 +1,6 @@
 package SPVM::Regex;
 
-our $VERSION = "0.241";
+our $VERSION = "0.241001";
 
 1;
 
