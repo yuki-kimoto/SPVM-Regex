@@ -1,3 +1,6 @@
+0.241002 2023-05-05
+  [Prerequirement Changes]
+    * SPVM 0.973+ is required.
 0.241001 2023-05-05
   * Nothing to changed. This is the relese because the pause indexer failed.
 0.241 2023-05-04
