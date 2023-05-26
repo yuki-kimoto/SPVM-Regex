@@ -112,11 +112,12 @@ class Regex {
     my $result_buffer = StringBuffer->new;
     $result_buffer->push($string);
     
+    my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
       my $result_buffer_value = $result_buffer->to_string;
       
-      my $regex_match = $self->match_forward($result_buffer_value, \$offset, $length);
+      $regex_match = $self->match_forward($result_buffer_value, \$offset, $length);
       
       if ($regex_match) {
         $match_count++;
@@ -155,7 +156,7 @@ class Regex {
       $length = $result_buffer->length - $offset;
     }
     
-    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count});
+    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
     
     my $option_regex_replace_info = (Regex::ReplaceInfo[])$optiton_h->get("info");
     
