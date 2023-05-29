@@ -18,7 +18,7 @@ class Regex {
   has match_length : ro int;
   has replaced_count : ro int;
   
-  static method new : Regex ($pattern : string, $flags = undef : string) {
+  static method new : Regex ($pattern : string, $flags : string = undef) {
     
     my $self = new Regex;
     
@@ -37,12 +37,12 @@ class Regex {
   
   private native method compile : void ($pattern : string);
   
-  method match : Regex::Match ($string : string, $offset = 0 : int, $length = -1 : int) {
+  method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1) {
     my $regex_match = $self->match_forward($string, \$offset, $length);
     return $regex_match;
   }
 
-  native method match_forward : Regex::Match ($string : string, $offset : int*, $length = -1 : int);
+  native method match_forward : Regex::Match ($string : string, $offset : int*, $length : int = -1);
 
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
@@ -65,11 +65,11 @@ class Regex {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
 
-  method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[]) {
+  method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   
-  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset = 0 : int, $length = -1 : int, $options = undef : object[]) {
+  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
     unless ($options) {
       $options = {};
     }
@@ -78,7 +78,7 @@ class Regex {
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   
-  precompile method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length = -1 : int, $options = undef : object[]) {
+  precompile method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
     my $optiton_h = Hash->new($options);
     
@@ -169,7 +169,7 @@ class Regex {
     return $result;
   }
 
-  precompile method split : string[] ($string : string, $limit = 0 : int) {
+  precompile method split : string[] ($string : string, $limit : int = 0) {
     unless ($string) {
       die "The \$string must be defined";
     }

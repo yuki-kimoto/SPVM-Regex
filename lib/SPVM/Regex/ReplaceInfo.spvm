@@ -8,7 +8,7 @@ class Regex::ReplaceInfo {
   has match : ro Regex::Match;
   
   # Class Methods
-  static method new : Regex::ReplaceInfo ($options = undef : object[]) {
+  static method new : Regex::ReplaceInfo ($options : object[] = undef) {
     
     my $self = new Regex::ReplaceInfo;
     

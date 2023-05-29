@@ -45,7 +45,7 @@ This field is set to the result of the pattern match performed by the the L<repl
 
 =head2 new
 
-  static method new : Regex::ReplaceInfo ($options = undef : object[]);
+  static method new : Regex::ReplaceInfo ($options : object[] = undef);
 
 Creates a new L<Regex::ReplaceInfo> object.
 
