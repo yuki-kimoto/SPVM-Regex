@@ -110,7 +110,7 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
     int32_t success = 1;
     int32_t match_start = -1;
     int32_t match_length = -1;
-    void* obj_captures = env->new_object_array(env, stack, SPVM_NATIVE_C_BASIC_TYPE_ID_STRING, doller0_and_captures_length);
+    void* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length);
     if (!obj_captures) {
       return env->die(env, stack, "Captures can't be created", __func__, FILE_NAME, __LINE__);; 
     }
@@ -143,7 +143,7 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
       stack[2].ival = match_start;
       stack[3].ival = match_length;
       
-      e = env->call_class_method_by_name(env, stack, "Regex::Match", "_new", 4, __func__, FILE_NAME, __LINE__);
+      env->call_class_method_by_name(env, stack, "Regex::Match", "_new", 4, &e, __func__, FILE_NAME, __LINE__);
       if (e) { return e; }
       
       obj_regex_match = stack[0].oval;
