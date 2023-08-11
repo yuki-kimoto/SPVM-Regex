@@ -93,13 +93,11 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
   
-  re2::StringPiece stp_string(string, string_length);
-  
   int32_t captures_length = re2->NumberOfCapturingGroups();
   int32_t doller0_and_captures_length = captures_length + 1;
   
   std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
-  int32_t match = re2->Match(stp_string, offset, offset + length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  int32_t match = re2->Match(string, offset, offset + length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
   void* obj_regex_match = NULL;
   if (match) {
