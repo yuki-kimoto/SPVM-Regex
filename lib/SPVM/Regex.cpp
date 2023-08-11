@@ -17,8 +17,6 @@ const char* FILE_NAME = "SPVM/Regex.cpp";
 extern "C" {
 
 int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
-  (void)env;
-  (void)stack;
   
   int32_t e;
 
@@ -56,8 +54,6 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
 }
 
 int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
-  (void)env;
-  (void)stack;
   
   int32_t e = 0;
   
