@@ -115,9 +115,7 @@ class Regex {
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
-      my $result_buffer_value = $result_buffer->to_string;
-      
-      $regex_match = $self->match_forward($result_buffer_value, \$offset, $length);
+      $regex_match = $self->match_forward($result_buffer->get_string_unsafe, \$offset, $length);
       
       if ($regex_match) {
         $match_count++;
