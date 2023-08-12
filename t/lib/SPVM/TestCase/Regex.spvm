@@ -2067,4 +2067,25 @@ class TestCase::Regex {
     
     return 1;
   }
+  
+  static method buffer_replace_g : int () {
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("ppzabczabcz");
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      $re->buffer_replace_g($target, "ABC", $offset, $length, {info => $replace_info_ref});
+      
+      unless ($replace_info_ref->[0]->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target->to_string eq "ppzABCzABCz") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
 }
