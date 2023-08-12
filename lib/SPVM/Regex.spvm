@@ -42,35 +42,7 @@ class Regex {
     return $regex_match;
   }
   
-  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length;
-    }
-    
-    unless ($offset + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, $offset, $length);
-    
-    return $regex_match;
-  }
-  
-  native method match_forward : Regex::Match ($string : string, $offset : int*, $length : int = -1);
-  
-  method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset : int*, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length;
-    }
-    
-    unless ($$offset + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset, $length);
-    
-    return $regex_match;
-  }
+  native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
   
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
@@ -97,10 +69,6 @@ class Regex {
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   
-  method buffer_replace  : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
-  }
-  
   method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
     unless ($options) {
       $options = {};
@@ -110,16 +78,7 @@ class Regex {
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
   
-  method buffer_replace_g  : string ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    unless ($options) {
-      $options = {};
-    }
-    $options = Fn->merge_options({global => 1}, $options);
-    
-    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
-  }
-  
-  precompile method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     my $string_buffer = StringBuffer->new;
     $string_buffer->push($string);
     
@@ -128,6 +87,47 @@ class Regex {
     my $result_string = $string_buffer->to_string;
     
     return $result_string;
+  }
+  
+  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length;
+    }
+    
+    unless ($offset + $length <= $string_buffer->length) {
+      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match($string_buffer->get_string_unsafe, $offset, $length);
+    
+    return $regex_match;
+  }
+  
+  method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length;
+    }
+    
+    unless ($$offset + $length <= $string_buffer->length) {
+      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
+    
+    return $regex_match;
+  }
+  
+  method buffer_replace  : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
+    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
+  }
+  
+  method buffer_replace_g  : string ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
+    unless ($options) {
+      $options = {};
+    }
+    $options = Fn->merge_options({global => 1}, $options);
+    
+    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
   }
   
   precompile method buffer_replace_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
