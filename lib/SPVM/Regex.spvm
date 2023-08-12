@@ -163,7 +163,7 @@ class Regex {
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
-      $regex_match = $self->match_forward($string_buffer->get_string_unsafe, \$offset, $length);
+      $regex_match = $self->buffer_match_forward($string_buffer, \$offset, $length);
       
       if ($regex_match) {
         $match_count++;
