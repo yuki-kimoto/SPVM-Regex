@@ -17,7 +17,7 @@ class TestCase::Regex {
       my $offset = 0;
       my $length = -1;
       my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
+      my $result = $re->replace_g($target, "ABC", $offset, $length, {info => $replace_info_ref});
       
       unless ($replace_info_ref->[0]->replaced_count == 2) {
         return 0;
@@ -35,7 +35,7 @@ class TestCase::Regex {
       my $offset = 6;
       my $length = -1;
       my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
+      my $result = $re->replace_g($target, "ABC", $offset, $length, {info => $replace_info_ref});
       
       unless ($replace_info_ref->[0]->replaced_count == 2) {
         return 0;
@@ -53,7 +53,7 @@ class TestCase::Regex {
       my $offset = 0;
       my $length = -1;
       my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
+      my $result = $re->replace_g($target, "ABC", $offset, $length, {info => $replace_info_ref});
       
       unless ($replace_info_ref->[0]->replaced_count == 1) {
         return 0;
@@ -71,7 +71,7 @@ class TestCase::Regex {
       my $offset = 0;
       my $length = -1;
       my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $result = $re->replace_common($target, "ABC", \$offset, $length, {global => 1, info => $replace_info_ref});
+      my $result = $re->replace_g($target, "ABC", $offset, $length, {info => $replace_info_ref});
       
       unless ($replace_info_ref->[0]->replaced_count == 0) {
         return 0;
