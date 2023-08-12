@@ -108,7 +108,7 @@ class Regex {
       $length = $string_buffer->length;
     }
     
-    unless ($$offset + $length <= $string_buffer->length) {
+    unless ($$offset_ref + $length <= $string_buffer->length) {
       die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
     }
     
