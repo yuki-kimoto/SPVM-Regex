@@ -91,7 +91,7 @@ class Regex {
   
   method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
     if ($length < 0) {
-      $length = $string_buffer->length;
+      $length = $string_buffer->length - $offset;
     }
     
     unless ($offset + $length <= $string_buffer->length) {
@@ -105,11 +105,11 @@ class Regex {
   
   method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
     if ($length < 0) {
-      $length = $string_buffer->length;
+      $length = $string_buffer->length - $$offset_ref;
     }
     
     unless ($$offset_ref + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+      die "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
     }
     
     my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
