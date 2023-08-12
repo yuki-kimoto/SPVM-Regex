@@ -2052,4 +2052,19 @@ class TestCase::Regex {
     
     return 1;
   }
+  
+  static method buffer_replace : int () {
+    
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("ppzabcz");
+      $re->buffer_replace($target, "ABC");
+      
+      unless ($target->to_string eq "ppzABCz") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
 }
