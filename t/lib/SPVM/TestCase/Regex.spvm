@@ -2088,4 +2088,25 @@ class TestCase::Regex {
     
     return 1;
   }
+  
+  static method buffer_replace_common : int () {
+    # Replace
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("ppzabcz");
+      my $offset = 0;
+      my $replace_info_ref = new Regex::ReplaceInfo[1];
+      $re->buffer_replace_common($target, "ABC", \$offset, -1, {info => $replace_info_ref});
+      
+      unless ($replace_info_ref->[0]->replaced_count == 1) {
+        return 0;
+      }
+      
+      unless ($target->to_string eq "ppzABCz") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
 }
