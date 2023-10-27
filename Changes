@@ -1,3 +1,7 @@
+0.243001 2023-10-27
+  [Bug Fix]
+    * Remove using env->get_ref_count native API.
+    
 0.243 2023-08-12
   [Performance Improvement]
     * The performance of the replace method is improved, because the string is not copied repeatedly.

@@ -141,12 +141,6 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
       if (error_id) { return error_id; }
       
       obj_regex_match = stack[0].oval;
-      
-      int32_t ref_count = env->get_ref_count(env, stack, obj_regex_match);
-      
-      if (ref_count == 0) {
-        env->push_mortal(env, stack, obj_regex_match);
-      }
     }
     
     // Next offset
