@@ -12,7 +12,7 @@
 #include <vector>
 #include<memory>
 
-const char* FILE_NAME = "SPVM/Regex.cpp";
+static const char* FILE_NAME = "Regex.cpp";
 
 extern "C" {
 

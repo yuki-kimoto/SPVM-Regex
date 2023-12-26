@@ -1,3 +1,6 @@
+0.244 2023-12-26
+  [Bug Fix]
+    * Fix the bug that FILE_NAME in native source file does not have the file scope.
 0.243001 2023-10-27
   [Bug Fix]
     * Remove using env->get_ref_count native API.
