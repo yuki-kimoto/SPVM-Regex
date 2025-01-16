@@ -4,6 +4,8 @@
 class Regex {
   version "0.244";
   
+  use Resource::RE2;
+  
   use Fn;
   use Regex::Replacer;
   use Regex::Re2;
