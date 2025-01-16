@@ -2,6 +2,8 @@
   [Changes]
     * Load Resource::RE2 class.
     * Add version_from Regex to all classes except for Regex class.
+  [Requirement Changes]
+    * Require SPVM 0.990038.
 0.244 2023-12-26
   [Bug Fix]
     * Fix the bug that FILE_NAME in native source file does not have the file scope.
