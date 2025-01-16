@@ -2,6 +2,8 @@
 # MIT License
 
 class Regex::ReplaceInfo {
+  version_from Regex;
+  
   # Fields
   has replaced_count : ro int;
   

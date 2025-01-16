@@ -2,6 +2,8 @@
 # MIT License
 
 class Regex::Replacer : interface_t {
+  version_from Regex;
+  
   use Regex;
   use Regex::Match;
   
