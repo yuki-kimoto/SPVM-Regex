@@ -9,8 +9,6 @@
 Changes
 lib/SPVM/Regex.config
 lib/SPVM/Regex.cpp
-lib/SPVM/Regex.native/include/.gitkeep
-lib/SPVM/Regex.native/src/.gitkeep
 lib/SPVM/Regex.pm
 lib/SPVM/Regex.spvm
 lib/SPVM/Regex/Match.pm
