@@ -39,8 +39,15 @@ class Regex {
   
   private native method compile : void ($pattern : string);
   
-  method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1) {
-    my $regex_match = $self->match_forward($string, \$offset, $length);
+  method match : Regex::Match ($string : string, $offset_ref : int* = undef, $length : int = -1) {
+    
+    unless ($offset_ref) {
+      my $offset = 0;
+      $offset_ref = \$offset;
+    }
+    
+    my $regex_match = $self->match_forward($string, $offset_ref, $length);
+    
     return $regex_match;
   }
   
@@ -91,16 +98,22 @@ class Regex {
     return $result_string;
   }
   
-  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
+  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
+    
+    unless ($offset_ref) {
+      my $offset = 0;
+      $offset_ref = \$offset;
+    }
+    
     if ($length < 0) {
-      $length = $string_buffer->length - $offset;
+      $length = $string_buffer->length - $$offset_ref;
     }
     
-    unless ($offset + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    unless ($$offset_ref + $length <= $string_buffer->length) {
+      die "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
     }
     
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, $offset, $length);
+    my $regex_match = $self->match($string_buffer->get_string_unsafe, $offset_ref, $length);
     
     return $regex_match;
   }
