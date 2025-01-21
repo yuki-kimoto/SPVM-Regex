@@ -171,7 +171,7 @@ Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $patter
 
 =head2 match
 
-  method match : Regex::Match ($string : string, $offset_ref : int* = undef, $length : int = -1);
+  method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1);
 
 The alias for the following L<match_forward|/"match_forward"> method.
 
@@ -262,7 +262,7 @@ The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, b
 
 =head2 buffer_match
 
-  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int* = undef, $length : int = -1);
+  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1);
 
 The same as L</"match">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the following excetpions are thrown.
 

@@ -1959,7 +1959,7 @@ class TestCase::Regex {
       my $target = StringBuffer->new("zabcz");
       
       my $offset = 0;
-      my $match = $re->buffer_match($target, \$offset);
+      my $match = $re->buffer_match($target, $offset);
       
       unless ($match) {
         return 0;
@@ -1972,7 +1972,7 @@ class TestCase::Regex {
       
       my $offset = 0;
       my $length = -1;
-      my $match = $re->buffer_match($target, \$offset, $length);
+      my $match = $re->buffer_match($target, $offset, $length);
       
       unless ($match) {
         return 0;
@@ -1985,7 +1985,7 @@ class TestCase::Regex {
       
       my $offset = 1;
       my $length = 3;
-      my $match = $re->buffer_match($target, \$offset, $length);
+      my $match = $re->buffer_match($target, $offset, $length);
       
       unless ($match) {
         return 0;
@@ -2000,13 +2000,15 @@ class TestCase::Regex {
         
         my $offset = 1;
         my $length = 4;
-        eval { my $match = $re->buffer_match($target, \$offset, $length); }
+        eval { my $match = $re->buffer_match($target, $offset, $length); }
         
-        unless ($@) {
+        unless (Fn->contains($@, "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.")) {
           return 0;
         }
       }
     }
+    
+    $@ = undef;
     
     return 1;
   }
