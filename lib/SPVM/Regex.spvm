@@ -129,6 +129,71 @@ class Regex {
   method cap19 : string () { return $self->captures->[19]; }
   method cap20 : string () { return $self->captures->[20]; }
   
+  method replace_v2 : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+    
+    my $replace_info_ref = new Regex::ReplaceInfo[1];
+    
+    my $string_ref = (string)undef;
+    if ($string_ref_or_buffer isa string[]) {
+      
+      my $string_ref = (string[])$string_ref_or_buffer;
+      
+      unless (@$string_ref == 1) {
+        die "\$string_ref_or_buffer must be 1-length array if the type is string[].";
+      }
+      
+      my $string = $string_ref->[0];
+      
+      $options = Fn->merge_options($options, {info => $replace_info_ref});
+      
+      my $replaced_string = $self->replace_common($string, $replace, $offset_ref, $length, $options);
+      
+      $string_ref->[0] = $replaced_string;
+    }
+    elsif ($string_ref_or_buffer isa StringBuffer) {
+      
+      my $string_buffer = (StringBuffer)$string_ref_or_buffer;
+      
+      my $offset = 0;
+      if ($offset_ref) {
+        $offset = $$offset_ref;
+      }
+      
+      if ($length < 0) {
+        $length = $string_buffer->length - $offset;
+      }
+      
+      unless ($offset + $length <= $string_buffer->length) {
+        die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+      }
+      
+      $options = Fn->merge_options($options, {info => $replace_info_ref});
+      
+      $self->buffer_replace_common($string_buffer, $replace, $offset_ref, $length, $options);
+    }
+    else {
+      die "The type of \$string_ref_or_buffer must be string[] or StringBuffer.";
+    }
+    
+    my $replace_info = $replace_info_ref->[0];
+    
+    if ($replace_info->replaced_count > 0) {
+      return $replace_info;
+    }
+    else {
+      return undef;
+    }
+  }
+  
+  method replace_v2_g  : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+    unless ($options) {
+      $options = {};
+    }
+    $options = Fn->merge_options($options, {global => 1});
+    
+    return $self->replace_v2($string_ref_or_buffer, $replace, $offset_ref, $length, $options);
+  }
+  
   method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
     return $self->replace_common($string, $replace, \$offset, $length, $options);
   }
