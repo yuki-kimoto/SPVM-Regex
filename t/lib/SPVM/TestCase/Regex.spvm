@@ -2479,4 +2479,44 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method buffer_replace_v2 : int () {
+    
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("ppzabcz");
+      $re->replace_v2($target, "ABC");
+      
+      unless ($target->to_string eq "ppzABCz") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
+  static method buffer_replace_v2_g : int () {
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("ppzabczabcz");
+      my $offset = 0;
+      my $length = -1;
+      my $replace_v2_info_ref = new Regex::ReplaceInfo[1];
+      my $replace_info = $re->replace_v2_g($target, "ABC", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target->to_string eq "ppzABCzABCz") {
+        return 0;
+      }
+      
+      unless ($offset == 10) {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
 }
