@@ -4,6 +4,7 @@
   [Incompatible Changes]
     * Remove Regex#match_start field.
     * Remove Regex#match_length field.
+    * Remove Regex#replaced_count field.
 0.245 2025-01-17
   [Changes]
     * Load Resource::RE2 class.

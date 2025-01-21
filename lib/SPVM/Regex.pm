@@ -132,14 +132,6 @@ The captured strings.
 
 This field is deprecated and will be removed.
 
-=head2 replaced_count
-
-  has replaced_count : ro int;
-
-The replaced count.
-
-This field is deprecated and will be removed.
-
 =head1 Class Methods
 
 =head2 new
