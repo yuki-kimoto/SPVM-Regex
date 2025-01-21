@@ -8,13 +8,13 @@ class Regex {
   
   use Fn;
   use Regex::Replacer;
-  use Regex::Re2;
+  use Regex::RE2;
   use Regex::Match;
   use Regex::ReplaceInfo;
   use Hash;
   use List;
   
-  has re2 : Regex::Re2;
+  has re2 : Regex::RE2;
   
   static method new : Regex ($pattern : string, $flags : string = undef) {
     

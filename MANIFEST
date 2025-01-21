@@ -13,7 +13,7 @@ lib/SPVM/Regex.pm
 lib/SPVM/Regex.spvm
 lib/SPVM/Regex/Match.pm
 lib/SPVM/Regex/Match.spvm
-lib/SPVM/Regex/Re2.spvm
+lib/SPVM/Regex/RE2.spvm
 lib/SPVM/Regex/ReplaceInfo.pm
 lib/SPVM/Regex/ReplaceInfo.spvm
 lib/SPVM/Regex/Replacer.pm

@@ -1,7 +1,7 @@
 # Copyright (c) 2023 Yuki Kimoto
 # MIT License
 
-class Regex::Re2 : pointer {
+class Regex::RE2 : pointer {
   version_from Regex;
 
 }

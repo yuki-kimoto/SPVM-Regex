@@ -7,7 +7,7 @@
     * Remove Regex#replaced_count field.
     * Remove Regex#captures field.
     * Remove Regex#cap1 to cap20 methods.
-    
+    * Rename Regex::Re2 to Regex::RE2.
 0.245 2025-01-17
   [Changes]
     * Load Resource::RE2 class.
