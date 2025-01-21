@@ -2109,4 +2109,81 @@ class TestCase::Regex {
     
     return 1;
   }
+  
+  static method match_v2 : int () {
+
+    # Match string
+    {
+      my $re = Regex->new("abc");
+      my $target = "zabcz";
+      
+      my $match_v2 = $re->match_v2($target);
+      
+      unless ($match_v2) {
+        return 0;
+      }
+    }
+    
+    # Match same string
+    {
+      my $re = Regex->new("abc");
+      my $target = "abc";
+      
+      my $match_v2 = $re->match_v2($target);
+      
+      unless ($match_v2) {
+        return 0;
+      }
+    }
+
+    # ignore case
+    {
+      {
+        my $re = Regex->new("abz", "i");
+        my $target = "zABZz";
+        
+        my $match_v2 = $re->match_v2($target);
+        
+        unless ($match_v2) {
+          return 0;
+        }
+      }
+
+      {
+        my $re = Regex->new("ABZ", "i");
+        my $target = "zabzz";
+        
+        my $match_v2 = $re->match_v2($target);
+        
+        unless ($match_v2) {
+          return 0;
+        }
+      }
+      
+      {
+        my $re = Regex->new("A[B-Z]{2,2}", "i");
+        my $target = "zabzz";
+        
+        my $match_v2 = $re->match_v2($target);
+        
+        unless ($match_v2) {
+          return 0;
+        }
+      }
+
+      {
+        my $re = Regex->new("a[b-z]{2,2}", "i");
+        my $target = "zABZz";
+        
+        my $match_v2 = $re->match_v2($target);
+        
+        unless ($match_v2) {
+          return 0;
+        }
+      }
+    }
+
+    return 1;
+  }
+  
 }

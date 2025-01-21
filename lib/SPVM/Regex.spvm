@@ -74,21 +74,15 @@ class Regex {
     return $regex_match;
   }
   
-  private method match_v2 : Regex::Match ($string_ref_or_buffer : object of string[]|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
+  method match_v2 : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $string = (string)undef;
-    if ($string_ref_or_buffer isa string[]) {
-      my $string_ref = (string[])$string_ref_or_buffer;
-      
-      unless (@$string_ref == 1) {
-        die "\$string_ref_or_buffer must be 1-length array if the type is string[].";
-      }
-      
-      $string = $string_ref->[0];
+    if ($string_or_buffer isa string) {
+      $string = (string)$string_or_buffer;
     }
-    elsif ($string_ref_or_buffer isa StringBuffer) {
+    elsif ($string_or_buffer isa StringBuffer) {
       
-      my $string_buffer = (StringBuffer)$string_ref_or_buffer;
+      my $string_buffer = (StringBuffer)$string_or_buffer;
       
       my $offset = 0;
       if ($offset_ref) {
