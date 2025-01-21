@@ -16,7 +16,6 @@ class Regex {
   
   has re2 : Regex::Re2;
   has captures : ro string[];
-  has match_length : ro int;
   has replaced_count : ro int;
   
   static method new : Regex ($pattern : string, $flags : string = undef) {
@@ -345,8 +344,7 @@ class Regex {
         
         my $part = Fn->substr($string, $current_offset, $match_start - $current_offset);
         $parts_list->push($part);
-        my $match_legnth = $self->match_length;
-        $offset = $match_start + $match_legnth;
+        $offset = $match_start + $match_length;
       }
     }
     if ($offset == $string_length) {

@@ -3,6 +3,7 @@
     * Fix a bug that if $offset_ref argument of Regex#match_foward method is undef, segfault occurs.
   [Incompatible Changes]
     * Remove Regex#match_start field.
+    * Remove Regex#match_length field.
 0.245 2025-01-17
   [Changes]
     * Load Resource::RE2 class.

@@ -132,14 +132,6 @@ The captured strings.
 
 This field is deprecated and will be removed.
 
-=head2 match_length
-
-  has match_length : ro int;
-
-The length of the matched string.
-
-This field is deprecated and will be removed.
-
 =head2 replaced_count
 
   has replaced_count : ro int;
