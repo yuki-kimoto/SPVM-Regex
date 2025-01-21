@@ -122,9 +122,6 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
           match_start = (submatch[0].data() - string);
           match_length = submatch[0].length();
           
-          env->set_field_int_by_name(env, stack, obj_self, "match_start", match_start, &error_id, __func__, FILE_NAME, __LINE__);
-          if (error_id) { return error_id; }
-          
           env->set_field_int_by_name(env, stack, obj_self, "match_length", match_length, &error_id, __func__, FILE_NAME, __LINE__);
           if (error_id) { return error_id; }
         }

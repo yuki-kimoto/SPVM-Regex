@@ -132,14 +132,6 @@ The captured strings.
 
 This field is deprecated and will be removed.
 
-=head2  match_start
-
-  has match_start : ro int;
-
-The start offset of the matched string.
-
-This field is deprecated and will be removed.
-
 =head2 match_length
 
   has match_length : ro int;
