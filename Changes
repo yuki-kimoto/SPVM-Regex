@@ -1,3 +1,7 @@
+0.246 2025-01-21
+  [Bug Fix]
+    * Fix a bug that if $offset_ref argument of Regex#match_foward method is undef, segfault occurs.
+    
 0.245 2025-01-17
   [Changes]
     * Load Resource::RE2 class.

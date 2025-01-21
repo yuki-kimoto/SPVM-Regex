@@ -69,6 +69,12 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t string_length = env->length(env, stack, obj_string);
   
   int32_t* offset_ref = stack[2].iref;
+  
+  if (!offset_ref) {
+    int32_t offset_tmp = 0;
+    offset_ref = &offset_tmp;
+  }
+  
   int32_t offset = *offset_ref;
   if (offset < 0) {
     return env->die(env, stack, "The string offset must be greater than or equal to 0", __func__, FILE_NAME, __LINE__);
