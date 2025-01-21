@@ -53,6 +53,7 @@ my $start_memory_blocks_count = $api->get_memory_blocks_count();
   ok(SPVM::TestCase::Regex->match_v2_forward);
   ok(SPVM::TestCase::Regex->buffer_match_v2);
   ok(SPVM::TestCase::Regex->buffer_match_v2_forward);
+  ok(SPVM::TestCase::Regex->replace_v2);
 
   # Extra
   {

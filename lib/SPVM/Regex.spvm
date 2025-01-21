@@ -235,7 +235,11 @@ class Regex {
     
     my $optiton_h = Hash->new($options);
     
-    my $offset = $$offset_ref;
+    my $offset = 0;
+    if ($offset_ref) {
+      $offset = $$offset_ref;
+    }
+    
     my $original_offset = $offset;
     
     my $global = 0;
@@ -309,6 +313,10 @@ class Regex {
     
     if ($option_regex_replace_info) {
       $option_regex_replace_info->[0] = $regex_replace_info;
+    }
+    
+    if ($offset_ref) {
+      $$offset_ref = $offset;
     }
   }
   
