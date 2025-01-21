@@ -2407,4 +2407,76 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method replace_v2_g : int () {
+    # Replace all
+    {
+      my $re = Regex->new("abc");
+      my $target_ref = ["ppzabczabcz"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = $re->replace_v2_g($target_ref, "ABC", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzABCzABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all offset
+    {
+      my $re = Regex->new("abc");
+      my $target_ref = ["ppzabczabczabcz"];
+      my $offset = 6;
+      my $length = -1;
+      my $replace_info = $re->replace_v2_g($target_ref, "ABC", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzabczABCzABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all with number
+    {
+      my $re = Regex->new("a\d+b");
+      my $target_ref = ["za123bz"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = $re->replace_v2_g($target_ref, "ABC", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 1) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "zABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all - Not replace_v2_g
+    {
+      my $re = Regex->new("a\d+b");
+      my $target_ref = ["pppp"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = $re->replace_v2_g($target_ref, "ABC", \$offset, $length);
+      
+      if ($replace_info) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "pppp") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
 }
