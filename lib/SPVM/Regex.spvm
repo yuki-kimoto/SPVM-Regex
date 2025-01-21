@@ -74,6 +74,46 @@ class Regex {
     return $regex_match;
   }
   
+  private method match_v2 : Regex::Match ($string_ref_or_buffer : object of string[]|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
+    
+    my $string = (string)undef;
+    if ($string_ref_or_buffer isa string[]) {
+      my $string_ref = (string[])$string_ref_or_buffer;
+      
+      unless (@$string_ref == 1) {
+        die "\$string_ref_or_buffer must be 1-length array if the type is string[].";
+      }
+      
+      $string = $string_ref->[0];
+    }
+    elsif ($string_ref_or_buffer isa StringBuffer) {
+      
+      my $string_buffer = (StringBuffer)$string_ref_or_buffer;
+      
+      my $offset = 0;
+      if ($offset_ref) {
+        $offset = $$offset_ref;
+      }
+      
+      if ($length < 0) {
+        $length = $string_buffer->length - $offset;
+      }
+      
+      unless ($offset + $length <= $string_buffer->length) {
+        die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+      }
+      
+      $string = $string_buffer->get_string_unsafe;
+    }
+    else {
+      die "The type of \$string_ref_or_buffer must be string or StringBuffer.";
+    }
+    
+    my $regex_match = $self->match_forward($string, $offset_ref, $length);
+    
+    return $regex_match;
+  }
+  
   method cap1 : string () { return $self->captures->[1]; }
   method cap2 : string () { return $self->captures->[2]; }
   method cap3 : string () { return $self->captures->[3]; }
