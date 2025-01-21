@@ -2,6 +2,7 @@ class TestCase::Regex {
   use Regex;
   use Regex::ReplaceInfo;
   use StringBuffer;
+  use Re;
   
   static method compile : int () {
     my $re = Regex->new("abc");
@@ -2513,6 +2514,85 @@ class TestCase::Regex {
       
       unless ($offset == 10) {
         return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
+  static method m : int () {
+    
+    # Match string
+    {
+      my $re = "abc";
+      my $target = "zabcz";
+      
+      my $match = Re->m($target, $re);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    # Match same string
+    {
+      my $re = "abc";
+      my $target = "abc";
+      
+      my $match = Re->m($target, $re);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    # ignore case
+    {
+      {
+        my $re = "abz";
+        my $flags = "i";
+        my $target = "zABZz";
+        
+        my $match = Re->m($target, $re, $flags);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
+      {
+        my $re = "ABZ";
+        my $flags = "i";
+        my $target = "zabzz";
+        
+        my $match = Re->m($target, $re, $flags);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
+      {
+        my $re = "A[B-Z]{2,2}";
+        my $flags = "i";
+        my $target = "zabzz";
+        my $match = Re->m($target, $re, $flags);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
+      {
+        my $re = "a[b-z]{2,2}";
+        my $flags = "i";
+        my $target = "zABZz";
+        
+        my $match = Re->m($target, $re, $flags);
+        
+        unless ($match) {
+          return 0;
+        }
       }
     }
     

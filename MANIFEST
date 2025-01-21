@@ -7,6 +7,8 @@
 .github/workflows/windows-latest.yml
 .gitignore
 Changes
+lib/SPVM/Re.pm
+lib/SPVM/Re.spvm
 lib/SPVM/Regex.config
 lib/SPVM/Regex.cpp
 lib/SPVM/Regex.pm
