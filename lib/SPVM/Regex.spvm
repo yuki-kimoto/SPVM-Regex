@@ -31,8 +31,6 @@ class Regex {
     return $self;
   }
   
-  native method DESTROY : void ();
-  
   private native method compile : void ($pattern : string);
   
   method match_v2 : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
@@ -345,5 +343,8 @@ class Regex {
     
     return $parts;
   }
+  
+  native method DESTROY : void ();
+  
 }
 
