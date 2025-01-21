@@ -2223,4 +2223,115 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method buffer_match_v2 : int () {
+
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("zabcz");
+      
+      my $match = $re->match_v2($target);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("zabcz");
+      
+      my $offset = 0;
+      my $match = $re->match_v2($target, \$offset);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("zabcz");
+      
+      my $offset = 0;
+      my $length = -1;
+      my $match = $re->match_v2($target, \$offset, $length);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("zabc");
+      
+      my $offset = 1;
+      my $length = 3;
+      my $match = $re->match_v2($target, \$offset, $length);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
+    # Exceptions
+    {
+      {
+        my $re = Regex->new("abc");
+        my $target = StringBuffer->new("zabc");
+        
+        my $offset = 1;
+        my $length = 4;
+        eval { my $match = $re->match_v2($target, \$offset, $length); }
+        
+        unless ($@) {
+          return 0;
+        }
+      }
+    }
+    
+    $@ = undef;
+    
+    return 1;
+  }
+  
+  static method buffer_match_v2_forward : int () {
+    
+    # Match string
+    {
+      my $re = Regex->new("abc");
+      my $target = StringBuffer->new("zabcz");
+      
+      my $offset = 1;
+      my $match = $re->match_v2($target, \$offset);
+      
+      unless ($match) {
+        return 0;
+      }
+      
+      unless ($offset == 4) {
+        return 0;
+      }
+    }
+    
+    # Exceptions
+    {
+      {
+        my $re = Regex->new("abc");
+        my $target = StringBuffer->new("zabc");
+        
+        my $offset = 1;
+        my $length = 4;
+        eval { my $match = $re->match_v2($target, \$offset, $length); }
+        
+        unless ($@) {
+          return 0;
+        }
+      }
+    }
+    
+    $@ = undef;
+    
+    return 1;
+  }
 }
