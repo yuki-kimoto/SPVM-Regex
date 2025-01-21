@@ -127,8 +127,6 @@ int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
           env->set_elem_object(env, stack, obj_captures, i, obj_capture);
         }
       }
-      env->set_field_object_by_name(env, stack, obj_self, "captures", obj_captures, &error_id, __func__, FILE_NAME, __LINE__);
-      if (error_id) { return error_id; }
     }
     
     {
