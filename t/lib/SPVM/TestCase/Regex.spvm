@@ -2744,4 +2744,23 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method re_split : int () {
+    {
+      my $string = "foo  bar   baz";
+      my $splited_strings = Re->split("\s+", undef, $string);
+      unless (Array->equals_string($splited_strings, ["foo", "bar", "baz"])) {
+        return 0;
+      }
+    }
+    
+    {
+      my $string = "foo,bar,baz";
+      my $splited_strings = Re->split(",", undef, $string, 2);
+      unless (Array->equals_string($splited_strings, ["foo", "bar,baz"])) {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
 }

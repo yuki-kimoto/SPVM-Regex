@@ -60,6 +60,7 @@ my $start_memory_blocks_count = $api->get_memory_blocks_count();
   ok(SPVM::TestCase::Regex->m);
   ok(SPVM::TestCase::Regex->s);
   ok(SPVM::TestCase::Regex->s_g);
+  ok(SPVM::TestCase::Regex->re_split);
 
   # Extra
   {

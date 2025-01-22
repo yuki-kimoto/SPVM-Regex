@@ -108,4 +108,14 @@ class Re {
     return $replace_info;
   }
   
+  static method split : string[] ($pattern : string, $flags : string, $string : string, $limit : int = 0) {
+    
+    my $is_global = 0;
+    my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
+    
+    my $parts = $regex->split($string, $limit);
+    
+    return $parts;
+  }
+  
 }
