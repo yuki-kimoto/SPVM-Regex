@@ -10,52 +10,32 @@ SPVM::Re - Short Description
 
 =head1 Description
 
-Re class in L<SPVM> has methods to do someting.
+Re class in L<SPVM> has methods for Perlish regular expression.
 
 =head1 Usage
 
   use Re;
-
-=head1 Details
-
-
-
-=head1 Super Class
-
-
-
-=head1 Interfaces
-
-
-
-=head1 Enumerations
-
-
-
-=head1 Fields
-
-
+  
+  my $string = "Hello World"
+  my $match = Re->m($string, "^Hellow");
+  
+  # ABC de ABC
+  my $string = "abc de abc";
+  Re->s($string, "abc", "ABC", "g");
 
 =head1 Class Methods
 
+=head2 m
 
+C<static method m : Regex::Match ($string_or_buffer : object of string|StringBuffer, $pattern : string, $flags : string = undef, $offset_ref : int* = undef, $length : int = -1);>
 
-=head1 Instance Methods
+=head2 s
 
+C<static method s : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $pattern : string, $replace : object of string|Regex::Replacer, $flags : string = undef, $offset_ref : int* = undef, $length : int = -1);>
 
+=head2 split
 
-=head1 See Also
-
-
-
-
-=head1 Repository
-
-
-
-=head1 Author
-
-Yuki Kimoto C<kimoto.yuki@gmail.com>
+C<static method split : string[] ($pattern : object of string|string[], $flags : string, $string : string, $limit : int = 0);>
 
 =head1 Copyright & License
 
