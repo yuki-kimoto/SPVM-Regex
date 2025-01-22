@@ -2599,4 +2599,149 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method s : int () {
+    # Replace
+    {
+      my $re = "abc";
+      my $target_ref = ["ppzabcz"];
+      my $replace_info = Re->s($target_ref, $re, "ABC");
+      
+      unless ($replace_info) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzABCz") {
+        return 0;
+      }
+    }
+    
+    # Not Replace
+    {
+      my $re ="abd";
+      my $target_ref = ["ppzabcz"];
+      my $replace_info = Re->s($target_ref, $re, "ABC");
+      
+      if ($replace_info) {
+        return 0;
+      }
+      
+    }
+    
+    # Replace offset
+    {
+      my $re = "abc";
+      my $target_ref = ["ppzabczabczabcz"];
+      my $offset = 6;
+      my $replace_info = Re->s($target_ref, $re, "ABC", undef, \$offset);
+      
+      unless ($replace_info) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzabczABCzabcz") {
+        return 0;
+      }
+    }
+    
+    # Replace - capture
+    {
+      my $re = "^(\d+)a(\d+)$";
+      my $target_ref = ["123a456"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = Re->s($target_ref, $re, "", undef, \$offset, $length);
+      
+      unless ($replace_info) {
+        return 0;
+      }
+      
+      unless ($replace_info->match->cap1 eq "123") {
+        return 0;
+      }
+      
+      unless ($replace_info->match->cap2 eq "456") {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
+  static method s_g : int () {
+    
+    # Replace all
+    {
+      my $re = "abc";
+      my $target_ref = ["ppzabczabcz"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = Re->s($target_ref, $re, "ABC", "g", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzABCzABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all offset
+    {
+      my $re = "abc";
+      my $target_ref = ["ppzabczabczabcz"];
+      my $offset = 6;
+      my $length = -1;
+      my $replace_info = Re->s($target_ref, $re, "ABC", "g", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 2) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "ppzabczABCzABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all with number
+    {
+      my $re = "a\d+b";
+      my $target_ref = ["za123bz"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = Re->s($target_ref, $re, "ABC", "g", \$offset, $length);
+      
+      unless ($replace_info->replaced_count == 1) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "zABCz") {
+        return 0;
+      }
+    }
+    
+    # Replace all - Not replace
+    {
+      my $re = "a\d+b";
+      my $target_ref = ["pppp"];
+      my $offset = 0;
+      my $length = -1;
+      my $replace_info = Re->s($target_ref, $re, "ABC", "g", \$offset, $length);
+      
+      if ($replace_info) {
+        return 0;
+      }
+      
+      unless ($target_ref->[0] eq "pppp") {
+        return 0;
+      }
+    }
+    
+    return 1;
+  }
+  
 }
