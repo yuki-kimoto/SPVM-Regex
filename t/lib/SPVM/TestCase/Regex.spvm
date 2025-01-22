@@ -2534,6 +2534,18 @@ class TestCase::Regex {
       }
     }
     
+    # Match string - cached
+    {
+      my $re = "abc";
+      my $target = "zabcz";
+      
+      my $match = Re->m($target, $re);
+      
+      unless ($match) {
+        return 0;
+      }
+    }
+    
     # Match same string
     {
       my $re = "abc";
