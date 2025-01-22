@@ -11,12 +11,10 @@ class Re {
   # Fields
   our $MUTEX : Sync::Mutex;
   
-  our $REGEXES_H : Hash of Regex;
+  our $REGEXES_H : cache Hash of Regex;
   
   INIT {
     $MUTEX = Sync::Mutex->new;
-    
-    $REGEXES_H = Hash->new;
   }
   
   static method m : Regex::Match ($string_or_buffer : object of string|StringBuffer, $pattern : string, $flags : string = undef, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
@@ -66,7 +64,9 @@ class Re {
       
       $MUTEX->reader_lock;
       
-      $regex = (Regex)$REGEXES_H->get($regex_key);
+      if ($REGEXES_H) {
+        $regex = (Regex)$REGEXES_H->get($regex_key);
+      }
     }
     
     unless ($regex) {
@@ -75,6 +75,10 @@ class Re {
       });
       
       $MUTEX->lock;
+      
+      unless ($REGEXES_H) {
+        $REGEXES_H = Hash->new;
+      }
       
       $regex = Regex->new($pattern, $flags_without_g);
       $REGEXES_H->set($regex_key, $regex);
