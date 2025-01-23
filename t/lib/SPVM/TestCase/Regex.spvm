@@ -420,7 +420,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      $@ = undef;
+      
     }
     
     # Capture zero more only
@@ -756,7 +756,7 @@ class TestCase::Regex {
       }
     }
     
-    $@ = undef;
+    
     
     return 1;
   }
@@ -1936,7 +1936,7 @@ class TestCase::Regex {
         }
       }
       
-      $@ = undef;
+      
     }
 
     return 1;
@@ -2009,7 +2009,7 @@ class TestCase::Regex {
       }
     }
     
-    $@ = undef;
+    
     
     return 1;
   }
@@ -2049,7 +2049,7 @@ class TestCase::Regex {
       }
     }
     
-    $@ = undef;
+    
     
     return 1;
   }
@@ -2291,7 +2291,7 @@ class TestCase::Regex {
       }
     }
     
-    $@ = undef;
+    
     
     return 1;
   }
@@ -2331,7 +2331,7 @@ class TestCase::Regex {
       }
     }
     
-    $@ = undef;
+    
     
     return 1;
   }
