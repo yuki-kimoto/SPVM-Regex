@@ -86,7 +86,20 @@ class Re {
     return $regex;
   }
   
-  static method m : Regex::Match ($string_or_buffer : object of string|StringBuffer, $pattern : string, $flags : string = undef, $offset_ref : int* = undef, $length : int = -1) {
+  static method m : Regex::Match ($string_or_buffer : object of string|StringBuffer, $pattern_and_flags : object of string|string[], $offset_ref : int* = undef, $length : int = -1) {
+    
+    my $pattern = (string)undef;
+    my $flags = (string)undef;
+    if ($pattern_and_flags isa string) {
+      $pattern = (string)$pattern_and_flags;
+    }
+    elsif ($pattern_and_flags isa string[]) {
+      $pattern = $pattern_and_flags->(string[])->[0];
+      $flags = $pattern_and_flags->(string[])->[1];
+    }
+    else {
+      die "The type of \$pattern_and_flags must be string or string[].";
+    }
     
     my $is_global = 0;
     my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
@@ -96,7 +109,20 @@ class Re {
     return $match;
   }
   
-  static method s : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $pattern : string, $replace : object of string|Regex::Replacer, $flags : string = undef, $offset_ref : int* = undef, $length : int = -1) {
+  static method s : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $pattern_and_flags : object of string|string[], $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
+    
+    my $pattern = (string)undef;
+    my $flags = (string)undef;
+    if ($pattern_and_flags isa string) {
+      $pattern = (string)$pattern_and_flags;
+    }
+    elsif ($pattern_and_flags isa string[]) {
+      $pattern = $pattern_and_flags->(string[])->[0];
+      $flags = $pattern_and_flags->(string[])->[1];
+    }
+    else {
+      die "The type of \$pattern_and_flags must be string or string[].";
+    }
     
     my $is_global = 0;
     my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
