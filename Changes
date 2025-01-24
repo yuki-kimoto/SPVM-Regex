@@ -1,7 +1,8 @@
-0.247 2025-01-22
+0.246 2025-01-24
+  [New Features]
+    * Add Re class.
   [Requirement Changes]
     * Require SPVM 0.990042.
-0.246 2025-01-21
   [Bug Fix]
     * Fix a bug that if $offset_ref argument of Regex#match_foward method is undef, segfault occurs.
   [Incompatible Changes]
