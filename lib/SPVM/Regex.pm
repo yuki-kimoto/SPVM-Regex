@@ -17,7 +17,20 @@ The Regex class of L<SPVM> has methods for regular expressions.
 L<Google RE2|https://github.com/google/re2> is used as the regular expression library.
 
 =head1 Usage
+
+B<Re:>
+
+  use Re;
   
+  my $string = "Hello World"
+  my $match = Re->m($string, "^Hellow");
+  
+  # ABC de ABC
+  my $string_ref = ["abc de abc"];
+  Re->s($string_ref, ["abc", "g"], "ABC");
+
+B<Regex:>
+
   use Regex;
   
   # Pattern match
@@ -109,6 +122,12 @@ L<Google RE2|https://github.com/google/re2> is used as the regular expression li
       return 0;
     }
   }
+
+=head1 Details
+
+=head2 More Perlish Pattern Match and Replacement
+
+See L<Re|SPVM::Re> class if you want to use more Perlish pattern match and replacement.
 
 =head1 Dependent Resources
 
