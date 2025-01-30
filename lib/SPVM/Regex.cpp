@@ -24,10 +24,6 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   void* obj_pattern = stack[1].oval;
   
-  if (!obj_pattern) {
-    return env->die(env, stack, "The regex pattern must be defined", __func__, FILE_NAME, __LINE__);
-  }
-  
   const char* pattern = env->get_chars(env, stack, obj_pattern);
   int32_t pattern_length = env->length(env, stack, obj_pattern);
   
