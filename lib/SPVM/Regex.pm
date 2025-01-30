@@ -162,15 +162,15 @@ C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object 
 
 Performs pattern matching on the substring from the offset $$offset_ref to the length $length of the string or the StringBuffer object $string_or_buffer.
 
-The $$offset_ref is updated to the next position.
+$$offset_ref is updated to the next position.
 
 If the pattern matching is successful, returns a L<Regex::Match|SPVM::Regex::Match> object. Otherwise returns undef.
 
 Exceptions:
 
-The $string must be defined. Otherwise an exception is thrown.
+$string must be defined. Otherwise an exception is thrown.
 
-The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+$offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
 
 If the regex is not compiled, an exception is thrown.
 
@@ -202,90 +202,27 @@ If this option is specifed, the first element of the array is set to a L<Regex::
 
 Exceptions:
 
-The $string must be defined. Otherwise an exception is thrown.
+$string_ref_or_buffer must be defined. Otherwise an exception is thrown.
 
-The $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
+$replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
 
-The $offset must be greater than or equal to 0. Otherwise an exception is thrown.
+$offset must be greater than or equal to 0. Otherwise an exception is thrown.
 
-The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+$offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
 
 Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 replace_g
 
 C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
-  
+
 Calls L</replace> method given the same arguments but with C<global> option set to 1, and returns its return value.
-
-=head2 replace_common
-
-  method replace_common : string ($string : string, $replace : object of string|Regex::Replacer,
-    $offset_ref : int*, $length : int = -1, $options : object[] = undef);
-
-Replaces the substring from the offset $$offset_ref to the length $length of the string $string with the replacement string or callback $replace with the options $options.
-
-If the $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
-
-Options:
-
-=over 2
-
-=item * C<global>
-
-This option must be a L<Int|SPVM::Int> object. Otherwise an exception is thrown.
-
-If the value of the L<Int|SPVM::Int> object is a true value, the global replacement is performed.
-
-=item * C<info>
-
-This option must be an array of the L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object. Otherwise an exception is thrown.
-
-If this option is specifed, the first element of the array is set to a L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object of the replacement result.
-
-=back
-
-Exceptions:
-
-The $string must be defined. Otherwise an exception is thrown.
-
-The $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
-
-The $offset must be greater than or equal to 0. Otherwise an exception is thrown.
-
-The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
-
-Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 split
 
-  method split : string[] ($string : string, $limit : int = 0);
+C<method split : string[] ($string : string, $limit : int = 0);>
 
 The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, but the regular expression is used as the separator.
-
-=head2 buffer_replace
-
-  method buffer_replace  : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef);
-
-The same as L</"replace">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the return type is void.
-
-The replacement is performed on the string buffer.
-
-=head2 buffer_replace_g
-
-  method buffer_replace_g  : string ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef);
-
-The same as L</"replace_g">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the return type is void.
-
-The replacement is performed on the string buffer.
-
-=head2 buffer_replace_common
-
-  method buffer_replace_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef);
-
-The same as L</"replace_common">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the return type is void.
-
-The replacement is performed on the string buffer.
 
 =head1 Repository
 

@@ -53,7 +53,7 @@ class Regex {
       }
       
       unless ($offset + $length <= $string_buffer->length) {
-        die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+        die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
       }
       
       $string = $string_buffer->get_string_unsafe;
@@ -102,7 +102,7 @@ class Regex {
       }
       
       unless ($offset + $length <= $string_buffer->length) {
-        die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+        die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
       }
       
       $options = Fn->merge_options($options, {info => $replace_info_ref});
@@ -127,7 +127,93 @@ class Regex {
     return $self->replace($string_ref_or_buffer, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
   }
   
-  method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  precompile method split : string[] ($string : string, $limit : int = 0) {
+    unless ($string) {
+      die "\$string must be defined";
+    }
+    
+    my $string_length = length $string;
+    
+    my $parts_list = StringList->new_len(0);
+    
+    my $offset = 0;
+    my $match_count = 0;
+    for (my $i = 0; $i < $string_length; $i++) {
+      if ($limit > 0 && $match_count >= $limit - 1) {
+        last;
+      }
+      
+      my $current_offset = $offset;
+      my $regex_match = $self->match_forward($string, \$offset);
+      if ($regex_match) {
+        $match_count++;
+        
+        my $match_start = $regex_match->match_start;
+        my $match_length = $regex_match->match_length;
+        
+        my $part = Fn->substr($string, $current_offset, $match_start - $current_offset);
+        $parts_list->push($part);
+        $offset = $match_start + $match_length;
+      }
+    }
+    if ($offset == $string_length) {
+      $parts_list->push("");
+    }
+    else {
+      my $part = Fn->substr($string, $offset, $string_length - $offset);
+      $parts_list->push($part);
+    }
+    
+    if ($limit == 0) {
+      while ($parts_list->length > 0) {
+        if ($parts_list->get($parts_list->length - 1) eq "") {
+          $parts_list->pop;
+        }
+        else {
+          last;
+        }
+      }
+    }
+    
+    my $parts = $parts_list->to_array;
+    
+    return $parts;
+  }
+  
+  native method DESTROY : void ();
+  
+  # Private Instance Methods
+  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
+  
+  private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length - $offset;
+    }
+    
+    unless ($offset + $length <= $string_buffer->length) {
+      die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
+    
+    return $regex_match;
+  }
+  
+  private method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length - $$offset_ref;
+    }
+    
+    unless ($$offset_ref + $length <= $string_buffer->length) {
+      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
+    
+    return $regex_match;
+  }
+  
+  private method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     my $string_buffer = StringBuffer->new;
     $string_buffer->push($string);
     
@@ -138,20 +224,7 @@ class Regex {
     return $result_string;
   }
   
-  method buffer_replace  : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
-  }
-  
-  method buffer_replace_g  : string ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    unless ($options) {
-      $options = {};
-    }
-    $options = Fn->merge_options({global => 1}, $options);
-    
-    $self->buffer_replace_common($string_buffer, $replace, \$offset, $length, $options);
-  }
-  
-  precompile method buffer_replace_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  private precompile method buffer_replace_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
     my $optiton_h = Hash->new($options);
     
@@ -168,11 +241,11 @@ class Regex {
     }
     
     unless ($string_buffer) {
-      die "The \$string must be defined";
+      die "\$string must be defined";
     }
     
     unless ($offset >= 0) {
-      die "The \$offset must be greater than or equal to 0";
+      die "\$offset must be greater than or equal to 0";
     }
     
     my $string_length = $string_buffer->length;
@@ -182,7 +255,7 @@ class Regex {
     }
     
     unless ($offset + $length <= $string_length) {
-      die "The \$offset + the \$length must be less than or equal to the length of the \$string";
+      die "\$offset + the \$length must be less than or equal to the length of the \$string";
     }
     
     my $regex_match = (Regex::Match)undef;
@@ -206,7 +279,7 @@ class Regex {
         $replace_string = $replacer->($self, $regex_match);
       }
       else {
-        die "The \$replace must be a string or a Regex::Replacer object";
+        die "\$replace must be a string or a Regex::Replacer object";
       }
       
       my $replace_string_length = length $replace_string;
@@ -236,92 +309,6 @@ class Regex {
     if ($offset_ref) {
       $$offset_ref = $offset;
     }
-  }
-  
-  precompile method split : string[] ($string : string, $limit : int = 0) {
-    unless ($string) {
-      die "The \$string must be defined";
-    }
-    
-    my $string_length = length $string;
-    
-    my $parts_list = StringList->new_len(0);
-    
-    my $offset = 0;
-    my $match_count = 0;
-    for (my $i = 0; $i < $string_length; $i++) {
-      if ($limit > 0 && $match_count >= $limit - 1) {
-        last;
-      }
-      
-      my $current_offset = $offset;
-      my $regex_match = $self->match_forward($string, \$offset);
-      if ($regex_match) {
-        $match_count++;
-
-        my $match_start = $regex_match->match_start;
-        my $match_length = $regex_match->match_length;
-        
-        my $part = Fn->substr($string, $current_offset, $match_start - $current_offset);
-        $parts_list->push($part);
-        $offset = $match_start + $match_length;
-      }
-    }
-    if ($offset == $string_length) {
-      $parts_list->push("");
-    }
-    else {
-      my $part = Fn->substr($string, $offset, $string_length - $offset);
-      $parts_list->push($part);
-    }
-
-    if ($limit == 0) {
-      while ($parts_list->length > 0) {
-        if ($parts_list->get($parts_list->length - 1) eq "") {
-          $parts_list->pop;
-        }
-        else {
-          last;
-        }
-      }
-    }
-    
-    my $parts = $parts_list->to_array;
-    
-    return $parts;
-  }
-  
-  native method DESTROY : void ();
-  
-  # Private Instance Methods
-  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
-  
-  private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length - $offset;
-    }
-    
-    unless ($offset + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
-    
-    return $regex_match;
-  }
-  
-  private method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length - $$offset_ref;
-    }
-    
-    unless ($$offset_ref + $length <= $string_buffer->length) {
-      die "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
-    
-    return $regex_match;
   }
   
 }
