@@ -84,7 +84,7 @@ class Regex {
       
       $options = Fn->merge_options($options, {info => $replace_info_ref});
       
-      my $replaced_string = $self->replace_common($string, $replace, $offset_ref, $length, $options);
+      my $replaced_string = $self->replace_string($string, $replace, $offset_ref, $length, $options);
       
       $string_ref->[0] = $replaced_string;
     }
@@ -107,7 +107,7 @@ class Regex {
       
       $options = Fn->merge_options($options, {info => $replace_info_ref});
       
-      $self->buffer_replace_common($string_buffer, $replace, $offset_ref, $length, $options);
+      $self->replace_buffer_common($string_buffer, $replace, $offset_ref, $length, $options);
     }
     else {
       die "The type of \$string_ref_or_buffer must be string[] or StringBuffer.";
@@ -213,18 +213,18 @@ class Regex {
     return $regex_match;
   }
   
-  private method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  private method replace_string : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     my $string_buffer = StringBuffer->new;
     $string_buffer->push($string);
     
-    $self->buffer_replace_common($string_buffer, $replace, $offset_ref, $length, $options);
+    $self->replace_buffer_common($string_buffer, $replace, $offset_ref, $length, $options);
     
     my $result_string = $string_buffer->to_string;
     
     return $result_string;
   }
   
-  private precompile method buffer_replace_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
     my $optiton_h = Hash->new($options);
     
