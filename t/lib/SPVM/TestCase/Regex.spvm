@@ -2336,7 +2336,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method replace_v2 : int () {
+  static method replace_v2_extra : int () {
     # Replace
     {
       my $re = Regex->new("abc");
@@ -2408,7 +2408,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method replace_v2_g : int () {
+  static method replace_v2_extra_g : int () {
     # Replace all
     {
       my $re = Regex->new("abc");
@@ -2480,7 +2480,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_replace_v2 : int () {
+  static method buffer_replace_v2_extra : int () {
     
     {
       my $re = Regex->new("abc");
@@ -2495,7 +2495,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_replace_v2_g : int () {
+  static method buffer_replace_v2_extra_g : int () {
     {
       my $re = Regex->new("abc");
       my $target = StringBuffer->new("ppzabczabcz");
