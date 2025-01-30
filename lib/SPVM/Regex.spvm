@@ -67,7 +67,7 @@ class Regex {
     return $regex_match;
   }
   
-  native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
+  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
   
   method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
     if ($length < 0) {
