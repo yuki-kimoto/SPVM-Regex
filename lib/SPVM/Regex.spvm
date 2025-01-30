@@ -33,7 +33,7 @@ class Regex {
   
   private native method compile : void ($pattern : string);
   
-  method match_v2 : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
+  method match : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $string = (string)undef;
     if ($string_or_buffer isa string) {
@@ -67,11 +67,6 @@ class Regex {
     return $regex_match;
   }
   
-  method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1) {
-    my $regex_match = $self->match_forward($string, \$offset, $length);
-    return $regex_match;
-  }
-  
   native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
   
   method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
@@ -83,7 +78,7 @@ class Regex {
       die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
     }
     
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, $offset, $length);
+    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
     
     return $regex_match;
   }

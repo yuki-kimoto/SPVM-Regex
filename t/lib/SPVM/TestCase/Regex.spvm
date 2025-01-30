@@ -2111,14 +2111,14 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method match_v2_extra : int () {
+  static method match_extra : int () {
 
     # Match string
     {
       my $re = Regex->new("abc");
       my $target = "zabcz";
       
-      my $match = $re->match_v2($target);
+      my $match = $re->match($target);
       
       unless ($match) {
         return 0;
@@ -2130,7 +2130,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "abc";
       
-      my $match = $re->match_v2($target);
+      my $match = $re->match($target);
       
       unless ($match) {
         return 0;
@@ -2143,7 +2143,7 @@ class TestCase::Regex {
         my $re = Regex->new("abz", "i");
         my $target = "zABZz";
         
-        my $match = $re->match_v2($target);
+        my $match = $re->match($target);
         
         unless ($match) {
           return 0;
@@ -2154,7 +2154,7 @@ class TestCase::Regex {
         my $re = Regex->new("ABZ", "i");
         my $target = "zabzz";
         
-        my $match = $re->match_v2($target);
+        my $match = $re->match($target);
         
         unless ($match) {
           return 0;
@@ -2165,7 +2165,7 @@ class TestCase::Regex {
         my $re = Regex->new("A[B-Z]{2,2}", "i");
         my $target = "zabzz";
         
-        my $match = $re->match_v2($target);
+        my $match = $re->match($target);
         
         unless ($match) {
           return 0;
@@ -2176,7 +2176,7 @@ class TestCase::Regex {
         my $re = Regex->new("a[b-z]{2,2}", "i");
         my $target = "zABZz";
         
-        my $match = $re->match_v2($target);
+        my $match = $re->match($target);
         
         unless ($match) {
           return 0;
@@ -2187,14 +2187,14 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method match_v2_extra_forward : int () {
+  static method match_extra_forward : int () {
     
     # Not Match string
     {
       my $re = Regex->new("abc");
       my $target = "zabcz";
       
-      my $match = (my $offset = 2, $re->match_v2($target, \$offset));
+      my $match = (my $offset = 2, $re->match($target, \$offset));
       
       if ($match) {
         return 0;
@@ -2210,7 +2210,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = "zabcz";
       
-      my $match = (my $offset = 1, $re->match_v2($target, \$offset));
+      my $match = (my $offset = 1, $re->match($target, \$offset));
       
       unless ($match) {
         return 0;
@@ -2224,13 +2224,13 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match_v2_extra : int () {
+  static method buffer_match_extra : int () {
 
     {
       my $re = Regex->new("abc");
       my $target = StringBuffer->new("zabcz");
       
-      my $match = $re->match_v2($target);
+      my $match = $re->match($target);
       
       unless ($match) {
         return 0;
@@ -2242,7 +2242,7 @@ class TestCase::Regex {
       my $target = StringBuffer->new("zabcz");
       
       my $offset = 0;
-      my $match = $re->match_v2($target, \$offset);
+      my $match = $re->match($target, \$offset);
       
       unless ($match) {
         return 0;
@@ -2255,7 +2255,7 @@ class TestCase::Regex {
       
       my $offset = 0;
       my $length = -1;
-      my $match = $re->match_v2($target, \$offset, $length);
+      my $match = $re->match($target, \$offset, $length);
       
       unless ($match) {
         return 0;
@@ -2268,7 +2268,7 @@ class TestCase::Regex {
       
       my $offset = 1;
       my $length = 3;
-      my $match = $re->match_v2($target, \$offset, $length);
+      my $match = $re->match($target, \$offset, $length);
       
       unless ($match) {
         return 0;
@@ -2283,7 +2283,7 @@ class TestCase::Regex {
         
         my $offset = 1;
         my $length = 4;
-        eval { my $match = $re->match_v2($target, \$offset, $length); }
+        eval { my $match = $re->match($target, \$offset, $length); }
         
         unless ($@) {
           return 0;
@@ -2296,7 +2296,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match_v2_extra_forward : int () {
+  static method buffer_match_extra_forward : int () {
     
     # Match string
     {
@@ -2304,7 +2304,7 @@ class TestCase::Regex {
       my $target = StringBuffer->new("zabcz");
       
       my $offset = 1;
-      my $match = $re->match_v2($target, \$offset);
+      my $match = $re->match($target, \$offset);
       
       unless ($match) {
         return 0;
@@ -2323,7 +2323,7 @@ class TestCase::Regex {
         
         my $offset = 1;
         my $length = 4;
-        eval { my $match = $re->match_v2($target, \$offset, $length); }
+        eval { my $match = $re->match($target, \$offset, $length); }
         
         unless ($@) {
           return 0;

@@ -104,7 +104,7 @@ class Re {
     my $is_global = 0;
     my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
     
-    my $match = $regex->match_v2($string_or_buffer, $offset_ref, $length);
+    my $match = $regex->match($string_or_buffer, $offset_ref, $length);
     
     return $match;
   }

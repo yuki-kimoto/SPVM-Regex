@@ -158,11 +158,21 @@ Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $patter
 
 =head2 match
 
-  method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1);
+C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1);>
 
-The alias for the following L<match_forward|/"match_forward"> method.
+Performs pattern matching on the substring from the offset $$offset_ref to the length $length of the string or the StringBuffer object $string_or_buffer.
 
-  my $ret = $self->match_forward($string, \$offset, $length);
+The $$offset_ref is updated to the next position.
+
+If the pattern matching is successful, returns a L<Regex::Match|SPVM::Regex::Match> object. Otherwise returns undef.
+
+Exceptions:
+
+The $string must be defined. Otherwise an exception is thrown.
+
+The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+
+If the regex is not compiled, an exception is thrown.
 
 =head2 match_forward
 
