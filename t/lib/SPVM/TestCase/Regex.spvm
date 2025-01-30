@@ -2111,7 +2111,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method match_v2 : int () {
+  static method match_v2_extra : int () {
 
     # Match string
     {
@@ -2187,7 +2187,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method match_v2_forward : int () {
+  static method match_v2_extra_forward : int () {
     
     # Not Match string
     {
@@ -2224,7 +2224,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match_v2 : int () {
+  static method buffer_match_v2_extra : int () {
 
     {
       my $re = Regex->new("abc");
@@ -2296,7 +2296,7 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match_v2_forward : int () {
+  static method buffer_match_v2_extra_forward : int () {
     
     # Match string
     {
