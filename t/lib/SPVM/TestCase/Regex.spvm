@@ -1948,7 +1948,7 @@ class TestCase::Regex {
       my $re = Regex->new("abc");
       my $target = StringBuffer->new("zabcz");
       
-      my $match = $re->buffer_match($target);
+      my $match = $re->match($target);
       
       unless ($match) {
         return 0;
@@ -1960,7 +1960,7 @@ class TestCase::Regex {
       my $target = StringBuffer->new("zabcz");
       
       my $offset = 0;
-      my $match = $re->buffer_match($target, $offset);
+      my $match = $re->match($target, \$offset);
       
       unless ($match) {
         return 0;
@@ -1973,7 +1973,7 @@ class TestCase::Regex {
       
       my $offset = 0;
       my $length = -1;
-      my $match = $re->buffer_match($target, $offset, $length);
+      my $match = $re->match($target, \$offset, $length);
       
       unless ($match) {
         return 0;
@@ -1986,7 +1986,7 @@ class TestCase::Regex {
       
       my $offset = 1;
       my $length = 3;
-      my $match = $re->buffer_match($target, $offset, $length);
+      my $match = $re->match($target, \$offset, $length);
       
       unless ($match) {
         return 0;
@@ -2001,7 +2001,7 @@ class TestCase::Regex {
         
         my $offset = 1;
         my $length = 4;
-        eval { my $match = $re->buffer_match($target, $offset, $length); }
+        eval { my $match = $re->match($target, \$offset, $length); }
         
         unless (Fn->contains($@, "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.")) {
           return 0;
@@ -2022,7 +2022,7 @@ class TestCase::Regex {
       my $target = StringBuffer->new("zabcz");
       
       my $offset = 1;
-      my $match = $re->buffer_match_forward($target, \$offset);
+      my $match = $re->match($target, \$offset);
       
       unless ($match) {
         return 0;
@@ -2041,9 +2041,9 @@ class TestCase::Regex {
         
         my $offset = 1;
         my $length = 4;
-        eval { my $match = $re->buffer_match_forward($target, \$offset, $length); }
+        eval { my $match = $re->match($target, \$offset, $length); }
         
-        unless (Fn->contains($@, "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.")) {
+        unless ($@) {
           return 0;
         }
       }

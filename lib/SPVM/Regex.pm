@@ -174,24 +174,6 @@ The $offset + the $length must be less than or equal to the length of the $strin
 
 If the regex is not compiled, an exception is thrown.
 
-=head2 match_forward
-
-  method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
-
-Performs pattern matching on the substring from the offset $$offset_ref to the length $length of the string $string.
-
-The $$offset_ref is updated to the next position.
-
-If the pattern matching is successful, returns a L<Regex::Match|SPVM::Regex::Match> object. Otherwise returns undef.
-
-Exceptions:
-
-The $string must be defined. Otherwise an exception is thrown.
-
-The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
-
-If the regex is not compiled, an exception is thrown.
-
 =head2 replace
 
   method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef)
@@ -256,26 +238,6 @@ Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
   method split : string[] ($string : string, $limit : int = 0);
 
 The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, but the regular expression is used as the separator.
-
-=head2 buffer_match
-
-  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1);
-
-The same as L</"match">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the following excetpions are thrown.
-
-Exceptions:
-
-The $offset + $length must be less than or equalt to the lenght of the $string_buffer. Otherwise an exception is thrown.
-
-=head2 buffer_match_forward
-
-  method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1);
-
-The same as L</"match_forward">, but the first argument is a L<StringBuffer|SPVM::StringBuffer> object, and the following excetpions are thrown.
-
-Exceptions:
-
-The $offset + $length must be less than or equalt to the lenght of the $string_buffer. Otherwise an exception is thrown.
 
 =head2 buffer_replace
 

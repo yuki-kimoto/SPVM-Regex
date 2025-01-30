@@ -67,36 +67,6 @@ class Regex {
     return $regex_match;
   }
   
-  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
-  
-  method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length - $offset;
-    }
-    
-    unless ($offset + $length <= $string_buffer->length) {
-      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
-    
-    return $regex_match;
-  }
-  
-  method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length - $$offset_ref;
-    }
-    
-    unless ($$offset_ref + $length <= $string_buffer->length) {
-      die "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
-    }
-    
-    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
-    
-    return $regex_match;
-  }
-  
   method replace_v2 : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
     my $replace_info_ref = new Regex::ReplaceInfo[1];
@@ -340,6 +310,37 @@ class Regex {
   }
   
   native method DESTROY : void ();
+  
+  # Private Instance Methods
+  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
+  
+  private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length - $offset;
+    }
+    
+    unless ($offset + $length <= $string_buffer->length) {
+      die "The \$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
+    
+    return $regex_match;
+  }
+  
+  private method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
+    if ($length < 0) {
+      $length = $string_buffer->length - $$offset_ref;
+    }
+    
+    unless ($$offset_ref + $length <= $string_buffer->length) {
+      die "The \$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+    }
+    
+    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
+    
+    return $regex_match;
+  }
   
 }
 
