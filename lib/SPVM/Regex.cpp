@@ -33,10 +33,10 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   std::unique_ptr<RE2> re2(new RE2(stp_pattern, options));
   
-  std::string error = re2->error();
-  std::string error_arg = re2->error_arg();
-  
   if (!re2->ok()) {
+    std::string error = re2->error();
+    std::string error_arg = re2->error_arg();
+    
     return env->die(env, stack, "The regex pattern $pattern %s can't be compiled. %s. [Place]%s", pattern, error.data(), error_arg.data(), __func__, FILE_NAME, __LINE__);
   }
   
