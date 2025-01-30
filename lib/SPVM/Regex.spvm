@@ -67,7 +67,7 @@ class Regex {
     return $regex_match;
   }
   
-  method replace_v2 : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
     my $replace_info_ref = new Regex::ReplaceInfo[1];
     
@@ -123,26 +123,8 @@ class Regex {
     }
   }
   
-  method replace_v2_g  : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
-    unless ($options) {
-      $options = {};
-    }
-    $options = Fn->merge_options($options, {global => 1});
-    
-    return $self->replace_v2($string_ref_or_buffer, $replace, $offset_ref, $length, $options);
-  }
-  
-  method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    return $self->replace_common($string, $replace, \$offset, $length, $options);
-  }
-  
-  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef) {
-    unless ($options) {
-      $options = {};
-    }
-    $options = Fn->merge_options({global => 1}, $options);
-    
-    return $self->replace_common($string, $replace, \$offset, $length, $options);
+  method replace_g  : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+    return $self->replace($string_ref_or_buffer, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
   }
   
   method replace_common : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {

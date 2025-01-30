@@ -129,7 +129,7 @@ class Re {
     
     my $options = Fn->merge_options(undef, {global => $is_global});
     
-    my $replace_info = $regex->replace_v2($string_ref_or_buffer, $replace, $offset_ref, $length, $options);
+    my $replace_info = $regex->replace($string_ref_or_buffer, $replace, $offset_ref, $length, $options);
     
     return $replace_info;
   }

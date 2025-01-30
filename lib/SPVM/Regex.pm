@@ -158,7 +158,7 @@ Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $patter
 
 =head2 match
 
-C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1);>
+C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|L<StringBuffer|SPVM::StringBuffer>, $offset_ref : int* = undef, $length : int = -1);>
 
 Performs pattern matching on the substring from the offset $$offset_ref to the length $length of the string or the StringBuffer object $string_or_buffer.
 
@@ -176,23 +176,47 @@ If the regex is not compiled, an exception is thrown.
 
 =head2 replace
 
-  method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef)
+  method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef)
+  
+Replaces the substring from the offset $$offset_ref to the length $length of the string $string with the replacement string or callback $replace with the options $options.
 
-The alias for the following L<replace_common|/"replace_common"> method.
+If the $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
 
-  my $ret = $self->replace_common($string, $replace, \$offset, $length, $options);
+Options:
+
+=over 2
+
+=item * C<global>
+
+This option must be a L<Int|SPVM::Int> object. Otherwise an exception is thrown.
+
+If the value of the L<Int|SPVM::Int> object is a true value, the global replacement is performed.
+
+=item * C<info>
+
+This option must be an array of the L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object. Otherwise an exception is thrown.
+
+If this option is specifed, the first element of the array is set to a L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object of the replacement result.
+
+=back
+
+Exceptions:
+
+The $string must be defined. Otherwise an exception is thrown.
+
+The $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
+
+The $offset must be greater than or equal to 0. Otherwise an exception is thrown.
+
+The $offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+
+Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 replace_g
 
-  method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef)
-
-The alias for the following L<replace_common|/"replace_common"> method.
-
-  unless ($options) {
-    $options = {};
-  }
-  $options = Fn->merge_options({global => 1}, $options);
-  return $self->replace_common($string, $replace, \$offset, $length, $options);
+C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
+  
+Calls L</replace> method given the same arguments but with C<global> option set to 1, and returns its return value.
 
 =head2 replace_common
 
