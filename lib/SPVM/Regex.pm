@@ -168,9 +168,11 @@ If the pattern matching is successful, returns a L<Regex::Match|SPVM::Regex::Mat
 
 Exceptions:
 
-$string must be defined. Otherwise an exception is thrown.
+$string_or_buffer must be defined. Otherwise an exception is thrown.
 
-$offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+The type of $string_ref_or_buffer must be string or StringBuffer. Otherwise an exception is thrown.
+
+$$offset_ref + $length must be less than or equal to the length of $string_or_buffer. Otherwise an exception is thrown.
 
 If the regex is not compiled, an exception is thrown.
 
@@ -180,7 +182,7 @@ If the regex is not compiled, an exception is thrown.
   
 Replaces the substring from the offset $$offset_ref to the length $length of the string $string with the replacement string or callback $replace with the options $options.
 
-If the $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
+If $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
 
 Options:
 
@@ -192,12 +194,6 @@ This option must be a L<Int|SPVM::Int> object. Otherwise an exception is thrown.
 
 If the value of the L<Int|SPVM::Int> object is a true value, the global replacement is performed.
 
-=item * C<info>
-
-This option must be an array of the L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object. Otherwise an exception is thrown.
-
-If this option is specifed, the first element of the array is set to a L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object of the replacement result.
-
 =back
 
 Exceptions:
@@ -206,9 +202,9 @@ $string_ref_or_buffer must be defined. Otherwise an exception is thrown.
 
 $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
 
-$offset must be greater than or equal to 0. Otherwise an exception is thrown.
+$$offset_ref must be greater than or equal to 0. Otherwise an exception is thrown.
 
-$offset + the $length must be less than or equal to the length of the $string. Otherwise an exception is thrown.
+$$offset_ref + $length must be less than or equal to the length of $string. Otherwise an exception is thrown.
 
 Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
