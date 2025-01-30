@@ -39,21 +39,21 @@ B<Regex:>
     my $string = "zabcz";
     my $match = $re->match("zabcz");
   }
-
+  
   # Pattern match - UTF-8
   {
     my $re = Regex->new("あ+");
     my $string = "いあああい";
     my $match = $re->match($string);
   }
-
+  
   # Pattern match - Character class and the nagation
   {
     my $re = Regex->new("[A-Z]+[^A-Z]+");
     my $string = "ABCzab";
     my $match = $re->match($string);
   }
-
+  
   # Pattern match with captures
   {
     my $re = Regex->new("^(\w+) (\w+) (\w+)$");
@@ -71,42 +71,46 @@ B<Regex:>
   {
     my $re = Regex->new("abc");
     my $string = "ppzabcz";
+    my $string_ref = [$string];
     
     # "ppzABCz"
-    my $result = $re->replace($string, "ABC");
+    $re->replace($string_ref, "ABC");
   }
-
+  
   # Replace with a callback and capture
   {
     my $re = Regex->new("a(bc)");
     my $string = "ppzabcz";
+    my $string_ref = [$string];
     
     # "ppzABbcCz"
-    my $result = $re->replace($string, method : string ($re : Regex, $match : Regex::Match) {
+    $re->replace($string_ref, method : string ($re : Regex, $match : Regex::Match) {
       return "AB" . $match->cap1 . "C";
     });
   }
-
+  
   # Replace global
   {
     my $re = Regex->new("abc");
     my $string = "ppzabczabcz";
+    my $string_ref = [$string];
     
     # "ppzABCzABCz"
-    my $result = $re->replace_g($string, "ABC");
+    $re->replace_g($string_ref, "ABC");
   }
-
+  
   # Replace global with a callback and capture
   {
     my $re = Regex->new("a(bc)");
     my $string = "ppzabczabcz";
+    my $string_ref = [$string];
     
     # "ppzABCbcPQRSzABCbcPQRSz"
-    my $result = $re->replace_g($string, method : string ($re : Regex, $match : Regex::Match) {
+    $re->replace_g($string_ref, method : string ($re : Regex, $match : Regex::Match) {
       return "ABC" . $match->cap1 . "PQRS";
     });
   }
-
+  
   # . - single line mode
   {
     my $re = Regex->new("(.+)", "s");
@@ -125,31 +129,27 @@ B<Regex:>
 
 =head1 Details
 
-=head2 More Perlish Pattern Match and Replacement
-
-See L<Re|SPVM::Re> class if you want to use more Perlish pattern match and replacement.
-
-=head1 Dependent Resources
-
-=over 2
-
-=item * L<SPVM::Resource::RE2>
-
-=back
-
 =head1 Regular Expression Syntax
 
-L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax>
+See L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax> about the syntax of regular expressions.
 
-=head1 Fields
+=head2 More Perlish Pattern Match and Replacement
+
+Use L<Re|SPVM::Re> class if you want to use more Perlish pattern match and replacement.
 
 =head1 Class Methods
 
 =head2 new
 
-  static method new : Regex ($pattern : string, $flags : string = undef)
+C<static method new : Regex ($pattern : string, $flags : string = undef);>
 
-Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $pattern with the flags $flags, and retruns the created object.
+Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $pattern with the flags $flags, and retruns the new object.
+
+Exceptions:
+
+The regex pattern $pattern must be defined. Otherwise an exception is thrown.
+
+Examples:
 
   my $re = Regex->new("^ab+c");
   my $re = Regex->new("^ab+c", "s");
@@ -223,6 +223,14 @@ The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, b
 =head1 Repository
 
 L<SPVM::Regex - Github|https://github.com/yuki-kimoto/SPVM-Regex>
+
+=head1 See Also
+
+=over 2
+
+L<SPVM::Resource::RE2>
+
+=back
 
 =head1 Author
 

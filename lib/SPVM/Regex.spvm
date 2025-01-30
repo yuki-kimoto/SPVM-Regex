@@ -18,21 +18,36 @@ class Regex {
   
   static method new : Regex ($pattern : string, $flags : string = undef) {
     
+    unless ($pattern) {
+      die "The regex pattern \$pattern must be defined.";
+    }
+    
     my $self = new Regex;
     
-    my $re2_pattern = $pattern;
-    
-    if ($flags) {
-      $re2_pattern = "(?$flags)$re2_pattern";
-    }
+    my $re2_pattern = &create_re2_pattern($pattern, $flags);;
     
     $self->compile($re2_pattern);
     
     return $self;
   }
   
+  # Private class methods
+  private static method create_re2_pattern : string ($pattern : string, $flags : string = undef) {
+    
+    my $re2_pattern = (string)undef;
+    if ($flags) {
+      $re2_pattern = "(?$flags)$pattern";
+    }
+    else {
+      $re2_pattern = $pattern;
+    }
+    
+    return $re2_pattern;
+  }
+  
   private native method compile : void ($pattern : string);
   
+  # Instance Methods
   method match : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $string = (string)undef;
