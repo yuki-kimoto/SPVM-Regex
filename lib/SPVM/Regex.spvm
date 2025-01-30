@@ -62,7 +62,7 @@ class Regex {
       die "The type of \$string_ref_or_buffer must be string or StringBuffer.";
     }
     
-    my $regex_match = $self->match_forward($string, $offset_ref, $length);
+    my $regex_match = $self->match_string($string, $offset_ref, $length);
     
     return $regex_match;
   }
@@ -144,7 +144,7 @@ class Regex {
       }
       
       my $current_offset = $offset;
-      my $regex_match = $self->match_forward($string, \$offset);
+      my $regex_match = $self->match_string($string, \$offset);
       if ($regex_match) {
         $match_count++;
         
@@ -183,7 +183,7 @@ class Regex {
   native method DESTROY : void ();
   
   # Private Instance Methods
-  private native method match_forward : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
+  private native method match_string : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
   
   private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
     if ($length < 0) {
@@ -199,7 +199,7 @@ class Regex {
     return $regex_match;
   }
   
-  private method buffer_match_forward : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
+  private method buffer_match_string : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
     if ($length < 0) {
       $length = $string_buffer->length - $$offset_ref;
     }
@@ -208,7 +208,7 @@ class Regex {
       die "\$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
     }
     
-    my $regex_match = $self->match_forward($string_buffer->get_string_unsafe, $offset_ref, $length);
+    my $regex_match = $self->match_string($string_buffer->get_string_unsafe, $offset_ref, $length);
     
     return $regex_match;
   }
@@ -261,7 +261,7 @@ class Regex {
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
-      $regex_match = $self->buffer_match_forward($string_buffer, \$offset, $length);
+      $regex_match = $self->buffer_match_string($string_buffer, \$offset, $length);
       
       if ($regex_match) {
         $match_count++;

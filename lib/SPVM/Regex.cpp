@@ -53,7 +53,7 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   return 0;
 }
 
-int32_t SPVM__Regex__match_forward(SPVM_ENV* env, SPVM_VALUE* stack) {
+int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   int32_t error_id = 0;
   
