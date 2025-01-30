@@ -37,7 +37,7 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   std::string error_arg = re2->error_arg();
   
   if (!re2->ok()) {
-    return env->die(env, stack, "The regex pattern %s can't be compiled. [Error]%s. [Fragment]%s", pattern, error.data(), error_arg.data(), __func__, FILE_NAME, __LINE__);
+    return env->die(env, stack, "The regex pattern $pattern %s can't be compiled. %s. [Place]%s", pattern, error.data(), error_arg.data(), __func__, FILE_NAME, __LINE__);
   }
   
   void* obj_re2 = env->new_pointer_object_by_name(env, stack, "Regex::RE2", re2.release(), &error_id, __func__, FILE_NAME, __LINE__);

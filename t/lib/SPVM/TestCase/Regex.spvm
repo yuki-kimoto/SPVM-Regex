@@ -5,7 +5,10 @@ class TestCase::Regex {
   use Re;
   
   static method compile : int () {
-    my $re = Regex->new("abc");
+    
+    {
+      my $re = Regex->new("abc");
+    }
     
     return 1;
   }
