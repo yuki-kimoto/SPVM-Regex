@@ -1,3 +1,41 @@
+0.247 2025-01-31
+  [Incompatible Changes]
+    * Change the defintion of Regex#match method.
+      
+      [Before]
+      method match : Regex::Match ($string : string, $offset : int = 0, $length : int = -1);
+      
+      [After]
+      method match : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1)
+   
+    * Remove Regex#match_forward method in favor of match method.
+    * Remove Regex#buffer_match method in favor of match method.
+    * Remove Regex#buffer_match_forward method in favor of match method.
+    * Change the definitions of Regex#replace method.
+     
+      [Before]
+      method replace  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef)
+      
+      [After]
+      method replace : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef)
+
+    * Change the definitions of Regex#replace_g method.
+     
+      [Before]
+      method replace_g  : string ($string : string, $replace : object of string|Regex::Replacer, $offset : int = 0, $length : int = -1, $options : object[] = undef)
+      
+      [After]
+      method replace_g  : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef)
+
+    * Remove Regex#replace_common method in favor of replace method.
+    * Remove Regex#buffer_replace_common method in favor of replace method.
+    * Remove Regex#buffer_replace method in favor of replace method.
+    * Remove Regex#buffer_replace_g method in favor of replace_g method.
+  [Exception Changes]
+    * Add an excetpion to Regex#new method.
+    
+      The regex pattern $pattern must be defined. Otherwise an exception is thrown.
+    
 0.246 2025-01-24
   [New Features]
     * Add Re class.
