@@ -162,11 +162,13 @@ Examples:
 
 C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|L<StringBuffer|SPVM::StringBuffer>, $offset_ref : int* = undef, $length : int = -1);>
 
-Performs pattern matching on the substring from the offset $$offset_ref to the length $length of the string or the StringBuffer object $string_or_buffer.
+Performs a pattern match on the string or the StringBuffer object $string_or_buffer from the offset $$offset_ref to the length $length.
 
-$$offset_ref is updated to the next position.
+If the pattern match succeeds, return a new L<Regex::Match|SPVM::Regex::Match> object, otherwise returns undef.
 
-If the pattern matching is successful, returns a L<Regex::Match|SPVM::Regex::Match> object. Otherwise returns undef.
+$$offset_ref is updated to the next position if it is specified.
+
+If $length is less than 0, it is set to the length of $string_or_buffer.
 
 Exceptions:
 
@@ -176,15 +178,19 @@ The type of $string_ref_or_buffer must be string or StringBuffer. Otherwise an e
 
 $$offset_ref + $length must be less than or equal to the length of $string_or_buffer. Otherwise an exception is thrown.
 
-If the regex is not compiled, an exception is thrown.
-
 =head2 replace
 
-  method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef)
-  
-Replaces the substring from the offset $$offset_ref to the length $length of the string $string with the replacement string or callback $replace with the options $options.
+C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
 
-If $replace is a L<Regex::Replacer|SPVM::Regex::Replacer> object, the return value of the callback is used for the replacement.
+The string to be replaced is either $string_ref_or_buffer->[0] when the type is string or $string_ref_or_buffer when the type is StringBuffer.
+
+Replaces the string from the offset $$offset_ref to the length $length with the replacement string or the callback $replace with the options $options using a regular expression.
+
+$$offset_ref is updated to the next position if it is specified.
+
+If $length is less than 0, it is set to the length of $string_or_buffer.
+
+If the replacement succeeds, returns a new L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo>, otherwise retunrs undef.
 
 Options:
 
@@ -202,11 +208,13 @@ Exceptions:
 
 $string_ref_or_buffer must be defined. Otherwise an exception is thrown.
 
+The type of $string_ref_or_buffer must be string or StringBuffer. Otherwise an exception is thrown.
+
 $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
 
 $$offset_ref must be greater than or equal to 0. Otherwise an exception is thrown.
 
-$$offset_ref + $length must be less than or equal to the length of $string. Otherwise an exception is thrown.
+$$offset_ref + $length must be less than or equal to the length of $string_ref_or_buffer. Otherwise an exception is thrown.
 
 Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 

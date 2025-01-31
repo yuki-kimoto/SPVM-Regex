@@ -68,7 +68,7 @@ class Regex {
       }
       
       unless ($offset + $length <= $string_buffer->length) {
-        die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_or_buffer.";
       }
       
       $string = $string_buffer->get_string_unsafe;
@@ -117,7 +117,7 @@ class Regex {
       }
       
       unless ($offset + $length <= $string_buffer->length) {
-        die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
       }
       
       $options = Fn->merge_options($options, {info => $replace_info_ref});
@@ -144,7 +144,7 @@ class Regex {
   
   precompile method split : string[] ($string : string, $limit : int = 0) {
     unless ($string) {
-      die "\$string must be defined";
+      die "The string \$string must be defined";
     }
     
     my $string_length = length $string;
@@ -206,7 +206,7 @@ class Regex {
     }
     
     unless ($offset + $length <= $string_buffer->length) {
-      die "\$offset + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
     }
     
     my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
@@ -220,7 +220,7 @@ class Regex {
     }
     
     unless ($$offset_ref + $length <= $string_buffer->length) {
-      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of the \$string_buffer.";
+      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
     }
     
     my $regex_match = $self->match_string($string_buffer->get_string_unsafe, $offset_ref, $length);
@@ -270,7 +270,7 @@ class Regex {
     }
     
     unless ($offset + $length <= $string_length) {
-      die "\$offset + the \$length must be less than or equal to the length of the \$string";
+      die "\$offset + \$length must be less than or equal to the length of \$string";
     }
     
     my $regex_match = (Regex::Match)undef;
