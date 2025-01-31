@@ -4,12 +4,27 @@ class TestCase::Regex {
   use StringBuffer;
   use Re;
   
-  static method compile : int () {
+  static method new : int () {
     
     {
       my $re = Regex->new("abc");
     }
     
+    # Exceptions
+    {
+      # Invalid regex
+      {
+        eval { Regex->new(")abc"); };
+        unless ($@) {
+          return 0;
+        }
+        
+        eval { Regex->new("((abc)"); };
+        unless ($@) {
+          return 0;
+        }
+      }
+    }
     return 1;
   }
 
@@ -420,20 +435,6 @@ class TestCase::Regex {
       }
     }
 
-    # Capture error
-    {
-      eval { Regex->new(")abc"); };
-      unless ($@) {
-        return 0;
-      }
-      eval { Regex->new("((abc)"); };
-      unless ($@) {
-        return 0;
-      }
-      
-      
-    }
-    
     # Capture zero more only
     {
       my $re = Regex->new("(a*)");
