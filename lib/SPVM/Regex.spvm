@@ -117,7 +117,7 @@ class Regex {
       }
       
       unless ($offset + $length <= $string_buffer->length) {
-        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
+        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_ref_or_buffer.";
       }
       
       $options = Fn->merge_options($options, {info => $replace_info_ref});
