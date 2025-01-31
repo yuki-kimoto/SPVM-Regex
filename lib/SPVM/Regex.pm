@@ -149,6 +149,8 @@ Exceptions:
 
 The regex pattern $pattern must be defined. Otherwise an exception is thrown.
 
+If the regex pattern $pattern can't be compiled, an exception is thrown.
+
 Examples:
 
   my $re = Regex->new("^ab+c");
