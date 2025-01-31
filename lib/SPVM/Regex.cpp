@@ -55,9 +55,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   void* obj_string = stack[1].oval;
   
-  if (!obj_string) {
-    return env->die(env, stack, "The string must be defined", __func__, FILE_NAME, __LINE__);
-  }
+  assert(obj_string);
   
   const char* string = env->get_chars(env, stack, obj_string);
   int32_t string_length = env->length(env, stack, obj_string);
@@ -70,9 +68,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   }
   
   int32_t offset = *offset_ref;
-  if (offset < 0) {
-    return env->die(env, stack, "The string offset must be greater than or equal to 0", __func__, FILE_NAME, __LINE__);
-  }
+  assert(offset >= 0);
   
   int32_t length = stack[3].ival;
   
@@ -80,16 +76,12 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     length = string_length - offset;
   }
   
-  if (!(offset + length <= string_length)) {
-    return env->die(env, stack, "The offset + the length must be less than or equal to the length of the string", __func__, FILE_NAME, __LINE__);
-  }
+  assert(offset + length <= string_length);
   
   void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
   if (error_id) { return error_id; }
   
-  if (!obj_re2) {
-    return env->die(env, stack, "The regex compililation is not yet performed", __func__, FILE_NAME, __LINE__);
-  }
+  assert(obj_re2);
   
   RE2* re2 = (RE2*)env->get_pointer(env, stack, obj_re2);
   
@@ -105,9 +97,6 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     int32_t match_start = -1;
     int32_t match_length = -1;
     void* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length);
-    if (!obj_captures) {
-      return env->die(env, stack, "Captures can't be created", __func__, FILE_NAME, __LINE__);; 
-    }
     
     // Captures
     {
