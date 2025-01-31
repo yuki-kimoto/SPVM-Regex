@@ -205,10 +205,6 @@ class Regex {
       $length = $string_buffer->length - $offset;
     }
     
-    unless ($offset + $length <= $string_buffer->length) {
-      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
-    }
-    
     my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
     
     return $regex_match;
@@ -217,10 +213,6 @@ class Regex {
   private method match_buffer : Regex::Match ($string_buffer : StringBuffer, $offset_ref : int*, $length : int = -1) {
     if ($length < 0) {
       $length = $string_buffer->length - $$offset_ref;
-    }
-    
-    unless ($$offset_ref + $length <= $string_buffer->length) {
-      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_buffer.";
     }
     
     my $regex_match = $self->match_string($string_buffer->get_string_unsafe, $offset_ref, $length);
