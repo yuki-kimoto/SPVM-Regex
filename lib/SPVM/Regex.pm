@@ -12,9 +12,9 @@ SPVM::Regex - Regular Expressions
 
 =head1 Description
 
-The Regex class of L<SPVM> has methods for regular expressions.
+Regex class in L<SPVM> has methods to perform pattern match and replacement using regular expressions.
 
-L<Google RE2|https://github.com/google/re2> is used as the regular expression library.
+L<Google RE2|https://github.com/google/re2> is used as the regular expression engine.
 
 =head1 Usage
 
@@ -228,7 +228,7 @@ Calls L</replace> method given the same arguments but with C<global> option set 
 
 C<method split : string[] ($string : string, $limit : int = 0);>
 
-The same as the L<split||SPVM::Fn/"split"> method in the L<Fn|SPVM::Fn> class, but the regular expression is used as the separator.
+The same as L<Fn#split|SPVM::Fn/"split"> method, but the regular expression is used as the separator.
 
 =head1 Repository
 
