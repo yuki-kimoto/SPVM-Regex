@@ -6,11 +6,11 @@ package SPVM::Re;
 
 =head1 Name
 
-SPVM::Re - Short Description
+SPVM::Re - More Perlish Regular Expressions
 
 =head1 Description
 
-Re class in L<SPVM> has methods for Perlish regular expression.
+Re class in L<SPVM> has methods for more Perlish regular expression.
 
 =head1 Usage
 
@@ -22,6 +22,8 @@ Re class in L<SPVM> has methods for Perlish regular expression.
   # ABC de ABC
   my $string_ref = ["abc de abc"];
   Re->s($string_ref, ["abc", "g"], "ABC");
+  
+  my $parts = Re->split(" +", $string);
 
 =head1 Class Methods
 
@@ -29,33 +31,47 @@ Re class in L<SPVM> has methods for Perlish regular expression.
 
 C<static method m : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : object of string|string[], $offset_ref : int* = undef, $length : int = -1);>
 
-If the string or the string in the string buffer $string_or_buffer at offset $$offset_ref to the length $length matches the regex(and with flags) $pattern_and_flags.
+Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
-If matching succeeds, returns a L<Regex::Match|SPVM::Regex::Match> object, otherwise returns undef.
+And the returned L<Regex|SPVM::Regex> object calls L<Regex#match|SPVM::Regex/"match"> method given $string_or_buffer, $offset_ref, $offset_ref, $length, and returns its return value.
 
-If $length is less than 0, it is set to the string length of $string_or_buffer.
+The L<Regex|SPVM::Regex> object is cached.
 
-$$offset_ref is updated to the next position if matching succeeds.
+Exceptions:
+
+Exceptions thrown by L<Regex#new|SPVM::Regex/"new"> method and L<Regex#match|SPVM::Regex/"match"> cound be thrown.
 
 =head2 s
 
 C<static method s : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : object of string|string[], $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1);>
 
-The string referenced or the string in the string buffer $string_or_buffer at offset $$offset_ref to the length $length is replaced with the string of $replace using the regex(and with flags) $pattern_and_flags.
+Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
-If replacing succeeds, returns a L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object, otherwise returns undef.
+And the returned L<Regex|SPVM::Regex> object calls L<Regex#replace|SPVM::Regex/"replace"> method given $string_ref_or_buffer, $offset_ref, $offset_ref, $length, and returns its return value.
 
-If $length is less than 0, it is set to the string length of $string_or_buffer.
+The flags in $pattern_and_flags can contains C<"g"> to L<Regex#replace_g|SPVM::Regex/"replace_g"> method instead of L<Regex#replace|SPVM::Regex/"replace"> method.
 
-$$offset_ref is updated to the next position if matching succeeds.
+The L<Regex|SPVM::Regex> object is cached.
 
-The flags in $pattern_and_flags can contains C<"g"> to replace all maching strings.
+Exceptions:
+
+Exceptions thrown by L<Regex#new|SPVM::Regex/"replace"> method and L<Regex#match|SPVM::Regex/"replace"> cound be thrown.
 
 =head2 split
 
 C<static method split : string[] ($pattern_and_flags : object of string|string[], $string : string, $limit : int = 0)>
 
-Splits $string using $pattern_and_flags, and returns the splited string.
+Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
+
+And the returned L<Regex|SPVM::Regex> object calls L<Regex#split|SPVM::Regex/"split"> method given $string, $limit, and returns its return value.
+
+=head1 See Also
+
+=over 2
+
+L<Regex|SPVM::Regex>
+
+=back
 
 =head1 Copyright & License
 
