@@ -62,8 +62,8 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   int32_t* offset_ref = stack[2].iref;
   
+  int32_t offset_tmp = 0;
   if (!offset_ref) {
-    int32_t offset_tmp = 0;
     offset_ref = &offset_tmp;
   }
   

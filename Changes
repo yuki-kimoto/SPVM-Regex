@@ -1,3 +1,6 @@
+0.248 2025-06-17
+  [Bug Fix]
+    * Fix a bug that match_string used dangling pointer.
 0.247 2025-01-31
   [Incompatible Changes]
     * Change the defintion of Regex#match method.
