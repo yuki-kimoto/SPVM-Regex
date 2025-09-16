@@ -96,7 +96,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     int32_t success = 1;
     int32_t match_start = -1;
     int32_t match_length = -1;
-    void* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length);
+    void* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length - 1);
     
     // Captures
     {
@@ -107,7 +107,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
         }
         else {
           void* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
-          env->set_elem_object(env, stack, obj_captures, i, obj_capture);
+          env->set_elem_object(env, stack, obj_captures, i - 1, obj_capture);
         }
       }
     }

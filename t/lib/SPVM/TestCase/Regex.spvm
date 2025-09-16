@@ -1561,7 +1561,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures->[1] eq "12") {
+      unless ($match->captures->[0] eq "12") {
         return 0;
       }
       
@@ -1572,6 +1572,13 @@ class TestCase::Regex {
       unless ($match->cap3 eq "56") {
         return 0;
       }
+      
+      warn $match->captures_length;
+      
+      unless ($match->captures_length == 3) {
+        return 0;
+      }
+      
     }
 
     # Ignore case
