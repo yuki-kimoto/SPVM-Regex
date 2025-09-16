@@ -8,7 +8,7 @@ SPVM::Regex::ReplaceInfo - Regex Replacement Information
 
 =head1 Description
 
-The Regex::ReplaceInfo class of L<SPVM> has methods to manipulate a regex replacement information.
+Regex::ReplaceInfo class in L<SPVM> represents a regex replacement information.
 
 =head1 Usage
 
@@ -27,17 +27,13 @@ The Regex::ReplaceInfo class of L<SPVM> has methods to manipulate a regex replac
 
 =head2 replaced_count
 
-  has replaced_count : ro int;
-
-Gets the C<replaced_count> field.
+C<has replaced_count : ro int;>
 
 This field is set to the number of strings replaced the L<replace|SPVM::Regex/"replace"> and L<replace_g|SPVM::Regex/"replace_g"> method in the L<Regex|SPVM::Regex> class.
 
 =head2 match
 
-  has match : ro Regex::Match;
-
-Gets the C<match> field. The type is L<Regex::Match|SPVM::Regex::Match>.
+C<has match : ro L<Regex::Match|SPVM::Regex::Match>;>
 
 This field is set to the result of the pattern match performed by the the L<replace|SPVM::Regex/"replace"> and L<replace_g|SPVM::Regex/"replace_g"> method in the L<Regex|SPVM::Regex> class.
 
@@ -45,37 +41,31 @@ This field is set to the result of the pattern match performed by the the L<repl
 
 =head2 new
 
-  static method new : Regex::ReplaceInfo ($options : object[] = undef);
+C<static method new : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($options : object[] = undef);>
 
-Creates a new L<Regex::ReplaceInfo> object.
+Creates a new L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> object, and returns it.
 
 Options:
 
-The options are key-value pairs. Each key must be a string type. Otherwise an exception is thrown.
-
-If an unsupported option is specified, an exception is thrown.
-
 =over 2
 
-=item * C<replaced_count>
+=item * C<replaced_count> : Int
 
 Sets the L</"replaced_count"> field.
 
-The value must be cast to the C<int> type. Otherwise an exception is thrown.
-
-Default:
-
-0
-
-=item * C<match>
+=item * C<match> : L<Regex::Match|SPVM::Regex::Match>
 
 Sets the L</"match"> field.
 
-The value must be a L<Regex::Match|SPVM::Regex::Match> object or C<undef>. Otherwise an exception is thrown.
+=back
 
-Default:
+=head1 See Also
 
-undef
+=over 2
+
+=item * L<Regex|SPVM::Regex>
+
+=item * L<Re|SPVM::Re>
 
 =back
 
