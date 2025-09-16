@@ -29,7 +29,7 @@ Re class in L<SPVM> has methods for more Perlish regular expression.
 
 =head2 m
 
-C<static method m : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : object of string|string[], $offset_ref : int* = undef, $length : int = -1);>
+C<static method m : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : string|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1);>
 
 Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
@@ -43,7 +43,7 @@ Exceptions thrown by L<Regex#new|SPVM::Regex/"new"> method and L<Regex#match|SPV
 
 =head2 s
 
-C<static method s : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : object of string|string[], $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1);>
+C<static method s : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : string[]|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : string|string[], $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1);>
 
 Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
@@ -59,7 +59,7 @@ Exceptions thrown by L<Regex#new|SPVM::Regex/"replace"> method and L<Regex#match
 
 =head2 split
 
-C<static method split : string[] ($pattern_and_flags : object of string|string[], $string : string, $limit : int = 0)>
+C<static method split : string[] ($pattern_and_flags : string|string[], $string : string, $limit : int = 0)>
 
 Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 

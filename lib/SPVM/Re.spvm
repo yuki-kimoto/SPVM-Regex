@@ -86,7 +86,7 @@ class Re {
     return $regex;
   }
   
-  static method m : Regex::Match ($string_or_buffer : object of string|StringBuffer, $pattern_and_flags : object of string|string[], $offset_ref : int* = undef, $length : int = -1) {
+  static method m : Regex::Match ($string_or_buffer : string|StringBuffer, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;
@@ -109,7 +109,7 @@ class Re {
     return $match;
   }
   
-  static method s : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $pattern_and_flags : object of string|string[], $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
+  static method s : Regex::ReplaceInfo ($string_ref_or_buffer : string[]|StringBuffer, $pattern_and_flags : string|string[], $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;
@@ -134,7 +134,7 @@ class Re {
     return $replace_info;
   }
   
-  static method split : string[] ($pattern_and_flags : object of string|string[], $string : string, $limit : int = 0) {
+  static method split : string[] ($pattern_and_flags : string|string[], $string : string, $limit : int = 0) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;

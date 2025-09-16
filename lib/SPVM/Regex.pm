@@ -160,7 +160,7 @@ Examples:
 
 =head2 match
 
-C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : object of string|L<StringBuffer|SPVM::StringBuffer>, $offset_ref : int* = undef, $length : int = -1);>
+C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_or_buffer : string|L<StringBuffer|SPVM::StringBuffer>, $offset_ref : int* = undef, $length : int = -1);>
 
 Performs a pattern match on the string or the StringBuffer object $string_or_buffer from the offset $$offset_ref to the length $length.
 
@@ -180,7 +180,7 @@ $$offset_ref + $length must be less than or equal to the length of $string_or_bu
 
 =head2 replace
 
-C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
+C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
 
 The string to be replaced is either $string_ref_or_buffer->[0] when the type is string or $string_ref_or_buffer when the type is StringBuffer.
 
@@ -220,7 +220,7 @@ Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 replace_g
 
-C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : object of string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : object of string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
+C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_or_buffer : string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
 
 Calls L</replace> method given the same arguments but with C<global> option set to 1, and returns its return value.
 

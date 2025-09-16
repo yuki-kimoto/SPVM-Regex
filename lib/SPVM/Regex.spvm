@@ -48,7 +48,7 @@ class Regex {
   private native method compile : void ($pattern : string);
   
   # Instance Methods
-  method match : Regex::Match ($string_or_buffer : object of string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
+  method match : Regex::Match ($string_or_buffer : string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $string = (string)undef;
     if ($string_or_buffer isa string) {
@@ -82,7 +82,7 @@ class Regex {
     return $regex_match;
   }
   
-  method replace : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace : Regex::ReplaceInfo ($string_ref_or_buffer : string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
     my $replace_info_ref = new Regex::ReplaceInfo[1];
     
@@ -138,7 +138,7 @@ class Regex {
     }
   }
   
-  method replace_g  : Regex::ReplaceInfo ($string_ref_or_buffer : object of string[]|StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace_g  : Regex::ReplaceInfo ($string_ref_or_buffer : string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     return $self->replace($string_ref_or_buffer, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
   }
   
@@ -220,7 +220,7 @@ class Regex {
     return $regex_match;
   }
   
-  private method replace_string : string ($string : string, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  private method replace_string : string ($string : string, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     my $string_buffer = StringBuffer->new;
     $string_buffer->push($string);
     
@@ -231,7 +231,7 @@ class Regex {
     return $result_string;
   }
   
-  private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : object of string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
+  private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
     my $optiton_h = Hash->new($options);
     
