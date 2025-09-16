@@ -1573,8 +1573,6 @@ class TestCase::Regex {
         return 0;
       }
       
-      warn $match->captures_length;
-      
       unless ($match->captures_length == 3) {
         return 0;
       }

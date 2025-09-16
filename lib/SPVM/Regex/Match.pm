@@ -26,37 +26,23 @@ The Regex::Match class of L<SPVM> has methods to manipulate a regex matching res
 
 C<has success : ro byte;>
 
-Gets the C<success> field.
-
 If a pattern match is successful, this field is set to 1.
 
 =head2 captures
 
 C<has captures : ro string[];>
 
-Gets the C<captures> field.
-
 The captured strings.
-
-C<method captures : string ($index : int);>
-
-The C<captures> method is the method to get an element of the C<captures> field.
-
-The length of the C<captures> field can be got by the L</"captures_length"> method.
 
 =head2  match_start
 
 C<has match_start : ro int>;
-
-Gets the C<match_start> field.
 
 The start offset of the matched string.
 
 =head2 match_length
 
 C<has match_length : ro int>;
-
-Gets the C<match_length> field.
 
 The length of the matched string.
 
@@ -84,13 +70,9 @@ Sets the C<match_start> field.
 
 Sets the C<match_length> field.
 
-=item * C<captures>
+=item * C<captures> : string[]
 
 Sets the C<captures> field.
-
-A new string array with the same length of this option is created and the address of each string is copied.
-
-This option must be cast to a string[] object. Otherwise an exception is thrown.
 
 =back
 
@@ -106,129 +88,131 @@ C<method captures_length : int ();>
 
 Gets the length of the L</"captures"> field.
 
-=head2 cap1=head2 cap
+=head2 cap
 
 C<method cap : string ($index : int);>
 
 Returns $match->captures[$index - 1].
 
+=head2 cap1
+
 C<method cap1 : string ();>
 
-Returns $match->cap(1);>
+Returns $match->cap(1).
 
 =head2 cap2
 
 C<method cap2 : string ();>
 
-Returns $match->cap(2);>
+Returns $match->cap(2).
 
 =head2 cap3
 
 C<method cap3 : string ();>
 
-Returns $match->cap(3);>
+Returns $match->cap(3).
 
 =head2 cap4
 
 C<method cap4 : string ();>
 
-Returns $match->cap(4);>
+Returns $match->cap(4).
 
 =head2 cap5
 
 C<method cap5 : string ();>
 
-Returns $match->cap(5);>
+Returns $match->cap(5).
 
 =head2 cap6
 
 C<method cap6 : string ();>
 
-Returns $match->cap(6);>
+Returns $match->cap(6).
 
 =head2 cap7
 
 C<method cap7 : string ();>
 
-Returns $match->cap(7);>
+Returns $match->cap(7).
 
 =head2 cap8
 
 C<method cap8 : string ();>
 
-Returns $match->cap(8);>
+Returns $match->cap(8).
 
 =head2 cap9
 
 C<method cap9 : string ();>
 
-Returns $match->cap(9);>
+Returns $match->cap(9).
 
 =head2 cap10
 
 C<method cap10 : string ();>
 
-Returns $match->cap(10);>
+Returns $match->cap(10).
 
 =head2 cap11
 
 C<method cap11 : string ();>
 
-Returns $match->cap(11);>
+Returns $match->cap(11).
 
 =head2 cap12
 
 C<method cap12 : string ();>
 
-Returns $match->cap(12);>
+Returns $match->cap(12).
 
 =head2 cap13
 
 C<method cap13 : string ();>
 
-Returns $match->cap(13);>
+Returns $match->cap(13).
 
 =head2 cap14
 
 C<method cap14 : string ();>
 
-Returns $match->cap(14);>
+Returns $match->cap(14).
 
 =head2 cap15
 
 C<method cap15 : string ();>
 
-Returns $match->cap(15);>
+Returns $match->cap(15).
 
 =head2 cap16
 
 C<method cap16 : string ();>
 
-Returns $match->cap(16);>
+Returns $match->cap(16).
 
 =head2 cap17
 
 C<method cap17 : string ();>
 
-Returns $match->cap(17);>
+Returns $match->cap(17).
 
 =head2 cap18
 
 C<method cap18 : string ();>
 
-Returns $match->cap(18);>
+Returns $match->cap(18).
 
 =head2 cap19
 
 C<method cap19 : string ();>
 
-Returns $match->cap(19);>
+Returns $match->cap(19).
 
 =head2 cap20
 
 C<method cap20 : string ();>
 
-Returns $match->cap(20);>
+Returns $match->cap(20).
 
 =head1 See Also
 

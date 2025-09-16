@@ -11,9 +11,25 @@ class Regex::Match {
   
   has success : ro byte;
   
-  has captures : ro string[];
+  has captures : ro string[]
+    get {
+      unless (exists $self->{captures}) {
+        $self->{captures} = new string[0];
+      }
+      
+      return $self->{captures};
+    }
+  ;
   
-  has match_start : ro int;
+  has match_start : ro int
+    get {
+      unless (exists $self->{match_start}) {
+        $self->{match_start} = -1;
+      }
+      
+      return $self->{match_start};
+    }
+  ;
   
   has match_length : ro int;
   
@@ -33,15 +49,22 @@ class Regex::Match {
     
     my $options_h = Hash->new($options);
     
-    $self->{success} = (byte)$options_h->get_or_default_int("success", 0);
+    if ($options_h->exists("success")) {
+      $self->{success} = (byte)$options_h->get_int("success");
+    }
     
-    $self->{match_start} = $options_h->get_or_default_int("match_start", -1);
+    if ($options_h->exists("match_start")) {
+      $self->{match_start} = $options_h->get_int("match_start");
+    }
     
-    $self->{match_length} = $options_h->get_or_default_int("match_length", -1);
+    if ($options_h->exists("match_length")) {
+      $self->{match_length} = $options_h->get_int("match_length");
+    }
     
-    my $captures = (string[])$options_h->get_or_default("captures", new string[0]);
-    
-    $self->{captures} = Array->copy_string_address($captures);
+    if ($options_h->exists("captures")) {
+      my $captures = (string[])$options_h->get("captures");
+      $self->{captures} = Array->copy_string_address($captures);
+    }
     
     return $self;
   }
@@ -59,51 +82,51 @@ class Regex::Match {
   
   # Instance Method
   method captures_length : int () {
-    return @{$self->{captures}};
+    return @{$self->captures};
   }
   
   method cap : string ($index : int) {
-    return $self->{captures}->[$index - 1];
+    return $self->captures->[$index - 1];
   }
   
-  method cap1 : string () { return $self->{captures}->[0]; }
+  method cap1 : string () { return $self->captures->[0]; }
   
-  method cap2 : string () { return $self->{captures}->[1]; }
+  method cap2 : string () { return $self->captures->[1]; }
   
-  method cap3 : string () { return $self->{captures}->[2]; }
+  method cap3 : string () { return $self->captures->[2]; }
   
-  method cap4 : string () { return $self->{captures}->[3]; }
+  method cap4 : string () { return $self->captures->[3]; }
   
-  method cap5 : string () { return $self->{captures}->[4]; }
+  method cap5 : string () { return $self->captures->[4]; }
   
-  method cap6 : string () { return $self->{captures}->[5]; }
+  method cap6 : string () { return $self->captures->[5]; }
   
-  method cap7 : string () { return $self->{captures}->[6]; }
+  method cap7 : string () { return $self->captures->[6]; }
   
-  method cap8 : string () { return $self->{captures}->[7]; }
+  method cap8 : string () { return $self->captures->[7]; }
   
-  method cap9 : string () { return $self->{captures}->[8]; }
+  method cap9 : string () { return $self->captures->[8]; }
   
-  method cap10 : string () { return $self->{captures}->[9]; }
+  method cap10 : string () { return $self->captures->[9]; }
   
-  method cap11 : string () { return $self->{captures}->[10]; }
+  method cap11 : string () { return $self->captures->[10]; }
   
-  method cap12 : string () { return $self->{captures}->[11]; }
+  method cap12 : string () { return $self->captures->[11]; }
   
-  method cap13 : string () { return $self->{captures}->[12]; }
+  method cap13 : string () { return $self->captures->[12]; }
   
-  method cap14 : string () { return $self->{captures}->[13]; }
+  method cap14 : string () { return $self->captures->[13]; }
   
-  method cap15 : string () { return $self->{captures}->[14]; }
+  method cap15 : string () { return $self->captures->[14]; }
   
-  method cap16 : string () { return $self->{captures}->[15]; }
+  method cap16 : string () { return $self->captures->[15]; }
   
-  method cap17 : string () { return $self->{captures}->[16]; }
+  method cap17 : string () { return $self->captures->[16]; }
   
-  method cap18 : string () { return $self->{captures}->[17]; }
+  method cap18 : string () { return $self->captures->[17]; }
   
-  method cap19 : string () { return $self->{captures}->[18]; }
+  method cap19 : string () { return $self->captures->[18]; }
   
-  method cap20 : string () { return $self->{captures}->[19]; }
+  method cap20 : string () { return $self->captures->[19]; }
   
 }
