@@ -86,7 +86,7 @@ class Re {
     return $regex;
   }
   
-  static method m : Regex::Match ($string_or_buffer : string|StringBuffer, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1) {
+  static method m : Regex::Match ($string_value : string|StringBuffer, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;
@@ -104,12 +104,12 @@ class Re {
     my $is_global = 0;
     my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
     
-    my $match = $regex->match($string_or_buffer, $offset_ref, $length);
+    my $match = $regex->match($string_value, $offset_ref, $length);
     
     return $match;
   }
   
-  static method s : Regex::ReplaceInfo ($string_ref_or_buffer : string[]|StringBuffer, $pattern_and_flags : string|string[], $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
+  static method s : Regex::ReplaceInfo ($string_ref_value : string[]|StringBuffer, $pattern_and_flags : string|string[], $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;
@@ -129,7 +129,7 @@ class Re {
     
     my $options = Fn->merge_options(undef, {global => $is_global});
     
-    my $replace_info = $regex->replace($string_ref_or_buffer, $replace, $offset_ref, $length, $options);
+    my $replace_info = $regex->replace($string_ref_value, $replace, $offset_ref, $length, $options);
     
     return $replace_info;
   }
