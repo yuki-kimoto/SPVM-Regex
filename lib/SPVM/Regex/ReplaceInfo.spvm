@@ -23,10 +23,15 @@ class Regex::ReplaceInfo {
     
     my $options_h = Hash->new($options);
     
-    $self->{replaced_count} = $options_h->get_or_default_int("replaced_count", 0);
+    if ($options_h->exists("replaced_count")) {
+      $self->{replaced_count} = $options_h->get_int("replaced_count");
+    }
     
-    $self->{match} = (Regex::Match)$options_h->get_or_default("match", undef);
+    if ($options_h->exists("match")) {
+      $self->{match} = (Regex::Match)$options_h->get("match");
+    }
     
     return $self;
   }
+  
 }
