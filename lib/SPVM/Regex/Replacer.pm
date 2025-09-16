@@ -4,11 +4,11 @@ package SPVM::Regex::Replacer;
 
 =head1 Name
 
-SPVM::Regex::Replacer - Interface for Regex Replacement Callback
+SPVM::Regex::Replacer - Callback for Regex Replacement
 
 =head1 Description
 
-The Regex::Replacer interface of L<SPVM> has an interface method for the regex replacement callback.
+Regex::Replacer interface in L<SPVM> is a callback for a regex replacement.
 
 =head1 Usage
   
@@ -22,15 +22,13 @@ The Regex::Replacer interface of L<SPVM> has an interface method for the regex r
   
   my $string = "abc";
   my $re = Regex->new("ab(c)");
-  my $replaced_string = $re->replace_g($string, $replacer);
+  $re->replace_g(my $_ = [$string], $replacer);
 
 =head1 Interface Methods
 
 C<required method : string ($re : Regex, $match : Regex::Match);>
 
-Given a L<Regex|SPVM::Regex> object and a L<Regex::Match|SPVM::Regex::Match> object, and returns a replacement string.
-
-$match argument will be required in the future release.
+This method is meant to return a replacement string.
 
 =head1 Copyright & License
 
