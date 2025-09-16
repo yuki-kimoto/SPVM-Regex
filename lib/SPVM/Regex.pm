@@ -22,12 +22,17 @@ B<Re:>
 
   use Re;
   
+  # Match
   my $string = "Hello World"
   my $match = Re->m($string, "^Hellow");
   
-  # ABC de ABC
-  my $string_ref = ["abc de abc"];
-  Re->s($string_ref, ["abc", "g"], "ABC");
+  # Replace
+  my $string = "abc de abc";
+  my $replace_info = Re->s(my $_ = [$string], ["abc", "g"], "ABC");
+  $string = $_->[0];
+  
+  # Split
+  my $parts = Re->split(" +", $string);
 
 B<Regex:>
 
@@ -129,7 +134,7 @@ B<Regex:>
 
 =head1 Details
 
-=head1 Regular Expression Syntax
+=head2 Regular Expression Syntax
 
 See L<Google RE2 Syntax|https://github.com/google/re2/wiki/Syntax> about the syntax of regular expressions.
 
@@ -141,7 +146,7 @@ Use L<Re|SPVM::Re> class if you want to use more Perlish pattern match and repla
 
 =head2 new
 
-C<static method new : Regex ($pattern : string, $flags : string = undef);>
+C<static method new : L<Regex|SPVM::Regex> ($pattern : string, $flags : string = undef);>
 
 Creates a new L<Regex|SPVM::Regex> object and compiles the regex pattern $pattern with the flags $flags, and retruns the new object.
 

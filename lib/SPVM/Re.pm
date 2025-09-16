@@ -16,13 +16,16 @@ Re class in L<SPVM> has methods for more Perlish regular expression.
 
   use Re;
   
+  # Match
   my $string = "Hello World"
   my $match = Re->m($string, "^Hellow");
   
-  # ABC de ABC
-  my $string_ref = ["abc de abc"];
-  Re->s($string_ref, ["abc", "g"], "ABC");
+  # Replace
+  my $string = "abc de abc";
+  my $replace_info = Re->s(my $_ = [$string], ["abc", "g"], "ABC");
+  $string = $_->[0];
   
+  # Split
   my $parts = Re->split(" +", $string);
 
 =head1 Class Methods
