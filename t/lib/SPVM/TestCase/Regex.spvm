@@ -240,7 +240,7 @@ class TestCase::Regex {
       my $offset = 0;
       my $target_ref = [$target];
       my $replace_info = $re->replace($target_ref, method : string ($re : Regex, $match : Regex::Match) {
-        return "AB" . $match->captures(1) . "C";
+        return "AB" . $match->cap(1) . "C";
       }, \$offset, -1);
       my $result = $target_ref->[0];
       
@@ -338,7 +338,7 @@ class TestCase::Regex {
       my $re = Regex->new("(a*)");
       my $target = "aaa";
       my $match = $re->match($target);
-      unless ($match->captures(1) eq "aaa") {
+      unless ($match->cap(1) eq "aaa") {
         return 0;
       }
     }
@@ -353,7 +353,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "b") {
+      unless ($match->cap(1) eq "b") {
         return 0;
       }
     }
@@ -368,7 +368,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "い") {
+      unless ($match->cap(1) eq "い") {
         return 0;
       }
     }
@@ -383,7 +383,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "") {
+      unless ($match->cap(1) eq "") {
         return 0;
       }
     }
@@ -399,7 +399,7 @@ class TestCase::Regex {
       }
 
       
-      unless ($match->captures(1) eq "abc89") {
+      unless ($match->cap(1) eq "abc89") {
         return 0;
       }
     }
@@ -414,23 +414,23 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "abc1") {
+      unless ($match->cap(1) eq "abc1") {
         return 0;
       }
 
-      unless ($match->captures(2) eq "abc2") {
+      unless ($match->cap(2) eq "abc2") {
         return 0;
       }
 
-      unless ($match->captures(3) eq "abc3") {
+      unless ($match->cap(3) eq "abc3") {
         return 0;
       }
 
-      unless ($match->captures(4) eq "abc4") {
+      unless ($match->cap(4) eq "abc4") {
         return 0;
       }
 
-      unless ($match->captures(5) eq "abc5") {
+      unless ($match->cap(5) eq "abc5") {
         return 0;
       }
     }
@@ -440,7 +440,7 @@ class TestCase::Regex {
       my $re = Regex->new("(a*)");
       my $target = "aaa";
       my $match = $re->match($target);
-      unless ($match->captures(1) eq "aaa") {
+      unless ($match->cap(1) eq "aaa") {
         return 0;
       }
     }
@@ -484,7 +484,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "abc") {
+      unless ($match->cap(1) eq "abc") {
         return 0;
       }
     }
@@ -500,7 +500,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($match->captures(1) eq "abc\ndef") {
+      unless ($match->cap(1) eq "abc\ndef") {
         return 0;
       }
     }
@@ -1558,6 +1558,10 @@ class TestCase::Regex {
       }
       
       unless ($match->cap1 eq "12") {
+        return 0;
+      }
+      
+      unless ($match->captures->[1] eq "12") {
         return 0;
       }
       

@@ -10,8 +10,11 @@ class Regex::Match {
   use Array;
   
   has success : ro byte;
-  has captures : string[];
+  
+  has captures : ro string[];
+  
   has match_start : ro int;
+  
   has match_length : ro int;
   
   # Class Method
@@ -50,7 +53,7 @@ class Regex::Match {
   }
   
   # Instance Method
-  method captures : string ($index : int) {
+  method cap : string ($index : int) {
     return $self->{captures}->[$index];
   }
   

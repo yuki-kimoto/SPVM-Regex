@@ -3,7 +3,8 @@
     * Require SPVM 0.990089.
   [Document and Internal Changes]
     * Remove "object of" from arguments.
-    
+  [Incompatible Changes]
+    * Rename Match#captures method to cap method, and Match#captures returns an array that has captured elements.
 0.248 2025-06-17
   [Requirement Changes]
     * Require SPVM 0.990068.
