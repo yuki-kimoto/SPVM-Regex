@@ -9,6 +9,8 @@
     
   [Bug Fix]
     * Fix the bug that Match#captures_length returns wrong value.
+  [Internal Changes]
+    * Improve the logic of constructors.
     
 0.248 2025-06-17
   [Requirement Changes]
