@@ -20,23 +20,28 @@ class Regex::Match {
   # Class Method
   static method new : Regex::Match ($options : object[] = undef) {
     
+    my $option_names = [
+      "success",
+      "match_start",
+      "match_length",
+      "captures",
+    ];
+    
+    Fn->check_option_names($options, $option_names);
+    
     my $self = new Regex::Match;
     
     my $options_h = Hash->new($options);
     
-    $self->{success} = (byte)$options_h->delete_or_default_int("success", 0);
+    $self->{success} = (byte)$options_h->get_or_default_int("success", 0);
     
-    $self->{match_start} = $options_h->delete_or_default_int("match_start", -1);
+    $self->{match_start} = $options_h->get_or_default_int("match_start", -1);
     
-    $self->{match_length} = $options_h->delete_or_default_int("match_length", -1);
+    $self->{match_length} = $options_h->get_or_default_int("match_length", -1);
     
-    my $captures = (string[])$options_h->delete_or_default("captures", new string[0]);
+    my $captures = (string[])$options_h->get_or_default("captures", new string[0]);
     
     $self->{captures} = Array->copy_string_address($captures);
-    
-    for my $name (@{$options_h->keys}) {
-      die "The \"$name\" option is not supported";
-    }
     
     return $self;
   }
