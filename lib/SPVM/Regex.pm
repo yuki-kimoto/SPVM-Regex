@@ -196,7 +196,7 @@ Options:
 
 =over 2
 
-=item * C<global>
+=item * C<global> : Int = 0
 
 This option must be a L<Int|SPVM::Int> object. Otherwise an exception is thrown.
 

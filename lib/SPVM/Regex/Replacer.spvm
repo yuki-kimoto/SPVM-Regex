@@ -7,5 +7,5 @@ class Regex::Replacer : interface_t {
   use Regex;
   use Regex::Match;
   
-  required method : string ($re : Regex, $match : Regex::Match = undef);
+  required method : string ($re : Regex, $match : Regex::Match);
 }

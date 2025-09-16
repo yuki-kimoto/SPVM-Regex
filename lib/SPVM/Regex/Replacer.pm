@@ -26,11 +26,11 @@ The Regex::Replacer interface of L<SPVM> has an interface method for the regex r
 
 =head1 Interface Methods
 
-  required method : string ($re : Regex, $match : Regex::Match = undef);
+C<required method : string ($re : Regex, $match : Regex::Match);>
 
-Receives a L<Regex|SPVM::Regex> object and a L<Regex::Match|SPVM::Regex::Match> object, and returns a replacement string.
+Given a L<Regex|SPVM::Regex> object and a L<Regex::Match|SPVM::Regex::Match> object, and returns a replacement string.
 
-The $match argument will be required in the future release.
+$match argument will be required in the future release.
 
 =head1 Copyright & License
 
