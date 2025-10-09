@@ -91,6 +91,8 @@ my $start_memory_blocks_count = $api->get_memory_blocks_count();
     {
       is(SPVM::TestCase::Regex->extra_url_unescape('foo%E3%81%82bar%E3%81%84'), "fooあbarい");
     };
+      
+    SPVM::TestCase::Regex->extra_issue9;
   }
 }
 

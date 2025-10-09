@@ -1976,7 +1976,8 @@ class TestCase::Regex {
 
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $match = $re->match($target);
       
@@ -1987,7 +1988,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 0;
       my $match = $re->match($target, \$offset);
@@ -1999,7 +2001,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 0;
       my $length = -1;
@@ -2012,7 +2015,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabc");
+      my $target = StringBuffer->new;
+      $target->push("zabc");
       
       my $offset = 1;
       my $length = 3;
@@ -2027,7 +2031,8 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abc");
-        my $target = StringBuffer->new("zabc");
+        my $target = StringBuffer->new;
+        $target->push("zabc");
         
         my $offset = 1;
         my $length = 4;
@@ -2049,7 +2054,8 @@ class TestCase::Regex {
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 1;
       my $match = $re->match($target, \$offset);
@@ -2067,7 +2073,8 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abc");
-        my $target = StringBuffer->new("zabc");
+        my $target = StringBuffer->new;
+        $target->push("zabc");
         
         my $offset = 1;
         my $length = 4;
@@ -2088,7 +2095,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("ppzabcz");
+      my $target = StringBuffer->new;
+      $target->push("ppzabcz");
       $re->replace($target, "ABC");
       
       unless ($target->to_string eq "ppzABCz") {
@@ -2102,7 +2110,8 @@ class TestCase::Regex {
   static method buffer_replace_g : int () {
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("ppzabczabcz");
+      my $target = StringBuffer->new;
+      $target->push("ppzabczabcz");
       my $offset = 0;
       my $length = -1;
       my $replace_info = $re->replace_g($target, "ABC", \$offset, $length);
@@ -2123,7 +2132,8 @@ class TestCase::Regex {
     # Replace
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("ppzabcz");
+      my $target = StringBuffer->new;
+      $target->push("ppzabcz");
       my $offset = 0;
       my $replace_info = $re->replace($target, "ABC", \$offset, -1);
       
@@ -2256,7 +2266,8 @@ class TestCase::Regex {
 
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $match = $re->match($target);
       
@@ -2267,7 +2278,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 0;
       my $match = $re->match($target, \$offset);
@@ -2279,7 +2291,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 0;
       my $length = -1;
@@ -2292,7 +2305,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabc");
+      my $target = StringBuffer->new;
+      $target->push("zabc");
       
       my $offset = 1;
       my $length = 3;
@@ -2307,7 +2321,8 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abc");
-        my $target = StringBuffer->new("zabc");
+        my $target = StringBuffer->new;
+        $target->push("zabc");
         
         my $offset = 1;
         my $length = 4;
@@ -2329,7 +2344,8 @@ class TestCase::Regex {
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("zabcz");
+      my $target = StringBuffer->new;
+      $target->push("zabcz");
       
       my $offset = 1;
       my $match = $re->match($target, \$offset);
@@ -2347,7 +2363,8 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abc");
-        my $target = StringBuffer->new("zabc");
+        my $target = StringBuffer->new;
+        $target->push("zabc");
         
         my $offset = 1;
         my $length = 4;
@@ -2512,7 +2529,8 @@ class TestCase::Regex {
     
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("ppzabcz");
+      my $target = StringBuffer->new;
+      $target->push("ppzabcz");
       $re->replace($target, "ABC");
       
       unless ($target->to_string eq "ppzABCz") {
@@ -2526,7 +2544,8 @@ class TestCase::Regex {
   static method buffer_replace_extra_g : int () {
     {
       my $re = Regex->new("abc");
-      my $target = StringBuffer->new("ppzabczabcz");
+      my $target = StringBuffer->new;
+      $target->push("ppzabczabcz");
       my $offset = 0;
       my $length = -1;
       my $replace_info_ref = new Regex::ReplaceInfo[1];
@@ -2811,4 +2830,18 @@ class TestCase::Regex {
     
     return 1;
   }
+  
+  static method extra_issue9 : int () {
+    
+    my $path = "";
+    
+    my $path_ref = [$path];
+    
+    # xx////xx  -> xx/xx
+    Re->s($path_ref, ["/{2,}", "g"], "/");
+    
+    warn;
+    
+  }
+
 }
