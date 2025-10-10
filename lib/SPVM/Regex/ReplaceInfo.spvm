@@ -24,11 +24,11 @@ class Regex::ReplaceInfo {
     my $options_h = Hash->new($options);
     
     if ($options_h->exists("replaced_count")) {
-      $self->{replaced_count} = $options_h->get_int("replaced_count");
+      $self->{replaced_count} = $options_h->{"replaced_count"}->(int);
     }
     
     if ($options_h->exists("match")) {
-      $self->{match} = (Regex::Match)$options_h->get("match");
+      $self->{match} = $options_h->{"match"}->(Regex::Match);
     }
     
     return $self;

@@ -50,19 +50,19 @@ class Regex::Match {
     my $options_h = Hash->new($options);
     
     if ($options_h->exists("success")) {
-      $self->{success} = (byte)$options_h->get_int("success");
+      $self->{success} = $options_h->{"success"}->(byte);
     }
     
     if ($options_h->exists("match_start")) {
-      $self->{match_start} = $options_h->get_int("match_start");
+      $self->{match_start} = $options_h->{"match_start"}->(int);
     }
     
     if ($options_h->exists("match_length")) {
-      $self->{match_length} = $options_h->get_int("match_length");
+      $self->{match_length} = $options_h->{"match_length"}->(int);
     }
     
     if ($options_h->exists("captures")) {
-      my $captures = (string[])$options_h->get("captures");
+      my $captures = $options_h->{"captures"}->(string[]);
       $self->{captures} = Array->copy_string_address($captures);
     }
     
