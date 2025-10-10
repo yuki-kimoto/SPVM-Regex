@@ -2727,6 +2727,21 @@ class TestCase::Regex {
       }
     }
     
+    # Replace
+    {
+      my $re = "abc";
+      my $target = (mutable string)copy "ppzabcz";
+      my $replace_info = Re->s($target, $re, "ABC");
+      
+      unless ($replace_info) {
+        return 0;
+      }
+      
+      unless ($target eq "ppzABCz") {
+        return 0;
+      }
+    }
+    
     return 1;
   }
   
@@ -2839,9 +2854,6 @@ class TestCase::Regex {
     
     # xx////xx  -> xx/xx
     Re->s($path_ref, ["/{2,}", "g"], "/");
-    
-    warn;
-    
   }
 
 }

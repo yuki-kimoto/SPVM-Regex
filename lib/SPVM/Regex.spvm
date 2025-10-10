@@ -82,9 +82,13 @@ class Regex {
     return $regex_match;
   }
   
-  method replace : Regex::ReplaceInfo ($string_ref_value : string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace : Regex::ReplaceInfo ($string_ref_value : mutable string|string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
     my $replace_info_ref = new Regex::ReplaceInfo[1];
+    
+    if ($string_ref_value isa string) {
+      $string_ref_value = StringBuffer->new_ref((mutable string)$string_ref_value);
+    }
     
     my $string_ref = (string)undef;
     if ($string_ref_value isa string[]) {
@@ -138,7 +142,7 @@ class Regex {
     }
   }
   
-  method replace_g  : Regex::ReplaceInfo ($string_ref_value : string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace_g  : Regex::ReplaceInfo ($string_ref_value : mutable string|string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     return $self->replace($string_ref_value, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
   }
   

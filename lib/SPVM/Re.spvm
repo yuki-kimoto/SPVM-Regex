@@ -109,7 +109,7 @@ class Re {
     return $match;
   }
   
-  static method s : Regex::ReplaceInfo ($string_ref_value : string[]|StringBuffer, $pattern_and_flags : string|string[], $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
+  static method s : Regex::ReplaceInfo ($string_ref_value : mutable string|string[]|StringBuffer, $pattern_and_flags : string|string[], $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;

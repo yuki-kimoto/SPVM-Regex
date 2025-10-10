@@ -185,7 +185,7 @@ $$offset_ref + $length must be less than or equal to the length of $string_value
 
 =head2 replace
 
-C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
+C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : mutable string|string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
 
 The string to be replaced is either $string_ref_value->[0] when the type is string or $string_ref_value when the type is StringBuffer.
 
@@ -225,7 +225,7 @@ Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 replace_g
 
-C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
+C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : mutable string|string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
 
 Calls L</replace> method given the same arguments but with C<global> option set to 1, and returns its return value.
 

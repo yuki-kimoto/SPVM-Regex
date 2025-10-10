@@ -46,7 +46,7 @@ Exceptions thrown by L<Regex#new|SPVM::Regex/"new"> method and L<Regex#match|SPV
 
 =head2 s
 
-C<static method s : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : string[]|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : string|string[], $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1);>
+C<static method s : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : mutable string|string[]|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : string|string[], $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1);>
 
 Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
