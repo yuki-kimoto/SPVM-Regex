@@ -1,6 +1,8 @@
 0.251 2025-10-09
   [New Features]
     * Regex#replace, replace_g, Re#s method can receive mutable string type.
+  [Requirement Changes]
+    * Require SPVM 0.990102.
     
 0.250 2025-10-09
   [Internal Changes]
