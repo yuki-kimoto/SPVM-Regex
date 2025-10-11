@@ -71,7 +71,7 @@ class Regex {
         die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_value.";
       }
       
-      $string = $string_buffer->get_string_unsafe;
+      $string = $string_buffer->get_string;
     }
     else {
       die "The type of \$string_ref_value must be string or StringBuffer.";
@@ -209,7 +209,7 @@ class Regex {
       $length = $string_buffer->length - $offset;
     }
     
-    my $regex_match = $self->match($string_buffer->get_string_unsafe, \$offset, $length);
+    my $regex_match = $self->match($string_buffer->get_string, \$offset, $length);
     
     return $regex_match;
   }
@@ -219,7 +219,7 @@ class Regex {
       $length = $string_buffer->length - $$offset_ref;
     }
     
-    my $regex_match = $self->match_string($string_buffer->get_string_unsafe, $offset_ref, $length);
+    my $regex_match = $self->match_string($string_buffer->get_string, $offset_ref, $length);
     
     return $regex_match;
   }
