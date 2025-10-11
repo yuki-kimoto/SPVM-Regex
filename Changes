@@ -1,4 +1,9 @@
-0.251 2025-10-09
+0.252 2025-10-11
+  [Internal Changes]
+    * Use hash access syntax.
+    * Use a new scope feature.
+    
+0.251 2025-10-11
   [New Features]
     * Regex#replace, replace_g, Re#s method can receive mutable string type.
   [Requirement Changes]
