@@ -286,7 +286,7 @@ class Regex {
       my $match_start = $regex_match->match_start;
       my $match_length = $regex_match->match_length;
       
-      $string_buffer->replace($match_start, $match_length, $replace_string);
+      $string_buffer->substr($match_start, $match_length, $replace_string);
       
       unless ($global) {
         last;
