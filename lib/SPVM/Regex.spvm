@@ -153,7 +153,7 @@ class Regex {
     
     my $string_length = length $string;
     
-    my $parts_list = StringList->new_len(0);
+    my $parts = StringList->new;
     
     my $offset = 0;
     my $match_count = 0;
@@ -171,22 +171,22 @@ class Regex {
         my $match_length = $regex_match->match_length;
         
         my $part = Fn->substr($string, $current_offset, $match_start - $current_offset);
-        $parts_list->push($part);
+        $parts->push($part);
         $offset = $match_start + $match_length;
       }
     }
     if ($offset == $string_length) {
-      $parts_list->push("");
+      $parts->push("");
     }
     else {
       my $part = Fn->substr($string, $offset, $string_length - $offset);
-      $parts_list->push($part);
+      $parts->push($part);
     }
     
     if ($limit == 0) {
-      while ($parts_list->length > 0) {
-        if ($parts_list->get($parts_list->length - 1) eq "") {
-          $parts_list->pop;
+      while ($parts->length > 0) {
+        if ($parts->[$parts->length - 1] eq "") {
+          $parts->pop;
         }
         else {
           last;
@@ -194,9 +194,7 @@ class Regex {
       }
     }
     
-    my $parts = $parts_list->to_array;
-    
-    return $parts;
+    return $parts->get_array;
   }
   
   native method DESTROY : void ();
