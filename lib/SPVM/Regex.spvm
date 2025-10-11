@@ -237,7 +237,7 @@ class Regex {
   
   private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
-    my $optiton_h = Hash->new($options);
+    my $options = Hash->new($options);
     
     my $offset = 0;
     if ($offset_ref) {
@@ -247,7 +247,7 @@ class Regex {
     my $original_offset = $offset;
     
     my $global = 0;
-    if (my $global_obj = $optiton_h->get("global")) {
+    if (my $global_obj = $options->{"global"}) {
       $global = (int)$global_obj;
     }
     
@@ -299,7 +299,7 @@ class Regex {
     
     my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
     
-    my $option_regex_replace_info = (Regex::ReplaceInfo[])$optiton_h->get("info");
+    my $option_regex_replace_info = (Regex::ReplaceInfo[])$options->{"info"};
     
     if ($option_regex_replace_info) {
       $option_regex_replace_info->[0] = $regex_replace_info;
