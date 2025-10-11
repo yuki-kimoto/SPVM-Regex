@@ -47,22 +47,22 @@ class Regex::Match {
     
     my $self = new Regex::Match;
     
-    my $options_h = Hash->new($options);
+    my $options = Hash->new($options);
     
-    if ($options_h->exists("success")) {
-      $self->{success} = $options_h->{"success"}->(byte);
+    if ($options->exists("success")) {
+      $self->{success} = $options->{"success"}->(byte);
     }
     
-    if ($options_h->exists("match_start")) {
-      $self->{match_start} = $options_h->{"match_start"}->(int);
+    if ($options->exists("match_start")) {
+      $self->{match_start} = $options->{"match_start"}->(int);
     }
     
-    if ($options_h->exists("match_length")) {
-      $self->{match_length} = $options_h->{"match_length"}->(int);
+    if ($options->exists("match_length")) {
+      $self->{match_length} = $options->{"match_length"}->(int);
     }
     
-    if ($options_h->exists("captures")) {
-      my $captures = $options_h->{"captures"}->(string[]);
+    if ($options->exists("captures")) {
+      my $captures = $options->{"captures"}->(string[]);
       $self->{captures} = Array->copy_string_address($captures);
     }
     

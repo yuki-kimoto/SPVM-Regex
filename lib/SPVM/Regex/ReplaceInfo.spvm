@@ -21,14 +21,14 @@ class Regex::ReplaceInfo {
     
     my $self = new Regex::ReplaceInfo;
     
-    my $options_h = Hash->new($options);
+    my $options = Hash->new($options);
     
-    if ($options_h->exists("replaced_count")) {
-      $self->{replaced_count} = $options_h->{"replaced_count"}->(int);
+    if ($options->exists("replaced_count")) {
+      $self->{replaced_count} = $options->{"replaced_count"}->(int);
     }
     
-    if ($options_h->exists("match")) {
-      $self->{match} = $options_h->{"match"}->(Regex::Match);
+    if ($options->exists("match")) {
+      $self->{match} = $options->{"match"}->(Regex::Match);
     }
     
     return $self;
