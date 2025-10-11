@@ -1,6 +1,7 @@
 0.252 2025-10-11
   [Internal Changes]
     * Use hash access syntax.
+    * Use array access syntax in List.
     * Use a new scope feature.
     
 0.251 2025-10-11
