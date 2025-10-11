@@ -184,8 +184,8 @@ class Regex {
     }
     
     if ($limit == 0) {
-      while ($parts->length > 0) {
-        if ($parts->[$parts->length - 1] eq "") {
+      while (@$parts > 0) {
+        if ($parts->[@$parts - 1] eq "") {
           $parts->pop;
         }
         else {
