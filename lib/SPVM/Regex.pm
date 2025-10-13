@@ -165,9 +165,9 @@ Examples:
 
 =head2 match
 
-C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_value : string|L<StringBuffer|SPVM::StringBuffer>, $offset_ref : int* = undef, $length : int = -1);>
+C<method match : L<Regex::Match|SPVM::Regex::Match> ($string_value : string, $offset_ref : int* = undef, $length : int = -1);>
 
-Performs a pattern match on the string or the StringBuffer object $string_value from the offset $$offset_ref to the length $length.
+Performs a pattern match on the string $string from the offset $$offset_ref to the length $length.
 
 If the pattern match succeeds, return a new L<Regex::Match|SPVM::Regex::Match> object, otherwise returns undef.
 
@@ -179,7 +179,7 @@ Exceptions:
 
 $string_value must be defined. Otherwise an exception is thrown.
 
-The type of $string must be string or StringBuffer. Otherwise an exception is thrown.
+The type of $string must be string. Otherwise an exception is thrown.
 
 $$offset_ref + $length must be less than or equal to the length of $string_value. Otherwise an exception is thrown.
 
@@ -211,7 +211,7 @@ Exceptions:
 
 $string must be defined. Otherwise an exception is thrown.
 
-The type of $string must be string or StringBuffer. Otherwise an exception is thrown.
+The type of $string must be mutable string. Otherwise an exception is thrown.
 
 $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
 

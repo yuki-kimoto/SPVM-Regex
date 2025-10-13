@@ -48,34 +48,7 @@ class Regex {
   private native method compile : void ($pattern : string);
   
   # Instance Methods
-  method match : Regex::Match ($string_value : string|StringBuffer, $offset_ref : int* = undef, $length : int = -1) {
-    
-    my $string = (string)undef;
-    if ($string_value isa string) {
-      $string = (string)$string_value;
-    }
-    elsif ($string_value isa StringBuffer) {
-      
-      my $string_buffer = (StringBuffer)$string_value;
-      
-      my $offset = 0;
-      if ($offset_ref) {
-        $offset = $$offset_ref;
-      }
-      
-      if ($length < 0) {
-        $length = $string_buffer->length - $offset;
-      }
-      
-      unless ($offset + $length <= $string_buffer->length) {
-        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_value.";
-      }
-      
-      $string = $string_buffer->get_string;
-    }
-    else {
-      die "The type of \$string_value must be string or StringBuffer.";
-    }
+  method match : Regex::Match ($string : string, $offset_ref : int* = undef, $length : int = -1) {
     
     my $regex_match = $self->match_string($string, $offset_ref, $length);
     

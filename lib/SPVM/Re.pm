@@ -32,11 +32,11 @@ Re class in L<SPVM> has methods for more Perlish regular expression.
 
 =head2 m
 
-C<static method m : L<Regex::Match|SPVM::Regex::Match> ($string_value : string|L<StringBuffer|SPVM::StringBuffer>, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1);>
+C<static method m : L<Regex::Match|SPVM::Regex::Match> ($string : string, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1);>
 
 Calls L<Regex#new|SPVM::Regex/"new"> method given $pattern_and_flags. $pattern_and_flags is a pattern string or a string array that contains a pattern and flags.
 
-And the returned L<Regex|SPVM::Regex> object calls L<Regex#match|SPVM::Regex/"match"> method given $string_value, $offset_ref, $offset_ref, $length, and returns its return value.
+And the returned L<Regex|SPVM::Regex> object calls L<Regex#match|SPVM::Regex/"match"> method given $string, $offset_ref, $offset_ref, $length, and returns its return value.
 
 The L<Regex|SPVM::Regex> object is cached.
 

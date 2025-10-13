@@ -86,7 +86,7 @@ class Re {
     return $regex;
   }
   
-  static method m : Regex::Match ($string_value : string|StringBuffer, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1) {
+  static method m : Regex::Match ($string : string, $pattern_and_flags : string|string[], $offset_ref : int* = undef, $length : int = -1) {
     
     my $pattern = (string)undef;
     my $flags = (string)undef;
@@ -104,7 +104,7 @@ class Re {
     my $is_global = 0;
     my $regex = &new_regex_use_cache($pattern, $flags, \$is_global);
     
-    my $match = $regex->match($string_value, $offset_ref, $length);
+    my $match = $regex->match($string, $offset_ref, $length);
     
     return $match;
   }

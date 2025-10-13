@@ -3,6 +3,8 @@
     * Sorry, Regex#replace method's first argument only receive mutable string type.
     * Sorry, Regex#replace_g method's first argument only receive mutable string type.
     * Sorry, Re#s method's first argument only receive mutable string type.
+    * Sorry, Regex#match method's first argument only receive mutable string type.
+    * Sorry, Re#m method's first argument only receive mutable string type.
     
 0.252 2025-10-11
   [Internal Changes]
