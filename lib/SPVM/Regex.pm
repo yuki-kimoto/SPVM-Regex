@@ -179,17 +179,15 @@ Exceptions:
 
 $string_value must be defined. Otherwise an exception is thrown.
 
-The type of $string_ref_value must be string or StringBuffer. Otherwise an exception is thrown.
+The type of $string must be string or StringBuffer. Otherwise an exception is thrown.
 
 $$offset_ref + $length must be less than or equal to the length of $string_value. Otherwise an exception is thrown.
 
 =head2 replace
 
-C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : mutable string|string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
+C<method replace : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string : mutable string, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef);>
 
-The string to be replaced is either $string_ref_value->[0] when the type is string or $string_ref_value when the type is StringBuffer.
-
-Replaces the string from the offset $$offset_ref to the length $length with the replacement string or the callback $replace with the options $options using a regular expression.
+Replaces the string $string from the offset $$offset_ref to the length $length with the replacement string or the callback $replace with the options $options using a regular expression.
 
 $$offset_ref is updated to the next position if it is specified.
 
@@ -211,21 +209,21 @@ If the value of the L<Int|SPVM::Int> object is a true value, the global replacem
 
 Exceptions:
 
-$string_ref_value must be defined. Otherwise an exception is thrown.
+$string must be defined. Otherwise an exception is thrown.
 
-The type of $string_ref_value must be string or StringBuffer. Otherwise an exception is thrown.
+The type of $string must be string or StringBuffer. Otherwise an exception is thrown.
 
 $replace must be a string or a L<Regex::Replacer|SPVM::Regex::Replacer> object. Otherwise an exception is thrown.
 
 $$offset_ref must be greater than or equal to 0. Otherwise an exception is thrown.
 
-$$offset_ref + $length must be less than or equal to the length of $string_ref_value. Otherwise an exception is thrown.
+$$offset_ref + $length must be less than or equal to the length of $string. Otherwise an exception is thrown.
 
 Exceptions of the L<match_forward|/"match_forward"> method can be thrown.
 
 =head2 replace_g
 
-C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string_ref_value : mutable string|string[]|L<StringBuffer|SPVM::StringBuffer>, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
+C<method replace_g  : L<Regex::ReplaceInfo|SPVM::Regex::ReplaceInfo> ($string : mutable string, $replace : string|L<Regex::Replacer|SPVM::Regex::Replacer>, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef):>
 
 Calls L</replace> method given the same arguments but with C<global> option set to 1, and returns its return value.
 

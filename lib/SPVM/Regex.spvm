@@ -74,7 +74,7 @@ class Regex {
       $string = $string_buffer->get_string;
     }
     else {
-      die "The type of \$string_ref_value must be string or StringBuffer.";
+      die "The type of \$string_value must be string or StringBuffer.";
     }
     
     my $regex_match = $self->match_string($string, $offset_ref, $length);
@@ -82,55 +82,28 @@ class Regex {
     return $regex_match;
   }
   
-  method replace : Regex::ReplaceInfo ($string_ref_value : mutable string|string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+  method replace : Regex::ReplaceInfo ($string : mutable string, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
     my $replace_info_ref = new Regex::ReplaceInfo[1];
     
-    if ($string_ref_value isa string) {
-      $string_ref_value = StringBuffer->new_ref((mutable string)$string_ref_value);
+    my $string_buffer = StringBuffer->new_ref((mutable string)$string);
+    
+    my $offset = 0;
+    if ($offset_ref) {
+      $offset = $$offset_ref;
     }
     
-    my $string_ref = (string)undef;
-    if ($string_ref_value isa string[]) {
-      
-      my $string_ref = (string[])$string_ref_value;
-      
-      unless (@$string_ref == 1) {
-        die "\$string_ref_value must be 1-length array if the type is string[].";
-      }
-      
-      my $string = $string_ref->[0];
-      
-      $options = Fn->merge_options($options, {info => $replace_info_ref});
-      
-      my $replaced_string = $self->replace_string($string, $replace, $offset_ref, $length, $options);
-      
-      $string_ref->[0] = $replaced_string;
+    if ($length < 0) {
+      $length = $string_buffer->length - $offset;
     }
-    elsif ($string_ref_value isa StringBuffer) {
-      
-      my $string_buffer = (StringBuffer)$string_ref_value;
-      
-      my $offset = 0;
-      if ($offset_ref) {
-        $offset = $$offset_ref;
-      }
-      
-      if ($length < 0) {
-        $length = $string_buffer->length - $offset;
-      }
-      
-      unless ($offset + $length <= $string_buffer->length) {
-        die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string_ref_value.";
-      }
-      
-      $options = Fn->merge_options($options, {info => $replace_info_ref});
-      
-      $self->replace_buffer_common($string_buffer, $replace, $offset_ref, $length, $options);
+    
+    unless ($offset + $length <= $string_buffer->length) {
+      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string.";
     }
-    else {
-      die "The type of \$string_ref_value must be string[] or StringBuffer.";
-    }
+    
+    $options = Fn->merge_options($options, {info => $replace_info_ref});
+    
+    $self->replace_buffer_common($string_buffer, $replace, $offset_ref, $length, $options);
     
     my $replace_info = $replace_info_ref->[0];
     
@@ -142,8 +115,8 @@ class Regex {
     }
   }
   
-  method replace_g  : Regex::ReplaceInfo ($string_ref_value : mutable string|string[]|StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
-    return $self->replace($string_ref_value, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
+  method replace_g  : Regex::ReplaceInfo ($string : mutable string, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
+    return $self->replace($string, $replace, $offset_ref, $length, Fn->merge_options($options, {global => 1}));
   }
   
   precompile method split : string[] ($string : string, $limit : int = 0) {

@@ -32,18 +32,16 @@ class TestCase::Regex {
     # Replace all
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabczabcz";
+      my $target = copy "ppzabczabcz";
       my $offset = 0;
       my $length = -1;
-      my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $target_ref = [$target];
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCzABCz") {
+      unless ($target eq "ppzABCzABCz") {
         return 0;
       }
     }
@@ -51,16 +49,16 @@ class TestCase::Regex {
     # Replace all offset
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabczabczabcz";
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
       my $length = -1;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzABCz") {
+      unless ($target eq "ppzabczABCzABCz") {
         return 0;
       }
     }
@@ -68,17 +66,17 @@ class TestCase::Regex {
     # Replace all with number
     {
       my $re = Regex->new("a\d+b");
-      my $target = "za123bz";
+      my $target = copy "za123bz";
       my $offset = 0;
       my $length = -1;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "zABCz") {
+      unless ($target eq "zABCz") {
         return 0;
       }
     }
@@ -86,17 +84,17 @@ class TestCase::Regex {
     # Replace all - Not replace_g
     {
       my $re = Regex->new("a\d+b");
-      my $target = "pppp";
+      my $target = copy "pppp";
       my $offset = 0;
       my $length = -1;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       if ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "pppp") {
+      unless ($target eq "pppp") {
         return 0;
       }
     }
@@ -108,16 +106,16 @@ class TestCase::Regex {
     # Replace
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabcz";
+      my $target = copy "ppzabcz";
       my $offset = 0;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, "ABC", \$offset, -1);
+      
+      my $replace_info = $re->replace((mutable string)$target, "ABC", \$offset, -1);
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCz") {
+      unless ($target eq "ppzABCz") {
         return 0;
       }
     }
@@ -125,16 +123,16 @@ class TestCase::Regex {
     # Replace offset
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabczabczabcz";
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, "ABC", \$offset, -1);
+      
+      my $replace_info = $re->replace((mutable string)$target, "ABC", \$offset, -1);
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzabcz") {
+      unless ($target eq "ppzabczABCzabcz") {
         return 0;
       }
     }
@@ -142,17 +140,17 @@ class TestCase::Regex {
     # Replace with number
     {
       my $re = Regex->new("a\d+b");
-      my $target = "za123bz";
+      my $target = copy "za123bz";
       my $offset = 0;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, "ABC", \$offset, -1);
-      my $result = $target_ref->[0];
+      
+      my $replace_info = $re->replace((mutable string)$target, "ABC", \$offset, -1);
+      my $result = $target;
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "zABCz") {
+      unless ($target eq "zABCz") {
         return 0;
       }
     }
@@ -160,17 +158,17 @@ class TestCase::Regex {
     # Replace - Not replaced
     {
       my $re = Regex->new("a\d+b");
-      my $target = "pppp";
+      my $target = copy "pppp";
       my $offset = 0;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, "ABC", \$offset, -1);
-      my $result = $target_ref->[0];
+      
+      my $replace_info = $re->replace((mutable string)$target, "ABC", \$offset, -1);
+      my $result = $target;
       
       if ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "pppp") {
+      unless ($target eq "pppp") {
         return 0;
       }
     }
@@ -182,12 +180,12 @@ class TestCase::Regex {
     # Replace
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabcz";
-      my $target_ref = [$target];
-      $re->replace($target_ref, "ABC");
-      my $result = $target_ref->[0];
+      my $target = copy "ppzabcz";
       
-      unless ($target_ref->[0] eq "ppzABCz") {
+      $re->replace((mutable string)$target, "ABC");
+      my $result = $target;
+      
+      unless ($target eq "ppzABCz") {
         return 0;
       }
     }
@@ -195,13 +193,13 @@ class TestCase::Regex {
     # Replace offset
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabczabczabcz";
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
-      my $target_ref = [$target];
-      $re->replace($target_ref, "ABC", \$offset);
-      my $result = $target_ref->[0];
       
-      unless ($target_ref->[0] eq "ppzabczABCzabcz") {
+      $re->replace((mutable string)$target, "ABC", \$offset);
+      my $result = $target;
+      
+      unless ($target eq "ppzabczABCzabcz") {
         return 0;
       }
     }
@@ -209,12 +207,12 @@ class TestCase::Regex {
     # Replace - capture
     {
       my $re = Regex->new("^(\d+)a(\d+)$");
-      my $target = "123a456";
+      my $target = copy "123a456";
       my $offset = 0;
       my $length = -1;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, "", \$offset, $length);
-      my $result = $target_ref->[0];
+      
+      my $replace_info = $re->replace((mutable string)$target, "", \$offset, $length);
+      my $result = $target;
       
       unless ($replace_info->match->cap1 eq "123") {
         return 0;
@@ -224,7 +222,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "") {
+      unless ($target eq "") {
         return 0;
       }
     }
@@ -236,19 +234,19 @@ class TestCase::Regex {
     # Replace callback with capture
     {
       my $re = Regex->new("a(bc)");
-      my $target = "ppzabcz";
+      my $target = copy "ppzabcz";
       my $offset = 0;
-      my $target_ref = [$target];
-      my $replace_info = $re->replace($target_ref, method : string ($re : Regex, $match : Regex::Match) {
+      
+      my $replace_info = $re->replace((mutable string)$target, method : string ($re : Regex, $match : Regex::Match) {
         return "AB" . $match->cap(1) . "C";
       }, \$offset, -1);
-      my $result = $target_ref->[0];
+      my $result = $target;
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABbcCz") {
+      unless ($target eq "ppzABbcCz") {
         return 0;
       }
     }
@@ -259,7 +257,7 @@ class TestCase::Regex {
     # Match start and end
     {
       my $re = Regex->new("abc");
-      my $target = "ppzabcz";
+      my $target = copy "ppzabcz";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -277,7 +275,7 @@ class TestCase::Regex {
     # Match start UTF-8
     {
       my $re = Regex->new("あい[かきくけこ]+う");
-      my $target = "んんあいかくこうん";
+      my $target = copy "んんあいかくこうん";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -295,7 +293,7 @@ class TestCase::Regex {
     # Match start zero width
     {
       my $re = Regex->new("b*c");
-      my $target = "zzcz";
+      my $target = copy "zzcz";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -314,7 +312,7 @@ class TestCase::Regex {
     # Match start zero width only
     {
       my $re = Regex->new("b*");
-      my $target = "zzcz";
+      my $target = copy "zzcz";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -336,7 +334,7 @@ class TestCase::Regex {
     # Capture zero more only
     {
       my $re = Regex->new("(a*)");
-      my $target = "aaa";
+      my $target = copy "aaa";
       my $match = $re->match($target);
       unless ($match->cap(1) eq "aaa") {
         return 0;
@@ -346,7 +344,7 @@ class TestCase::Regex {
     # Capture a char
     {
       my $re = Regex->new("a(b)c");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -361,7 +359,7 @@ class TestCase::Regex {
     # Capture a char UTF-8
     {
       my $re = Regex->new("あ(い)う");
-      my $target = "んあいうん";
+      my $target = copy "んあいうん";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -376,7 +374,7 @@ class TestCase::Regex {
     # Capture a char zero width
     {
       my $re = Regex->new("a(b?)c");
-      my $target = "zacz";
+      my $target = copy "zacz";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -391,7 +389,7 @@ class TestCase::Regex {
     # Capture char class-and quantifier
     {
       my $re = Regex->new("\-(\w+)\-");
-      my $target = "-abc89-";
+      my $target = copy "-abc89-";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -407,7 +405,7 @@ class TestCase::Regex {
     # Capture many strings 
     {
       my $re = Regex->new("\-(\w+) (\w+) (\w+) (\w+) (\w+)");
-      my $target = "-abc1 abc2 abc3 abc4 abc5 abc6-";
+      my $target = copy "-abc1 abc2 abc3 abc4 abc5 abc6-";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -438,7 +436,7 @@ class TestCase::Regex {
     # Capture zero more only
     {
       my $re = Regex->new("(a*)");
-      my $target = "aaa";
+      my $target = copy "aaa";
       my $match = $re->match($target);
       unless ($match->cap(1) eq "aaa") {
         return 0;
@@ -452,7 +450,7 @@ class TestCase::Regex {
     # Match char class-range
     {
       my $re = Regex->new("[0-9]+");
-      my $target = "z09az";
+      my $target = copy "z09az";
       
       my $match = $re->match($target);
       
@@ -464,7 +462,7 @@ class TestCase::Regex {
     # Not Match char class-range
     {
       my $re = Regex->new("[0-9a-c]+");
-      my $target = "zz";
+      my $target = copy "zz";
       
       my $match = $re->match($target);
       
@@ -476,7 +474,7 @@ class TestCase::Regex {
     # .
     {
       my $re = Regex->new("(.+)");
-      my $target = "abc\ndef";
+      my $target = copy "abc\ndef";
       
       my $match = $re->match($target);
       
@@ -492,7 +490,7 @@ class TestCase::Regex {
     # . - single line mode
     {
       my $re = Regex->new("(.+)", "s");
-      my $target = "abc\ndef";
+      my $target = copy "abc\ndef";
       
       my $match = $re->match($target);
       
@@ -513,7 +511,7 @@ class TestCase::Regex {
     # Match char class-negate
     {
       my $re = Regex->new("[^0-9]+");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = $re->match($target);
       
@@ -525,7 +523,7 @@ class TestCase::Regex {
     # Not match char class-negate
     {
       my $re = Regex->new("[^0-9]+");
-      my $target = "012";
+      my $target = copy "012";
       
       my $match = $re->match($target);
       
@@ -537,7 +535,7 @@ class TestCase::Regex {
     # Match char class-negate UTF-8
     {
       my $re = Regex->new("[^あ]+");
-      my $target = "いうえ";
+      my $target = copy "いうえ";
       
       my $match = $re->match($target);
       
@@ -549,7 +547,7 @@ class TestCase::Regex {
     # Don't Match char class-negate UTF-8
     {
       my $re = Regex->new("[^あ]+");
-      my $target = "あああ";
+      my $target = copy "あああ";
       
       my $match = $re->match($target);
       
@@ -567,7 +565,7 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("[bcdあ]+");
-        my $target = "zabcあz";
+        my $target = copy "zabcあz";
         
         my $match = $re->match($target);
         
@@ -578,7 +576,7 @@ class TestCase::Regex {
       
       {
         my $re = Regex->new("^[a-c\dx-z]+$");
-        my $target = "ac09xz";
+        my $target = copy "ac09xz";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -589,7 +587,7 @@ class TestCase::Regex {
     # Match char class-\d
     {
       my $re = Regex->new("[\da]+");
-      my $target = "z01az";
+      my $target = copy "z01az";
       
       my $match = $re->match($target);
       
@@ -601,7 +599,7 @@ class TestCase::Regex {
     # Not Match char class
     {
       my $re = Regex->new("[bcd\d]+");
-      my $target = "ae";
+      my $target = copy "ae";
       
       my $match = $re->match($target);
       
@@ -614,7 +612,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("^[\d\D]+$");
       
-      my $target = "abc123";
+      my $target = copy "abc123";
       
       my $match = $re->match($target);
       
@@ -628,7 +626,7 @@ class TestCase::Regex {
       my $re = Regex->new("^[^\d\D]+$");
       
       {
-        my $target = "abc";
+        my $target = copy "abc";
         
         my $match = $re->match($target);
         if ($match) {
@@ -636,7 +634,7 @@ class TestCase::Regex {
         }
       }
       {
-        my $target = "123";
+        my $target = copy "123";
         
         my $match = $re->match($target);
         if ($match) {
@@ -650,7 +648,7 @@ class TestCase::Regex {
       my $re = Regex->new("[a-a]");
       
       {
-        my $target = "a";
+        my $target = copy "a";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -663,7 +661,7 @@ class TestCase::Regex {
       my $re = Regex->new("[a-aa-a]");
       
       {
-        my $target = "a";
+        my $target = copy "a";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -677,7 +675,7 @@ class TestCase::Regex {
         my $re = Regex->new("-");
         
         {
-          my $target = "-";
+          my $target = copy "-";
           my $match = $re->match($target);
           unless ($match) {
             return 0;
@@ -688,7 +686,7 @@ class TestCase::Regex {
         my $re = Regex->new("a-z");
         
         {
-          my $target = "a-z";
+          my $target = copy "a-z";
           my $match = $re->match($target);
           unless ($match) {
             return 0;
@@ -703,7 +701,7 @@ class TestCase::Regex {
       my $re = Regex->new("[-]");
       
       {
-        my $target = "-";
+        my $target = copy "-";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -716,7 +714,7 @@ class TestCase::Regex {
       my $re = Regex->new("[a-]");
       
       {
-        my $target = "a";
+        my $target = copy "a";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -724,7 +722,7 @@ class TestCase::Regex {
       }
 
       {
-        my $target = "-";
+        my $target = copy "-";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -746,21 +744,21 @@ class TestCase::Regex {
       my $re = Regex->new("[ ^a]");
       
       {
-        my $target = " ";
+        my $target = copy " ";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
         }
       }
       {
-        my $target = "^";
+        my $target = copy "^";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
         }
       }
       {
-        my $target = "a";
+        my $target = copy "a";
         my $match = $re->match($target);
         unless ($match) {
           return 0;
@@ -778,7 +776,7 @@ class TestCase::Regex {
     # Match not space
     {
       my $re = Regex->new("\s+\S+\s+");
-      my $target = "\f\tzacz \r\n";
+      my $target = copy "\f\tzacz \r\n";
       
       my $match = $re->match($target);
       
@@ -790,7 +788,7 @@ class TestCase::Regex {
     # Not Match not space
     {
       my $re = Regex->new("\S+");
-      my $target = "\f\t \r\n";
+      my $target = copy "\f\t \r\n";
       
       my $match = $re->match($target);
       
@@ -806,7 +804,7 @@ class TestCase::Regex {
     # Match space
     {
       my $re = Regex->new("a\s+c");
-      my $target = "za\f\t\r\n cz";
+      my $target = copy "za\f\t\r\n cz";
       
       my $match = $re->match($target);
       
@@ -818,7 +816,7 @@ class TestCase::Regex {
     # Not Match
     {
       my $re = Regex->new("\s+");
-      my $target = "\aabc\0";
+      my $target = copy "\aabc\0";
       
       my $match = $re->match($target);
       
@@ -835,7 +833,7 @@ class TestCase::Regex {
     # Match not number
     {
       my $re = Regex->new("\w\W+\w");
-      my $target = "0-:9";
+      my $target = copy "0-:9";
       
       my $match = $re->match($target);
       
@@ -847,7 +845,7 @@ class TestCase::Regex {
     # Match not a-z
     {
       my $re = Regex->new("\w\W+\w");
-      my $target = "ab`{yz";
+      my $target = copy "ab`{yz";
       
       my $match = $re->match($target);
       
@@ -859,7 +857,7 @@ class TestCase::Regex {
     # Match not A-Z
     {
       my $re = Regex->new("\w\W+\w");
-      my $target = "AB`{YZ";
+      my $target = copy "AB`{YZ";
       
       my $match = $re->match($target);
       
@@ -871,7 +869,7 @@ class TestCase::Regex {
     # Match not _
     {
       my $re = Regex->new("\w\W+\w");
-      my $target = "_^`_";
+      my $target = copy "_^`_";
       
       my $match = $re->match($target);
       
@@ -883,7 +881,7 @@ class TestCase::Regex {
     # not Match 
     {
       my $re = Regex->new("\W+");
-      my $target = "azAZ_09";
+      my $target = copy "azAZ_09";
       
       my $match = $re->match($target);
       
@@ -900,7 +898,7 @@ class TestCase::Regex {
     # Match number
     {
       my $re = Regex->new("\-\w+\:");
-      my $target = "-0123456789:";
+      my $target = copy "-0123456789:";
       
       my $match = $re->match($target);
       
@@ -912,7 +910,7 @@ class TestCase::Regex {
     # Match a-z
     {
       my $re = Regex->new("\`\w+\{");
-      my $target = "`abyz{";
+      my $target = copy "`abyz{";
       
       my $match = $re->match($target);
       
@@ -924,7 +922,7 @@ class TestCase::Regex {
     # Match A-Z
     {
       my $re = Regex->new("\`\w+\{");
-      my $target = "`ABYZ{";
+      my $target = copy "`ABYZ{";
       
       my $match = $re->match($target);
       
@@ -936,7 +934,7 @@ class TestCase::Regex {
     # Match _
     {
       my $re = Regex->new("\^\w+\`");
-      my $target = "^__`";
+      my $target = copy "^__`";
       
       my $match = $re->match($target);
       
@@ -948,7 +946,7 @@ class TestCase::Regex {
     # Match Not
     {
       my $re = Regex->new("\w+");
-      my $target = "{}あいう";
+      my $target = copy "{}あいう";
       
       my $match = $re->match($target);
       
@@ -965,7 +963,7 @@ class TestCase::Regex {
     # Match not number
     {
       my $re = Regex->new("0\D+9");
-      my $target = "0abc9";
+      my $target = copy "0abc9";
       
       my $match = $re->match($target);
       
@@ -982,7 +980,7 @@ class TestCase::Regex {
     # Match number
     {
       my $re = Regex->new("a\d+c");
-      my $target = "za0123456789cz";
+      my $target = copy "za0123456789cz";
       
       my $match = $re->match($target);
       
@@ -995,7 +993,7 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("\d+\D+\d+");
-        my $target = "123abc789";
+        my $target = copy "123abc789";
         
         my $match = $re->match($target);
         
@@ -1014,7 +1012,7 @@ class TestCase::Regex {
       # Match $ - "zabbc"
       {
         my $re = Regex->new("ab+c$");
-        my $target = "zabbc";
+        my $target = copy "zabbc";
         
         my $match = $re->match($target);
         
@@ -1026,7 +1024,7 @@ class TestCase::Regex {
       # Not Match $ - "zabbcz"
       {
         my $re = Regex->new("ab+c$");
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1045,7 +1043,7 @@ class TestCase::Regex {
       # Match ^ - "abbcz"
       {
         my $re = Regex->new("^ab+c");
-        my $target = "abbcz";
+        my $target = copy "abbcz";
         
         my $match = $re->match($target);
         
@@ -1057,7 +1055,7 @@ class TestCase::Regex {
       # Not Match ^ - "zabbcz"
       {
         my $re = Regex->new("^ab+c");
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1076,7 +1074,7 @@ class TestCase::Regex {
       # Match {1,3} - "zabcz"
       {
         my $re = Regex->new("ab{1,3}c");
-        my $target = "zabcz";
+        my $target = copy "zabcz";
         
         my $match = $re->match($target);
         
@@ -1088,7 +1086,7 @@ class TestCase::Regex {
       # Match {1,3} - "zabbbcz"
       {
         my $re = Regex->new("ab{1,3}c");
-        my $target = "zabbbcz";
+        my $target = copy "zabbbcz";
         
         my $match = $re->match($target);
         
@@ -1100,7 +1098,7 @@ class TestCase::Regex {
       # Not Match {1,3} - "zacz"
       {
         my $re = Regex->new("ab{1,3}c");
-        my $target = "zacz";
+        my $target = copy "zacz";
         
         my $match = $re->match($target);
         
@@ -1111,7 +1109,7 @@ class TestCase::Regex {
       # Not Match {1,3} - "zabbbbcz"
       {
         my $re = Regex->new("ab{1,3}c");
-        my $target = "zabbbbcz";
+        my $target = copy "zabbbbcz";
         
         my $match = $re->match($target);
         
@@ -1126,7 +1124,7 @@ class TestCase::Regex {
       # Match {11,13} - "zabbbbbbbbbbbcz"
       {
         my $re = Regex->new("ab{11,13}c");
-        my $target = "zabbbbbbbbbbbcz";
+        my $target = copy "zabbbbbbbbbbbcz";
         
         my $match = $re->match($target);
         
@@ -1138,7 +1136,7 @@ class TestCase::Regex {
       # Match {11,13} - "zabbbcz"
       {
         my $re = Regex->new("ab{11,13}c");
-        my $target = "zabbbbbbbbbbbbbcz";
+        my $target = copy "zabbbbbbbbbbbbbcz";
         
         my $match = $re->match($target);
         
@@ -1150,7 +1148,7 @@ class TestCase::Regex {
       # Not Match {11,13} - "zacz"
       {
         my $re = Regex->new("ab{11,13}c");
-        my $target = "zabbbbbbbbbbcz";
+        my $target = copy "zabbbbbbbbbbcz";
         
         my $match = $re->match($target);
         
@@ -1161,7 +1159,7 @@ class TestCase::Regex {
       # Not Match {11,13} - "zabbbbcz"
       {
         my $re = Regex->new("ab{11,13}c");
-        my $target = "zabbbbbbbbbbbbbbcz";
+        my $target = copy "zabbbbbbbbbbbbbbcz";
         
         my $match = $re->match($target);
         
@@ -1176,7 +1174,7 @@ class TestCase::Regex {
       my $re = Regex->new("ab{2,}c");
       
       {
-        my $target = "zabcz";
+        my $target = copy "zabcz";
         
         my $match = $re->match($target);
         
@@ -1185,7 +1183,7 @@ class TestCase::Regex {
         }
       }
       {
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1194,7 +1192,7 @@ class TestCase::Regex {
         }
       }
       {
-        my $target = "zabbbcz";
+        my $target = copy "zabbbcz";
         
         my $match = $re->match($target);
         
@@ -1213,7 +1211,7 @@ class TestCase::Regex {
       # Match ? - "zabcz"
       {
         my $re = Regex->new("ab?c");
-        my $target = "zabcz";
+        my $target = copy "zabcz";
         
         my $match = $re->match($target);
         
@@ -1225,7 +1223,7 @@ class TestCase::Regex {
       # Not Match ? - "zabbcz"
       {
         my $re = Regex->new("ab?c");
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1237,7 +1235,7 @@ class TestCase::Regex {
       # Match ? - "zacz"
       {
         my $re = Regex->new("ab?c");
-        my $target = "zacz";
+        my $target = copy "zacz";
         
         my $match = $re->match($target);
         
@@ -1256,7 +1254,7 @@ class TestCase::Regex {
       # Match + - "zabcz"
       {
         my $re = Regex->new("ab+c");
-        my $target = "zabcz";
+        my $target = copy "zabcz";
         
         my $match = $re->match($target);
         
@@ -1268,7 +1266,7 @@ class TestCase::Regex {
       # Match + - "zabbcz"
       {
         my $re = Regex->new("ab+c");
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1280,7 +1278,7 @@ class TestCase::Regex {
       # Not Match + - "zacz"
       {
         my $re = Regex->new("ab+c");
-        my $target = "zacz";
+        my $target = copy "zacz";
         
         my $match = $re->match($target);
         
@@ -1299,7 +1297,7 @@ class TestCase::Regex {
       # Match * - "zabcz"
       {
         my $re = Regex->new("ab*c");
-        my $target = "zabcz";
+        my $target = copy "zabcz";
         
         my $match = $re->match($target);
         
@@ -1311,7 +1309,7 @@ class TestCase::Regex {
       # Match * - "zabbcz"
       {
         my $re = Regex->new("ab*c");
-        my $target = "zabbcz";
+        my $target = copy "zabbcz";
         
         my $match = $re->match($target);
         
@@ -1323,7 +1321,7 @@ class TestCase::Regex {
       # Match * - "zacz"
       {
         my $re = Regex->new("ab*c");
-        my $target = "zacz";
+        my $target = copy "zacz";
         
         my $match = $re->match($target);
         
@@ -1335,7 +1333,7 @@ class TestCase::Regex {
       # Not Match * - "zabbdz"
       {
         my $re = Regex->new("ab*c");
-        my $target = "zabbdz";
+        my $target = copy "zabbdz";
         
         my $match = $re->match($target);
         
@@ -1353,7 +1351,7 @@ class TestCase::Regex {
     # Not Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = (my $offset = 2, $re->match($target, \$offset));
       
@@ -1365,7 +1363,7 @@ class TestCase::Regex {
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = (my $offset = 1, $re->match($target, \$offset));
       
@@ -1382,7 +1380,7 @@ class TestCase::Regex {
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = $re->match($target);
       
@@ -1394,7 +1392,7 @@ class TestCase::Regex {
     # Match same string
     {
       my $re = Regex->new("abc");
-      my $target = "abc";
+      my $target = copy "abc";
       
       my $match = $re->match($target);
       
@@ -1407,7 +1405,7 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abz", "i");
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = $re->match($target);
         
@@ -1418,7 +1416,7 @@ class TestCase::Regex {
 
       {
         my $re = Regex->new("ABZ", "i");
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         
         my $match = $re->match($target);
         
@@ -1429,7 +1427,7 @@ class TestCase::Regex {
       
       {
         my $re = Regex->new("A[B-Z]{2,2}", "i");
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         
         my $match = $re->match($target);
         
@@ -1440,7 +1438,7 @@ class TestCase::Regex {
 
       {
         my $re = Regex->new("a[b-z]{2,2}", "i");
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = $re->match($target);
         
@@ -1464,10 +1462,9 @@ class TestCase::Regex {
     }
 
     {
-      my $path = "/..";
-      my $path_ref = [$path];
-      Regex->new("^/\.\.$")->replace($path_ref, "/");
-      $path = $path_ref->[0];
+      my $path = copy "/..";
+      Regex->new("^/\.\.$")->replace((mutable string)$path, "/");
+      
       unless ($path eq "/") {
         return 0;
       }
@@ -1485,7 +1482,7 @@ class TestCase::Regex {
     {
       my $re = Regex->new("(1)(2)(3)(4)(5)(6)(7)(8)(9)(10)");
       
-      my $target = "12345678910";
+      my $target = copy "12345678910";
       my $match = $re->match($target);
       
       unless ($match) {
@@ -1527,7 +1524,7 @@ class TestCase::Regex {
     # "]" is a character at the place that is not character class.
     {
       my $re = Regex->new("]");
-      my $target = "]";
+      my $target = copy "]";
       my $match = $re->match($target);
       unless ($match) {
         return 0;
@@ -1651,13 +1648,11 @@ class TestCase::Regex {
     {
       my $re = Regex->new("bc");
       
-      my $string = "abcdbc";
+      my $string = copy "abcdbc";
       my $offset = 0;
-      my $replaced_ref = [$string];
-      $re->replace($replaced_ref, "BC");
-      my $replaced = $replaced_ref->[0];
+      $re->replace((mutable string)$string, "BC");
       
-      unless ($replaced eq "aBCdbc") {
+      unless ($string eq "aBCdbc") {
         return 0;
       }
     }
@@ -1667,8 +1662,8 @@ class TestCase::Regex {
       {
         my $re = Regex->new("\b");
 
-        my $string = "12 34 56";
-        my $match = $re->match($string);
+        my $target = "12 34 56";
+        my $match = $re->match($target);
 
         unless ($match) {
           return 0;
@@ -1677,22 +1672,18 @@ class TestCase::Regex {
 
       {
         my $re = Regex->new("\b");
-        my $string = "ab cde";
-        my $string_ref = [$string];
-        $re->replace($string_ref, "_");
-        my $replaced = $string_ref->[0];
-        unless ($replaced eq "_ab cde") {
+        my $target = copy "ab cde";
+        $re->replace((mutable string)$target, "_");
+        unless ($target eq "_ab cde") {
           return 0;
         }
       }
 
       {
         my $re = Regex->new("\b");
-        my $string = "  k";
-        my $string_ref = [$string];
-        $re->replace($string_ref, "_");
-        my $replaced = $string_ref->[0];
-        unless ($replaced eq "  _k") {
+        my $target = copy "  k";
+        $re->replace((mutable string)$target, "_");
+        unless ($target eq "  _k") {
           return 0;
         }
       }
@@ -1706,8 +1697,8 @@ class TestCase::Regex {
     
     # URL escape
     my $regex = Regex->new("([^A-Za-z0-9\-\._~])");
-    my $input_ref = [$input];
-    $regex->replace_g($input_ref, method : string ($re : Regex, $match : Regex::Match) {
+    my $output = copy $input;
+    $regex->replace_g((mutable string)$output, method : string ($re : Regex, $match : Regex::Match) {
       my $bytes = $match->cap1;
       
       my $escaped_char_buffer = StringBuffer->new;
@@ -1723,8 +1714,6 @@ class TestCase::Regex {
       return $escaped_char;
     });
     
-    my $output = $input_ref->[0];
-    
     return $output;
   }
   
@@ -1732,15 +1721,13 @@ class TestCase::Regex {
     
     # URL unescape
     my $regex = Regex->new("%([0-9a-fA-F]{2,2})");
-    my $input_ref = [$input];
-    $regex->replace_g($input_ref, method : string ($re : Regex, $match : Regex::Match) {
+    my $output = copy $input;
+    $regex->replace_g((mutable string)$output, method : string ($re : Regex, $match : Regex::Match) {
       my $cap1 = $match->cap1;
       my $hex = Fn->hex($cap1);
       my $ch = (string)[(byte)$hex];
       return $ch;
     });
-    
-    my $output = $input_ref->[0];
     
     return $output;
   }
@@ -1972,189 +1959,12 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match : int () {
-
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $match = $re->match($target);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 0;
-      my $match = $re->match($target, \$offset);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 0;
-      my $length = -1;
-      my $match = $re->match($target, \$offset, $length);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabc");
-      
-      my $offset = 1;
-      my $length = 3;
-      my $match = $re->match($target, \$offset, $length);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    # Exceptions
-    {
-      {
-        my $re = Regex->new("abc");
-        my $target = StringBuffer->new;
-        $target->push("zabc");
-        
-        my $offset = 1;
-        my $length = 4;
-        eval { my $match = $re->match($target, \$offset, $length); }
-        
-        unless ($@) {
-          return 0;
-        }
-      }
-    }
-    
-    
-    
-    return 1;
-  }
-  
-  static method buffer_match_forward : int () {
-    
-    # Match string
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 1;
-      my $match = $re->match($target, \$offset);
-      
-      unless ($match) {
-        return 0;
-      }
-      
-      unless ($offset == 4) {
-        return 0;
-      }
-    }
-    
-    # Exceptions
-    {
-      {
-        my $re = Regex->new("abc");
-        my $target = StringBuffer->new;
-        $target->push("zabc");
-        
-        my $offset = 1;
-        my $length = 4;
-        eval { my $match = $re->match($target, \$offset, $length); }
-        
-        unless ($@) {
-          return 0;
-        }
-      }
-    }
-    
-    
-    
-    return 1;
-  }
-  
-  static method buffer_replace : int () {
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("ppzabcz");
-      $re->replace($target, "ABC");
-      
-      unless ($target->to_string eq "ppzABCz") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-  
-  static method buffer_replace_g : int () {
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("ppzabczabcz");
-      my $offset = 0;
-      my $length = -1;
-      my $replace_info = $re->replace_g($target, "ABC", \$offset, $length);
-      
-      unless ($replace_info->replaced_count == 2) {
-        return 0;
-      }
-      
-      unless ($target->to_string eq "ppzABCzABCz") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-  
-  static method buffer_replace_common : int () {
-    # Replace
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("ppzabcz");
-      my $offset = 0;
-      my $replace_info = $re->replace($target, "ABC", \$offset, -1);
-      
-      unless ($replace_info->replaced_count == 1) {
-        return 0;
-      }
-      
-      unless ($target->to_string eq "ppzABCz") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-  
   static method match_extra : int () {
 
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = $re->match($target);
       
@@ -2166,7 +1976,7 @@ class TestCase::Regex {
     # Match same string
     {
       my $re = Regex->new("abc");
-      my $target = "abc";
+      my $target = copy "abc";
       
       my $match = $re->match($target);
       
@@ -2179,7 +1989,7 @@ class TestCase::Regex {
     {
       {
         my $re = Regex->new("abz", "i");
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = $re->match($target);
         
@@ -2190,7 +2000,7 @@ class TestCase::Regex {
 
       {
         my $re = Regex->new("ABZ", "i");
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         
         my $match = $re->match($target);
         
@@ -2201,7 +2011,7 @@ class TestCase::Regex {
       
       {
         my $re = Regex->new("A[B-Z]{2,2}", "i");
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         
         my $match = $re->match($target);
         
@@ -2212,7 +2022,7 @@ class TestCase::Regex {
 
       {
         my $re = Regex->new("a[b-z]{2,2}", "i");
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = $re->match($target);
         
@@ -2230,7 +2040,7 @@ class TestCase::Regex {
     # Not Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = (my $offset = 2, $re->match($target, \$offset));
       
@@ -2246,7 +2056,7 @@ class TestCase::Regex {
     # Match string
     {
       my $re = Regex->new("abc");
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = (my $offset = 1, $re->match($target, \$offset));
       
@@ -2262,137 +2072,18 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method buffer_match_extra : int () {
-
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $match = $re->match($target);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 0;
-      my $match = $re->match($target, \$offset);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 0;
-      my $length = -1;
-      my $match = $re->match($target, \$offset, $length);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabc");
-      
-      my $offset = 1;
-      my $length = 3;
-      my $match = $re->match($target, \$offset, $length);
-      
-      unless ($match) {
-        return 0;
-      }
-    }
-    
-    # Exceptions
-    {
-      {
-        my $re = Regex->new("abc");
-        my $target = StringBuffer->new;
-        $target->push("zabc");
-        
-        my $offset = 1;
-        my $length = 4;
-        eval { my $match = $re->match($target, \$offset, $length); }
-        
-        unless ($@) {
-          return 0;
-        }
-      }
-    }
-    
-    
-    
-    return 1;
-  }
-  
-  static method buffer_match_extra_forward : int () {
-    
-    # Match string
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("zabcz");
-      
-      my $offset = 1;
-      my $match = $re->match($target, \$offset);
-      
-      unless ($match) {
-        return 0;
-      }
-      
-      unless ($offset == 4) {
-        return 0;
-      }
-    }
-    
-    # Exceptions
-    {
-      {
-        my $re = Regex->new("abc");
-        my $target = StringBuffer->new;
-        $target->push("zabc");
-        
-        my $offset = 1;
-        my $length = 4;
-        eval { my $match = $re->match($target, \$offset, $length); }
-        
-        unless ($@) {
-          return 0;
-        }
-      }
-    }
-    
-    
-    
-    return 1;
-  }
-  
   static method replace_extra : int () {
     # Replace
     {
       my $re = Regex->new("abc");
-      my $target_ref = ["ppzabcz"];
-      my $replace_info = $re->replace($target_ref, "ABC");
+      my $target = copy "ppzabcz";
+      my $replace_info = $re->replace((mutable string)$target, "ABC");
       
       unless ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCz") {
+      unless ($target eq "ppzABCz") {
         return 0;
       }
     }
@@ -2400,8 +2091,8 @@ class TestCase::Regex {
     # Not Replace
     {
       my $re = Regex->new("abd");
-      my $target_ref = ["ppzabcz"];
-      my $replace_info = $re->replace($target_ref, "ABC");
+      my $target = copy "ppzabcz";
+      my $replace_info = $re->replace((mutable string)$target, "ABC");
       
       if ($replace_info) {
         return 0;
@@ -2412,15 +2103,15 @@ class TestCase::Regex {
     # Replace offset
     {
       my $re = Regex->new("abc");
-      my $target_ref = ["ppzabczabczabcz"];
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
-      my $replace_info = $re->replace($target_ref, "ABC", \$offset);
+      my $replace_info = $re->replace((mutable string)$target, "ABC", \$offset);
       
       unless ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzabcz") {
+      unless ($target eq "ppzabczABCzabcz") {
         return 0;
       }
     }
@@ -2428,10 +2119,10 @@ class TestCase::Regex {
     # Replace - capture
     {
       my $re = Regex->new("^(\d+)a(\d+)$");
-      my $target_ref = ["123a456"];
+      my $target = copy "123a456";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = $re->replace($target_ref, "", \$offset, $length);
+      my $replace_info = $re->replace((mutable string)$target, "", \$offset, $length);
       
       unless ($replace_info) {
         return 0;
@@ -2445,7 +2136,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "") {
+      unless ($target eq "") {
         return 0;
       }
     }
@@ -2457,16 +2148,16 @@ class TestCase::Regex {
     # Replace all
     {
       my $re = Regex->new("abc");
-      my $target_ref = ["ppzabczabcz"];
+      my $target = copy "ppzabczabcz";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCzABCz") {
+      unless ($target eq "ppzABCzABCz") {
         return 0;
       }
     }
@@ -2474,16 +2165,16 @@ class TestCase::Regex {
     # Replace all offset
     {
       my $re = Regex->new("abc");
-      my $target_ref = ["ppzabczabczabcz"];
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
       my $length = -1;
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzABCz") {
+      unless ($target eq "ppzabczABCzABCz") {
         return 0;
       }
     }
@@ -2491,16 +2182,16 @@ class TestCase::Regex {
     # Replace all with number
     {
       my $re = Regex->new("a\d+b");
-      my $target_ref = ["za123bz"];
+      my $target = copy "za123bz";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "zABCz") {
+      unless ($target eq "zABCz") {
         return 0;
       }
     }
@@ -2508,58 +2199,16 @@ class TestCase::Regex {
     # Replace all - Not replace_g
     {
       my $re = Regex->new("a\d+b");
-      my $target_ref = ["pppp"];
+      my $target = copy "pppp";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = $re->replace_g($target_ref, "ABC", \$offset, $length);
+      my $replace_info = $re->replace_g((mutable string)$target, "ABC", \$offset, $length);
       
       if ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "pppp") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-  
-  static method buffer_replace_extra : int () {
-    
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("ppzabcz");
-      $re->replace($target, "ABC");
-      
-      unless ($target->to_string eq "ppzABCz") {
-        return 0;
-      }
-    }
-    
-    return 1;
-  }
-  
-  static method buffer_replace_extra_g : int () {
-    {
-      my $re = Regex->new("abc");
-      my $target = StringBuffer->new;
-      $target->push("ppzabczabcz");
-      my $offset = 0;
-      my $length = -1;
-      my $replace_info_ref = new Regex::ReplaceInfo[1];
-      my $replace_info = $re->replace_g($target, "ABC", \$offset, $length);
-      
-      unless ($replace_info->replaced_count == 2) {
-        return 0;
-      }
-      
-      unless ($target->to_string eq "ppzABCzABCz") {
-        return 0;
-      }
-      
-      unless ($offset == 10) {
+      unless ($target eq "pppp") {
         return 0;
       }
     }
@@ -2572,7 +2221,7 @@ class TestCase::Regex {
     # Match string
     {
       my $re = "abc";
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = Re->m($target, $re);
       
@@ -2584,7 +2233,7 @@ class TestCase::Regex {
     # Match string - cached
     {
       my $re = "abc";
-      my $target = "zabcz";
+      my $target = copy "zabcz";
       
       my $match = Re->m($target, $re);
       
@@ -2596,7 +2245,7 @@ class TestCase::Regex {
     # Match same string
     {
       my $re = "abc";
-      my $target = "abc";
+      my $target = copy "abc";
       
       my $match = Re->m($target, $re);
       
@@ -2610,7 +2259,7 @@ class TestCase::Regex {
       {
         my $re = "abz";
         my $flags = "i";
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = Re->m($target, [$re, $flags]);
         
@@ -2622,7 +2271,7 @@ class TestCase::Regex {
       {
         my $re = "ABZ";
         my $flags = "i";
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         
         my $match = Re->m($target, [$re, $flags]);
         
@@ -2634,7 +2283,7 @@ class TestCase::Regex {
       {
         my $re = "A[B-Z]{2,2}";
         my $flags = "i";
-        my $target = "zabzz";
+        my $target = copy "zabzz";
         my $match = Re->m($target, [$re, $flags]);
         
         unless ($match) {
@@ -2645,7 +2294,7 @@ class TestCase::Regex {
       {
         my $re = "a[b-z]{2,2}";
         my $flags = "i";
-        my $target = "zABZz";
+        my $target = copy "zABZz";
         
         my $match = Re->m($target, [$re, $flags]);
         
@@ -2662,14 +2311,14 @@ class TestCase::Regex {
     # Replace
     {
       my $re = "abc";
-      my $target_ref = ["ppzabcz"];
-      my $replace_info = Re->s($target_ref, $re, "ABC");
+      my $target = copy "ppzabcz";
+      my $replace_info = Re->s((mutable string)$target, $re, "ABC");
       
       unless ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCz") {
+      unless ($target eq "ppzABCz") {
         return 0;
       }
     }
@@ -2677,8 +2326,8 @@ class TestCase::Regex {
     # Not Replace
     {
       my $re ="abd";
-      my $target_ref = ["ppzabcz"];
-      my $replace_info = Re->s($target_ref, $re, "ABC");
+      my $target = copy "ppzabcz";
+      my $replace_info = Re->s((mutable string)$target, $re, "ABC");
       
       if ($replace_info) {
         return 0;
@@ -2689,15 +2338,15 @@ class TestCase::Regex {
     # Replace offset
     {
       my $re = "abc";
-      my $target_ref = ["ppzabczabczabcz"];
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
-      my $replace_info = Re->s($target_ref, $re, "ABC", \$offset);
+      my $replace_info = Re->s((mutable string)$target, $re, "ABC", \$offset);
       
       unless ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzabcz") {
+      unless ($target eq "ppzabczABCzabcz") {
         return 0;
       }
     }
@@ -2705,10 +2354,10 @@ class TestCase::Regex {
     # Replace - capture
     {
       my $re = "^(\d+)a(\d+)$";
-      my $target_ref = ["123a456"];
+      my $target = copy "123a456";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = Re->s($target_ref, $re, "", \$offset, $length);
+      my $replace_info = Re->s((mutable string)$target, $re, "", \$offset, $length);
       
       unless ($replace_info) {
         return 0;
@@ -2722,7 +2371,7 @@ class TestCase::Regex {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "") {
+      unless ($target eq "") {
         return 0;
       }
     }
@@ -2750,16 +2399,16 @@ class TestCase::Regex {
     # Replace all
     {
       my $re = "abc";
-      my $target_ref = ["ppzabczabcz"];
+      my $target = copy "ppzabczabcz";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = Re->s($target_ref, [$re, "g"], "ABC", \$offset, $length);
+      my $replace_info = Re->s((mutable string)$target, [$re, "g"], "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzABCzABCz") {
+      unless ($target eq "ppzABCzABCz") {
         return 0;
       }
     }
@@ -2767,16 +2416,16 @@ class TestCase::Regex {
     # Replace all offset
     {
       my $re = "abc";
-      my $target_ref = ["ppzabczabczabcz"];
+      my $target = copy "ppzabczabczabcz";
       my $offset = 6;
       my $length = -1;
-      my $replace_info = Re->s($target_ref, [$re, "g"], "ABC", \$offset, $length);
+      my $replace_info = Re->s((mutable string)$target, [$re, "g"], "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 2) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "ppzabczABCzABCz") {
+      unless ($target eq "ppzabczABCzABCz") {
         return 0;
       }
     }
@@ -2784,16 +2433,16 @@ class TestCase::Regex {
     # Replace all with number
     {
       my $re = "a\d+b";
-      my $target_ref = ["za123bz"];
+      my $target = copy "za123bz";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = Re->s($target_ref, [$re, "g"], "ABC", \$offset, $length);
+      my $replace_info = Re->s((mutable string)$target, [$re, "g"], "ABC", \$offset, $length);
       
       unless ($replace_info->replaced_count == 1) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "zABCz") {
+      unless ($target eq "zABCz") {
         return 0;
       }
     }
@@ -2801,16 +2450,16 @@ class TestCase::Regex {
     # Replace all - Not replace
     {
       my $re = "a\d+b";
-      my $target_ref = ["pppp"];
+      my $target = copy "pppp";
       my $offset = 0;
       my $length = -1;
-      my $replace_info = Re->s($target_ref, [$re, "g"], "ABC", \$offset, $length);
+      my $replace_info = Re->s((mutable string)$target, [$re, "g"], "ABC", \$offset, $length);
       
       if ($replace_info) {
         return 0;
       }
       
-      unless ($target_ref->[0] eq "pppp") {
+      unless ($target eq "pppp") {
         return 0;
       }
     }
@@ -2848,12 +2497,10 @@ class TestCase::Regex {
   
   static method extra_issue9 : int () {
     
-    my $path = "";
-    
-    my $path_ref = [$path];
+    my $path = copy "";
     
     # xx////xx  -> xx/xx
-    Re->s($path_ref, ["/{2,}", "g"], "/");
+    Re->s((mutable string)$path, ["/{2,}", "g"], "/");
   }
 
 }

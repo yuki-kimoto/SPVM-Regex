@@ -1,3 +1,9 @@
+0.253 2025-10-13
+  [Incompatible Changes]
+    * Sorry, Regex#replace method's first argument only receive mutable string type.
+    * Sorry, Regex#replace_g method's first argument only receive mutable string type.
+    * Sorry, Re#s method's first argument only receive mutable string type.
+    
 0.252 2025-10-11
   [Internal Changes]
     * Use hash access syntax.
