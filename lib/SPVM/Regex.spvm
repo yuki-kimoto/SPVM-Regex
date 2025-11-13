@@ -2,7 +2,7 @@
 # MIT License
 
 class Regex {
-  version "0.253";
+  version "0.254";
   
   use Resource::RE2;
   
