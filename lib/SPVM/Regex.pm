@@ -233,6 +233,16 @@ C<method split : string[] ($string : string, $limit : int = 0);>
 
 The same as L<Fn#split|SPVM::Fn/"split"> method, but the regular expression is used as the separator.
 
+If the regex is caputred using C<()>, they are included in the return value.
+
+Examples:
+
+  # ["foo", "bar", "baz"]
+  my $ret = Regex->new(",")->split("foo,bar,baz");
+  
+  # ["foo", "<cap1>", "bar", "<cap2>", "baz"]
+  my $ret = Regex->new("(<.*?>)")->split("foo<cap1>bar<cap2>baz");
+
 =head1 Repository
 
 L<SPVM::Regex - Github|https://github.com/yuki-kimoto/SPVM-Regex>

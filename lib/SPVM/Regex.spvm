@@ -93,6 +93,7 @@ class Regex {
   }
   
   precompile method split : string[] ($string : string, $limit : int = 0) {
+    
     unless ($string) {
       die "The string \$string must be defined";
     }
@@ -118,6 +119,10 @@ class Regex {
         
         my $part = Fn->substr($string, $current_offset, $match_start - $current_offset);
         $parts->push($part);
+        if (@{$regex_match->captures}) {
+          $parts->push_($regex_match->captures);
+        }
+        
         $offset = $match_start + $match_length;
       }
     }

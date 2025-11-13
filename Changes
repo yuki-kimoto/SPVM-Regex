@@ -1,3 +1,10 @@
+0.254 2025-11-13
+  [Incompatible Changes]
+    * Regex#split method add captured string to the return value.
+
+      # ["foo", "<cap1>", "bar", "<cap2>", "baz"]
+      my $ret = Regex->new("(<.*?>)")->split("foo<cap1>bar<cap2>baz");
+
 0.253 2025-10-13
   [Incompatible Changes]
     * Sorry, Regex#replace method's first argument only receive mutable string type.
