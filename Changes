@@ -20,6 +20,26 @@
         }
       }
       
+    * Fix a bug that the following pattern match failed.
+      # Match \z - offset + length
+      {
+        my $re = Regex->new("\Aab+c\z");
+        my $target = copy "zabbcz";
+        
+        my $offset = 1;
+        my $length = 4;
+        my $match = $re->match($target, \$offset, $length);
+        
+        unless ($match) {
+          return 0;
+        }
+        
+        unless ($offset == 5) {
+          diag $offset;
+          return 0;
+        }
+      }
+      
 
 0.254 2025-11-13
   [Incompatible Changes]

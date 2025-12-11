@@ -1045,13 +1045,14 @@ class TestCase::Regex {
         }
       }
       
-      # Match \A - "abbcz"
+      # Match \z - offset + length
       {
-        my $re = Regex->new("\Aab+c");
+        my $re = Regex->new("\Aab+c\z");
         my $target = copy "zabbcz";
         
         my $offset = 1;
-        my $match = $re->match($target, \$offset);
+        my $length = 4;
+        my $match = $re->match($target, \$offset, $length);
         
         unless ($match) {
           return 0;
