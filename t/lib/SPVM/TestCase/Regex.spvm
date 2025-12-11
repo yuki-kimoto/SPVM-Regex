@@ -1006,50 +1006,6 @@ class TestCase::Regex {
     return 1;
   }
   
-  static method match_end : int () {
-    # Match $
-    {
-      # Match $ - "zabbc"
-      {
-        my $re = Regex->new("ab+c$");
-        my $target = copy "zabbc";
-        
-        my $match = $re->match($target);
-        
-        unless ($match) {
-          return 0;
-        }
-      }
-      
-      # Not Match $ - "zabbcz"
-      {
-        my $re = Regex->new("ab+c$");
-        my $target = copy "zabbcz";
-        
-        my $match = $re->match($target);
-        
-        if ($match) {
-          return 0;
-        }
-      }
-      
-      # Match $ - "zabbc"
-      {
-        my $re = Regex->new("ab+c\z");
-        my $target = copy "zabbc";
-        
-        my $match = $re->match($target);
-        
-        unless ($match) {
-          return 0;
-        }
-      }
-      
-    }
-    
-    return 1;
-  }
-
   static method match_start : int () {
     # Match ^
     {
@@ -1094,6 +1050,50 @@ class TestCase::Regex {
     return 1;
   }
   
+  static method match_end : int () {
+    # Match $
+    {
+      # Match $ - "zabbc"
+      {
+        my $re = Regex->new("ab+c$");
+        my $target = copy "zabbc";
+        
+        my $match = $re->match($target);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
+      # Not Match $ - "zabbcz"
+      {
+        my $re = Regex->new("ab+c$");
+        my $target = copy "zabbcz";
+        
+        my $match = $re->match($target);
+        
+        if ($match) {
+          return 0;
+        }
+      }
+      
+      # Match $ - "zabbc"
+      {
+        my $re = Regex->new("ab+c\z");
+        my $target = copy "zabbc";
+        
+        my $match = $re->match($target);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
+    }
+    
+    return 1;
+  }
+
   static method match_quantifier : int () {
     # Match {1,3}
     {
