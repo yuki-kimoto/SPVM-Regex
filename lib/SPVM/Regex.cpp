@@ -62,23 +62,23 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   int32_t string_offset = stack[2].ival;
   
-  int32_t* offset_ref = stack[3].iref;
+  int32_t* match_offset_ref = stack[3].iref;
   
-  int32_t offset_tmp = 0;
-  if (!offset_ref) {
-    offset_ref = &offset_tmp;
+  int32_t match_offset_tmp = 0;
+  if (!match_offset_ref) {
+    match_offset_ref = &match_offset_tmp;
   }
   
-  int32_t offset = *offset_ref;
-  assert(offset >= 0);
+  int32_t match_offset = *match_offset_ref;
+  assert(match_offset >= 0);
   
   int32_t length = stack[4].ival;
   
   if (length < 0) {
-    length = string_length - offset;
+    length = string_length - match_offset;
   }
   
-  assert(offset + length <= string_length);
+  assert(match_offset + length <= string_length);
   
   void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
   if (error_id) { return error_id; }
@@ -91,9 +91,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t doller0_and_captures_length = captures_length + 1;
   
   std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
-  int32_t end_offset = offset + length;
+  int32_t end_match_offset = match_offset + length;
   const char* target_string = string + string_offset;
-  int32_t match = re2->Match(target_string, offset, end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  int32_t match = re2->Match(target_string, match_offset, end_match_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
   void* obj_regex_match = NULL;
   if (match) {
@@ -128,9 +128,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
       obj_regex_match = stack[0].oval;
     }
     
-    // Next offset
-    int32_t next_offset = (submatch[0].data() - target_string) + submatch[0].length();
-    *offset_ref = next_offset;
+    // Next match_offset
+    int32_t next_match_offset = (submatch[0].data() - target_string) + submatch[0].length();
+    *match_offset_ref = next_match_offset;
     
     stack[0].oval = obj_regex_match;
   }
