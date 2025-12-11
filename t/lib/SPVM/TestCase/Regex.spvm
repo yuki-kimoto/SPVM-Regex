@@ -1716,6 +1716,15 @@ class TestCase::Regex {
 
     }
     
+    {
+      my $string = copy "foo//bar///baz";
+      Re->s((mutable string)$string, ["^/*|/+", "g"], "/");
+      
+      unless ($string eq "/foo/bar/baz") {
+        return 0;
+      }
+    }
+    
     return 1;
   }
 
