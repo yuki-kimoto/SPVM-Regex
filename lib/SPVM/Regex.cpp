@@ -92,7 +92,8 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
   int32_t end_offset = offset + length;
-  int32_t match = re2->Match(string + string_offset, offset, end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  const char* target_string = string + string_offset;
+  int32_t match = re2->Match(target_string, offset, end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
   void* obj_regex_match = NULL;
   if (match) {
@@ -105,7 +106,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     {
       for (int32_t i = 0; i < doller0_and_captures_length; ++i) {
         if (i == 0) {
-          match_start = (submatch[0].data() - string);
+          match_start = (submatch[0].data() - target_string);
           match_length = submatch[0].length();
         }
         else {
@@ -128,7 +129,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     }
     
     // Next offset
-    int32_t next_offset = (submatch[0].data() - string) + submatch[0].length();
+    int32_t next_offset = (submatch[0].data() - target_string) + submatch[0].length();
     *offset_ref = next_offset;
     
     stack[0].oval = obj_regex_match;
