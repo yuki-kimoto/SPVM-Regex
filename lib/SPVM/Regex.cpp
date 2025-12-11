@@ -60,7 +60,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   const char* string = env->get_chars(env, stack, obj_string);
   int32_t string_length = env->length(env, stack, obj_string);
   
-  int32_t* offset_ref = stack[2].iref;
+  int32_t string_offset = stack[2].ival;
+  
+  int32_t* offset_ref = stack[3].iref;
   
   int32_t offset_tmp = 0;
   if (!offset_ref) {
@@ -70,7 +72,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t offset = *offset_ref;
   assert(offset >= 0);
   
-  int32_t length = stack[3].ival;
+  int32_t length = stack[4].ival;
   
   if (length < 0) {
     length = string_length - offset;
@@ -90,7 +92,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
   int32_t end_offset = offset + length;
-  int32_t match = re2->Match(string, offset, end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  int32_t match = re2->Match(string + string_offset, offset, end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
   void* obj_regex_match = NULL;
   if (match) {

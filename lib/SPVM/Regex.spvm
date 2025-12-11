@@ -50,7 +50,7 @@ class Regex {
   # Instance Methods
   method match : Regex::Match ($string : string, $offset_ref : int* = undef, $length : int = -1) {
     
-    my $regex_match = $self->match_string($string, $offset_ref, $length);
+    my $regex_match = $self->match_string($string, 0, $offset_ref, $length);
     
     return $regex_match;
   }
@@ -110,7 +110,7 @@ class Regex {
       }
       
       my $current_offset = $offset;
-      my $regex_match = $self->match_string($string, \$offset);
+      my $regex_match = $self->match_string($string, 0, \$offset);
       if ($regex_match) {
         $match_count++;
         
@@ -151,7 +151,7 @@ class Regex {
   native method DESTROY : void ();
   
   # Private Instance Methods
-  private native method match_string : Regex::Match ($string : string, $offset_ref : int*, $length : int = -1);
+  private native method match_string : Regex::Match ($string : string, $string_offset : int = 0, $offset_ref : int* = undef, $length : int = -1);
   
   private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
     if ($length < 0) {
@@ -168,7 +168,7 @@ class Regex {
       $length = $string_buffer->length - $$offset_ref;
     }
     
-    my $regex_match = $self->match_string($string_buffer->get_string, $offset_ref, $length);
+    my $regex_match = $self->match_string($string_buffer->get_string, 0, $offset_ref, $length);
     
     return $regex_match;
   }
@@ -209,6 +209,7 @@ class Regex {
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
+      
       $regex_match = $self->match_buffer($string_buffer, \$offset, $length);
       
       if ($regex_match) {
