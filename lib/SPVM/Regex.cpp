@@ -91,9 +91,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t doller0_and_captures_length = captures_length + 1;
   
   std::vector<re2::StringPiece> submatch(doller0_and_captures_length);
-  int32_t target_string_length = match_offset + length;
+  int32_t match_end_offset = match_offset + length;
   const char* target_string = string + string_offset;
-  int32_t match = re2->Match(target_string, match_offset, target_string_length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
+  int32_t match = re2->Match(target_string, match_offset, match_end_offset, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
   void* obj_regex_match = NULL;
   if (match) {
