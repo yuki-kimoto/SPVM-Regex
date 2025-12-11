@@ -129,7 +129,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
     }
     
     // Next match_offset
-    int32_t next_match_offset = (submatch[0].data() - string) + submatch[0].length();
+    int32_t next_match_offset = (submatch[0].data() - target_string) + submatch[0].length();
     *match_offset_ref = next_match_offset;
     
     stack[0].oval = obj_regex_match;
