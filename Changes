@@ -1,3 +1,26 @@
+0.254 2025-12-11
+  [Bug Fix]
+    * Fix a bug that the following pattern match failed.
+
+      # Match \A - "abbcz"
+      {
+        my $re = Regex->new("\Aab+c");
+        my $target = copy "zabbcz";
+        
+        my $offset = 1;
+        my $match = $re->match($target, \$offset);
+        
+        unless ($match) {
+          return 0;
+        }
+        
+        unless ($offset == 5) {
+          diag $offset;
+          return 0;
+        }
+      }
+      
+
 0.254 2025-11-13
   [Incompatible Changes]
     * Regex#split method add captured string to the return value.

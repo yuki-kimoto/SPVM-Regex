@@ -1045,6 +1045,24 @@ class TestCase::Regex {
         }
       }
       
+      # Match \A - "abbcz"
+      {
+        my $re = Regex->new("\Aab+c");
+        my $target = copy "zabbcz";
+        
+        my $offset = 1;
+        my $match = $re->match($target, \$offset);
+        
+        unless ($match) {
+          return 0;
+        }
+        
+        unless ($offset == 5) {
+          diag $offset;
+          return 0;
+        }
+      }
+      
     }
     
     return 1;

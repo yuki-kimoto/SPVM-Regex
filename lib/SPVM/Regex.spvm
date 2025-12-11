@@ -50,7 +50,12 @@ class Regex {
   # Instance Methods
   method match : Regex::Match ($string : string, $offset_ref : int* = undef, $length : int = -1) {
     
-    my $regex_match = $self->match_string($string, 0, $offset_ref, $length);
+    my $string_offset = $offset_ref ? $$offset_ref : 0;
+    my $match_offset = 0;
+    my $regex_match = $self->match_string($string, $string_offset, \$match_offset, $length);
+    if ($offset_ref) {
+      $$offset_ref += $match_offset;
+    }
     
     return $regex_match;
   }
