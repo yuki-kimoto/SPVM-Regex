@@ -1020,7 +1020,7 @@ class TestCase::Regex {
           return 0;
         }
       }
-
+      
       # Not Match $ - "zabbcz"
       {
         my $re = Regex->new("ab+c$");
@@ -1032,6 +1032,19 @@ class TestCase::Regex {
           return 0;
         }
       }
+      
+      # Match $ - "zabbc"
+      {
+        my $re = Regex->new("ab+c\z");
+        my $target = copy "zabbc";
+        
+        my $match = $re->match($target);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
     }
     
     return 1;
@@ -1063,6 +1076,19 @@ class TestCase::Regex {
           return 0;
         }
       }
+      
+      # Match \A - "abbcz"
+      {
+        my $re = Regex->new("\Aab+c");
+        my $target = copy "abbcz";
+        
+        my $match = $re->match($target);
+        
+        unless ($match) {
+          return 0;
+        }
+      }
+      
     }
     
     return 1;
@@ -1371,7 +1397,7 @@ class TestCase::Regex {
         return 0;
       }
     }
-
+    
     return 1;
   }
 
