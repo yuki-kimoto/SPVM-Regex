@@ -83,10 +83,7 @@ class Regex {
     
     $options->{"info"} = $replace_info_ref;
     
-    my $global = 0;
-    if (my $global_obj = $options->{"global"}) {
-      $global = (int)$global_obj;
-    }
+    my $global = $options->{"global"}->(int);
     
     my $string_length = $string_buffer->length;
     
