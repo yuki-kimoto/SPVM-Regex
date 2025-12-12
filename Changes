@@ -39,6 +39,22 @@
           return 0;
         }
       }
+   * Fix a bug that the following replacement failed.
+   
+      # Replace offset \A
+      {
+        my $target = copy "zabcabcz";
+        my $offset = 1;
+        my $length = 6;
+        
+        Re->s((mutable string)$target, ["\Aabc", "g"], "ABC", \$offset);
+        
+        unless ($target eq "zABCabcz") {
+          diag $target;
+          return 0;
+        }
+      }
+    
 
 0.254 2025-11-13
   [Incompatible Changes]

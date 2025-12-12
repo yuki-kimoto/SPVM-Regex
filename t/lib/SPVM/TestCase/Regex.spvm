@@ -227,6 +227,20 @@ class TestCase::Regex {
       }
     }
     
+    # Replace offset \A
+    {
+      my $target = copy "zabcabcz";
+      my $offset = 1;
+      my $length = 6;
+      
+      Re->s((mutable string)$target, ["\Aabc", "g"], "ABC", \$offset);
+      
+      unless ($target eq "zABCabcz") {
+        diag $target;
+        return 0;
+      }
+    }
+    
     return 1;
   }
   

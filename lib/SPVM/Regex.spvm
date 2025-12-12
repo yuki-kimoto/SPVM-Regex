@@ -68,22 +68,21 @@ class Regex {
     
     my $string_buffer = StringBuffer->new_ref((mutable string)$string);
     
-    my $offset = 0;
-    if ($offset_ref) {
-      $offset = $$offset_ref;
-    }
-    
     my $options = Fn->to_hash($options);
     
     my $global = $options->{"global"}->(int);
     
     my $string_length = $string_buffer->length;
     
+    my $string_offset = $offset_ref ? $$offset_ref : 0;
+    
+    my $match_offset = 0;
+    
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
       
-      $regex_match = $self->match_string($string_buffer->get_string, 0, \$offset, $length);
+      $regex_match = $self->match_string($string_buffer->get_string, $string_offset, \$match_offset, $length);
       
       if ($regex_match) {
         $match_count++;
@@ -116,14 +115,14 @@ class Regex {
       }
       
       my $next_string_offset = $match_start + $replace_string_length;
-      $offset = $next_string_offset;
-      $length = $string_buffer->length - $offset;
+      $match_offset = $next_string_offset - $string_offset;
+      $length -= $match_offset;
     }
     
     my $replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
     
     if ($offset_ref) {
-      $$offset_ref = $offset;
+      $$offset_ref += $match_offset;
     }
     
     if ($replace_info->replaced_count > 0) {
