@@ -62,8 +62,6 @@ class Regex {
   
   method replace : Regex::ReplaceInfo ($string : mutable string, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
-    my $replace_info_ref = new Regex::ReplaceInfo[1];
-    
     my $string_buffer = StringBuffer->new_ref((mutable string)$string);
     
     my $offset = 0;
@@ -80,8 +78,6 @@ class Regex {
     }
     
     my $options = Fn->to_hash($options);
-    
-    $options->{"info"} = $replace_info_ref;
     
     my $global = $options->{"global"}->(int);
     
@@ -128,19 +124,11 @@ class Regex {
       $length = $string_buffer->length - $offset;
     }
     
-    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
-    
-    my $option_regex_replace_info = (Regex::ReplaceInfo[])$options->{"info"};
-    
-    if ($option_regex_replace_info) {
-      $option_regex_replace_info->[0] = $regex_replace_info;
-    }
+    my $replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
     
     if ($offset_ref) {
       $$offset_ref = $offset;
     }
-    
-    my $replace_info = $replace_info_ref->[0];
     
     if ($replace_info->replaced_count > 0) {
       return $replace_info;
