@@ -119,8 +119,8 @@ class Regex {
         last;
       }
       
-      my $next_offset = $match_start + $replace_string_length;
-      $offset = $next_offset;
+      my $next_string_offset = $match_start + $replace_string_length;
+      $offset = $next_string_offset;
       $length = $string_buffer->length - $offset;
     }
     
