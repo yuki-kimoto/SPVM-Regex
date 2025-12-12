@@ -81,7 +81,75 @@ class Regex {
     
     $options = Fn->merge_options($options, {info => $replace_info_ref});
     
-    $self->replace_buffer_common($string_buffer, $replace, $offset_ref, $length, $options);
+    my $options = Fn->to_hash($options);
+    
+    my $global = 0;
+    if (my $global_obj = $options->{"global"}) {
+      $global = (int)$global_obj;
+    }
+    
+    my $string_length = $string_buffer->length;
+    
+    my $regex_match = (Regex::Match)undef;
+    my $match_count = 0;
+    while (1) {
+      
+      $regex_match = $self->match_string($string_buffer->get_string, 0, \$offset, $length);
+      
+      if ($regex_match) {
+        $match_count++;
+      }
+      else {
+        last;
+      }
+      
+      my $replace_string : string;
+      if ($replace isa string) {
+        $replace_string = (string)$replace;
+      }
+      elsif ($replace isa Regex::Replacer) {
+        my $replacer = (Regex::Replacer)$replace;
+        $replace_string = $replacer->($self, $regex_match);
+      }
+      else {
+        die "\$replace must be a string or a Regex::Replacer object";
+      }
+      
+      my $replace_string_length = length $replace_string;
+      
+      my $match_start = $regex_match->match_start;
+      my $match_length = $regex_match->match_length;
+      
+      $string_buffer->substr($match_start, $match_length, $replace_string);
+      
+      unless ($global) {
+        last;
+      }
+      
+      my $next_offset = $match_start + $replace_string_length;
+      $offset = $next_offset;
+      $length = $string_buffer->length - $offset;
+    }
+    
+    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
+    
+    my $option_regex_replace_info = (Regex::ReplaceInfo[])$options->{"info"};
+    
+    if ($option_regex_replace_info) {
+      $option_regex_replace_info->[0] = $regex_replace_info;
+    }
+    
+    if ($offset_ref) {
+      $$offset_ref = $offset;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     my $replace_info = $replace_info_ref->[0];
     
@@ -157,78 +225,6 @@ class Regex {
   
   # Private Instance Methods
   private native method match_string : Regex::Match ($string : string, $string_offset : int = 0, $match_offset_ref : int* = undef, $length : int = -1);
-  
-  private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
-    
-    my $options = Hash->new($options);
-    
-    my $offset = 0;
-    if ($offset_ref) {
-      $offset = $$offset_ref;
-    }
-    
-    my $original_offset = $offset;
-    
-    my $global = 0;
-    if (my $global_obj = $options->{"global"}) {
-      $global = (int)$global_obj;
-    }
-    
-    my $string_length = $string_buffer->length;
-    
-    my $regex_match = (Regex::Match)undef;
-    my $match_count = 0;
-    while (1) {
-      
-      $regex_match = $self->match_string($string_buffer->get_string, 0, \$offset, $length);
-      
-      if ($regex_match) {
-        $match_count++;
-      }
-      else {
-        last;
-      }
-      
-      my $replace_string : string;
-      if ($replace isa string) {
-        $replace_string = (string)$replace;
-      }
-      elsif ($replace isa Regex::Replacer) {
-        my $replacer = (Regex::Replacer)$replace;
-        $replace_string = $replacer->($self, $regex_match);
-      }
-      else {
-        die "\$replace must be a string or a Regex::Replacer object";
-      }
-      
-      my $replace_string_length = length $replace_string;
-      
-      my $match_start = $regex_match->match_start;
-      my $match_length = $regex_match->match_length;
-      
-      $string_buffer->substr($match_start, $match_length, $replace_string);
-      
-      unless ($global) {
-        last;
-      }
-      
-      my $next_offset = $match_start + $replace_string_length;
-      $offset = $next_offset;
-      $length = $string_buffer->length - $offset;
-    }
-    
-    my $regex_replace_info = Regex::ReplaceInfo->new({replaced_count => $match_count, match => $regex_match});
-    
-    my $option_regex_replace_info = (Regex::ReplaceInfo[])$options->{"info"};
-    
-    if ($option_regex_replace_info) {
-      $option_regex_replace_info->[0] = $regex_replace_info;
-    }
-    
-    if ($offset_ref) {
-      $$offset_ref = $offset;
-    }
-  }
   
 }
 
