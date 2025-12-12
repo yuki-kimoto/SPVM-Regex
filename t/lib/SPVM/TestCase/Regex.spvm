@@ -241,6 +241,20 @@ class TestCase::Regex {
       }
     }
     
+    # Replace length \z
+    {
+      my $target = copy "zabcabcz";
+      my $offset = 1;
+      my $length = 6;
+      
+      Re->s((mutable string)$target, ["abc\z", "g"], "ABC", \$offset, $length);
+      
+      unless ($target eq "zabcABCz") {
+        diag $target;
+        return 0;
+      }
+    }
+    
     return 1;
   }
   
