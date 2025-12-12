@@ -176,10 +176,6 @@ class Regex {
     
     my $string_length = $string_buffer->length;
     
-    if ($length == -1) {
-      $length = $string_length - $offset;
-    }
-    
     my $regex_match = (Regex::Match)undef;
     my $match_count = 0;
     while (1) {
