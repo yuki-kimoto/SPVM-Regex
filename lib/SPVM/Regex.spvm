@@ -169,13 +169,7 @@ class Regex {
   }
   
   private method match_buffer : Regex::Match ($string_buffer : StringBuffer, $string_offset : int = 0, $match_offset_ref : int* = undef, $length : int = -1) {
-    if ($length < 0) {
-      $length = $string_buffer->length - $$match_offset_ref;
-    }
-    
-    my $regex_match = $self->match_string($string_buffer->get_string, $string_offset, $match_offset_ref, $length);
-    
-    return $regex_match;
+    return $self->match_string($string_buffer->get_string, $string_offset, $match_offset_ref, $length);
   }
   
   private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
