@@ -156,7 +156,7 @@ class Regex {
   native method DESTROY : void ();
   
   # Private Instance Methods
-  private native method match_string : Regex::Match ($string : string, $string_offset : int = 0, $offset_ref : int* = undef, $length : int = -1);
+  private native method match_string : Regex::Match ($string : string, $string_offset : int = 0, $match_offset_ref : int* = undef, $length : int = -1);
   
   private method buffer_match : Regex::Match ($string_buffer : StringBuffer, $offset : int = 0, $length : int = -1) {
     if ($length < 0) {
@@ -168,12 +168,12 @@ class Regex {
     return $regex_match;
   }
   
-  private method match_buffer : Regex::Match ($string_buffer : StringBuffer, $string_offset : int = 0, $offset_ref : int* = undef, $length : int = -1) {
+  private method match_buffer : Regex::Match ($string_buffer : StringBuffer, $string_offset : int = 0, $match_offset_ref : int* = undef, $length : int = -1) {
     if ($length < 0) {
-      $length = $string_buffer->length - $$offset_ref;
+      $length = $string_buffer->length - $$match_offset_ref;
     }
     
-    my $regex_match = $self->match_string($string_buffer->get_string, $string_offset, $offset_ref, $length);
+    my $regex_match = $self->match_string($string_buffer->get_string, $string_offset, $match_offset_ref, $length);
     
     return $regex_match;
   }
