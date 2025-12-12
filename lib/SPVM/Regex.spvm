@@ -73,14 +73,6 @@ class Regex {
       $offset = $$offset_ref;
     }
     
-    if ($length < 0) {
-      $length = $string_buffer->length - $offset;
-    }
-    
-    unless ($offset + $length <= $string_buffer->length) {
-      die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string.";
-    }
-    
     my $options = Fn->to_hash($options);
     
     my $global = $options->{"global"}->(int);
