@@ -62,6 +62,10 @@ class Regex {
   
   method replace : Regex::ReplaceInfo ($string : mutable string, $replace : string|Regex::Replacer, $offset_ref : int* = undef, $length : int = -1, $options : object[] = undef) {
     
+    unless ($string) {
+      die "The string \$string must be defined.";
+    }
+    
     my $string_buffer = StringBuffer->new_ref((mutable string)$string);
     
     my $offset = 0;
