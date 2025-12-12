@@ -79,9 +79,9 @@ class Regex {
       die "\$\$offset_ref + \$length must be less than or equalt to the lenght of \$string.";
     }
     
-    $options = Fn->merge_options($options, {info => $replace_info_ref});
-    
     my $options = Fn->to_hash($options);
+    
+    $options->{"info"} = $replace_info_ref;
     
     my $global = 0;
     if (my $global_obj = $options->{"global"}) {
@@ -142,14 +142,6 @@ class Regex {
     if ($offset_ref) {
       $$offset_ref = $offset;
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     my $replace_info = $replace_info_ref->[0];
     
