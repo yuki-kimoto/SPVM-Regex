@@ -168,10 +168,6 @@ class Regex {
     return $regex_match;
   }
   
-  private method match_buffer : Regex::Match ($string_buffer : StringBuffer, $string_offset : int = 0, $match_offset_ref : int* = undef, $length : int = -1) {
-    return $self->match_string($string_buffer->get_string, $string_offset, $match_offset_ref, $length);
-  }
-  
   private precompile method replace_buffer_common : void ($string_buffer : StringBuffer, $replace : string|Regex::Replacer, $offset_ref : int*, $length : int = -1, $options : object[] = undef) {
     
     my $options = Hash->new($options);
@@ -198,7 +194,7 @@ class Regex {
     my $match_count = 0;
     while (1) {
       
-      $regex_match = $self->match_buffer($string_buffer, 0, \$offset, $length);
+      $regex_match = $self->match_string($string_buffer->get_string, 0, \$offset, $length);
       
       if ($regex_match) {
         $match_count++;
