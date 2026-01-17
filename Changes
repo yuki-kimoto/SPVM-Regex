@@ -1,3 +1,7 @@
+0.256 2026-01-17
+  [Bug Fix]
+    * Fix https://github.com/yuki-kimoto/SPVM-Regex/issues/11
+
 0.255 2025-12-12
   [Bug Fix]
     * Fix a bug that the following pattern match failed.
