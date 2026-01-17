@@ -1520,7 +1520,21 @@ class TestCase::Regex {
         }
       }
     }
-
+    
+    # Exceptions
+    {
+      {
+        my $re = Regex->new("abc");
+        
+        eval { my $match = $re->match(undef); }
+        
+        unless ($@) {
+          return 0;
+        }
+      }
+      
+    }
+    
     return 1;
   }
   

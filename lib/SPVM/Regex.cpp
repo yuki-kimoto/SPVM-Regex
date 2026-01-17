@@ -24,6 +24,8 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   void* obj_pattern = stack[1].oval;
   
+  assert(obj_pattern);
+  
   const char* pattern = env->get_chars(env, stack, obj_pattern);
   int32_t pattern_length = env->length(env, stack, obj_pattern);
   
@@ -55,7 +57,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   void* obj_string = stack[1].oval;
   
-  assert(obj_string);
+  if (!obj_string) {
+    return env->die(env, stack, "String $string must be defined.", __func__, FILE_NAME, __LINE__);
+  }
   
   const char* string = env->get_chars(env, stack, obj_string);
   int32_t string_length = env->length(env, stack, obj_string);
