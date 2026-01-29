@@ -37,7 +37,7 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   if (!re2->ok()) {
     std::string error = re2->error();
-    return env->die_v2(env, stack, "The regex pattern $pattern \"%s\" can't be compiled: %s.", __func__, FILE_NAME, __LINE__, pattern, error.data());
+    return env->die(env, stack, "The regex pattern $pattern \"%s\" can't be compiled: %s.", __func__, FILE_NAME, __LINE__, pattern, error.data());
   }
   
   void* obj_re2 = env->new_pointer_object_by_name(env, stack, "Regex::RE2", re2.release(), &error_id, __func__, FILE_NAME, __LINE__);
@@ -58,7 +58,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   void* obj_string = stack[1].oval;
   
   if (!obj_string) {
-    return env->die_v2(env, stack, "String $string must be defined.", __func__, FILE_NAME, __LINE__);
+    return env->die(env, stack, "String $string must be defined.", __func__, FILE_NAME, __LINE__);
   }
   
   const char* string = env->get_chars(env, stack, obj_string);
