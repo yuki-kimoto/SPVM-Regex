@@ -20,9 +20,9 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   int32_t error_id = 0;
 
-  void* obj_self = stack[0].oval;
+  SPVM_OBJ* obj_self = stack[0].oval;
   
-  void* obj_pattern = stack[1].oval;
+  SPVM_OBJ* obj_pattern = stack[1].oval;
   
   assert(obj_pattern);
   
@@ -40,7 +40,7 @@ int32_t SPVM__Regex__compile(SPVM_ENV* env, SPVM_VALUE* stack) {
     return env->die(env, stack, "The regex pattern $pattern \"%s\" can't be compiled: %s.", __func__, FILE_NAME, __LINE__, pattern, error.data());
   }
   
-  void* obj_re2 = env->new_pointer_object_by_name(env, stack, "Regex::RE2", re2.release(), &error_id, __func__, FILE_NAME, __LINE__);
+  SPVM_OBJ* obj_re2 = env->new_pointer_object_by_name(env, stack, "Regex::RE2", re2.release(), &error_id, __func__, FILE_NAME, __LINE__);
   if (error_id) { return error_id; }
   
   env->set_field_object_by_name(env, stack, obj_self, "re2", obj_re2, &error_id, __func__, FILE_NAME, __LINE__);
@@ -53,9 +53,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   int32_t error_id = 0;
   
-  void* obj_self = stack[0].oval;
+  SPVM_OBJ* obj_self = stack[0].oval;
   
-  void* obj_string = stack[1].oval;
+  SPVM_OBJ* obj_string = stack[1].oval;
   
   if (!obj_string) {
     return env->die(env, stack, "String $string must be defined.", __func__, FILE_NAME, __LINE__);
@@ -84,7 +84,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   
   assert(match_offset + length <= string_length);
   
-  void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
+  SPVM_OBJ* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
   if (error_id) { return error_id; }
   
   assert(obj_re2);
@@ -100,12 +100,12 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
   re2::StringPiece target_string_piece(target_string, target_string_length);
   int32_t match = re2->Match(target_string_piece, match_offset, target_string_length, re2::RE2::Anchor::UNANCHORED, submatch.data(), doller0_and_captures_length);
   
-  void* obj_regex_match = NULL;
+  SPVM_OBJ* obj_regex_match = NULL;
   if (match) {
     int32_t success = 1;
     int32_t match_start = -1;
     int32_t match_length = -1;
-    void* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length - 1);
+    SPVM_OBJ* obj_captures = env->new_string_array(env, stack, doller0_and_captures_length - 1);
     
     // Captures
     {
@@ -115,7 +115,7 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
           match_length = submatch[0].length();
         }
         else {
-          void* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
+          SPVM_OBJ* obj_capture = env->new_string(env, stack, submatch[i].data(), submatch[i].length());
           env->set_elem_object(env, stack, obj_captures, i - 1, obj_capture);
         }
       }
@@ -149,9 +149,9 @@ int32_t SPVM__Regex__match_string(SPVM_ENV* env, SPVM_VALUE* stack) {
 int32_t SPVM__Regex__DESTROY(SPVM_ENV* env, SPVM_VALUE* stack) {
   int32_t error_id = 0;
   
-  void* obj_self = stack[0].oval;
+  SPVM_OBJ* obj_self = stack[0].oval;
 
-  void* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
+  SPVM_OBJ* obj_re2 = env->get_field_object_by_name(env, stack, obj_self, "re2", &error_id, __func__, FILE_NAME, __LINE__);
   if (error_id) { return error_id; }
   
   if (obj_re2) {
