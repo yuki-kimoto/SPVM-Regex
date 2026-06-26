@@ -110,7 +110,7 @@ WriteMakefile(
   },
   PREREQ_PM => {
     %configure_requires_and_prereq_pm,
-    'SPVM::Resource::RE2' => '0.046',
+    'SPVM::Resource::RE2' => '0.047',
   },
 );
 
