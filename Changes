@@ -1,3 +1,8 @@
+0.261 2026-06-26
+  [Requirement Changes]
+    * Require SPVM::Resource::RE2 0.047.
+  [Internal Changes]
+    * Simplify config file removing -DNOMINMAX.
 0.260 2026-06-25
   [Requirement Changes]
     * Require SPVM 0.990191.
