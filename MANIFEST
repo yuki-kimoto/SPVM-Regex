@@ -10,7 +10,7 @@
 Changes
 lib/SPVM/Re.pm
 lib/SPVM/Re.spvm
-lib/SPVM/Regex.config
+lib/SPVM/Regex.build
 lib/SPVM/Regex.cpp
 lib/SPVM/Regex.pm
 lib/SPVM/Regex.spvm

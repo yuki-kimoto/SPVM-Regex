@@ -3,12 +3,8 @@ use Test::More;
 use strict;
 use warnings;
 use utf8;
-use FindBin;
-use lib "$FindBin::Bin/lib";
+use lib "t/lib";
 
-BEGIN { $ENV{SPVM_BUILD_DIR} = "$FindBin::Bin/.spvm_build" };
-
-use SPVM 'Fn';
 use SPVM::Regex;
 
 use SPVM 'TestCase::Regex';
@@ -90,10 +86,10 @@ my $start_memory_blocks_count = $api->get_memory_blocks_count();
 
 # Version
 {
-  is($SPVM::Regex::VERSION, SPVM::Fn->get_version_string('Regex'));
+  is($SPVM::Regex::VERSION, $api->get_version_string('Regex'));
 }
 
-SPVM::Fn->destroy_runtime_permanent_vars;
+$api->destroy_runtime_permanent_vars;
 
 # All object is freed
 my $end_memory_blocks_count = $api->get_memory_blocks_count();
