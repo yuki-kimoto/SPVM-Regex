@@ -1,6 +1,6 @@
 package SPVM::Regex;
 
-our $VERSION = "0.261";
+our $VERSION = "0.262";
 
 1;
 
@@ -12,7 +12,7 @@ SPVM::Regex - Regular Expressions
 
 =head1 Description
 
-Regex class in L<SPVM> has methods to perform pattern match and replacement using regular expressions.
+Regex class in L<SPVM> performs pattern match and replacement using regular expressions.
 
 L<Google RE2|https://github.com/google/re2> is used as the regular expression engine.
 
